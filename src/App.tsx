@@ -85,7 +85,7 @@ const Navbar = ({ setPage }: { setPage: (p: Page) => void }) => {
   return (
     <nav className="sticky top-0 z-50 bg-black border-b-[0.1875rem] border-pink px-[1.5em] py-[1em] flex justify-between items-center">
       <div 
-        className="text-[2.1rem] font-display cursor-pointer flex items-center" 
+        className="text-[2.6rem] md:text-[2.4rem] font-display cursor-pointer flex items-center" 
         onClick={() => { setPage('home'); window.scrollTo(0, 0); }}
       >
         <span className="text-pink">GENZVERSE</span>
@@ -100,7 +100,7 @@ const Navbar = ({ setPage }: { setPage: (p: Page) => void }) => {
               setPage(pageName);
               window.scrollTo(0, 0);
             }}
-            className={`font-display text-[1.4rem] relative group transition-colors ${
+            className={`font-display text-[1.75rem] md:text-[1.6rem] relative group transition-colors ${
               (item === 'STUDENTS' || item === 'BRANDS') ? 'text-lime hover:text-pink' : 'text-cream hover:text-pink'
             }`}
           >
@@ -187,18 +187,18 @@ const HomePage = ({ setPage, setSelectedPost }: { setPage: (p: Page) => void, se
           <div className="inline-block bg-lime text-black px-[0.75rem] py-[0.25rem] brutal-border brutal-shadow mb-[1.5rem] text-[0.6rem] md:text-[0.75rem] font-bold">
             YOUTH-LED CAMPAIGN FORCE.
           </div>
-          <h1 className="text-[2.55rem] md:text-[4.25rem] leading-[0.9] mb-[1.5rem] p-[0.5rem]">
+          <h1 className="text-[3.2rem] md:text-[4.9rem] leading-[0.9] mb-[1.5rem] p-[0.5rem]">
             WE DON'T <br />
             SELL ADS. <br />
             <span className="text-pink glitch-text">WE BUILD MOVEMENTS.</span>
           </h1>
-          <p className="text-cream/70 text-[0.85rem] md:text-[0.95rem] mb-[2.5rem] max-w-[32rem]">
+          <p className="text-cream/70 text-[1.06rem] md:text-[1.1rem] mb-[2.5rem] max-w-[32rem]">
             // Scaling Potential
           </p>
           <div className="flex flex-col sm:flex-row gap-[1rem]">
             <button 
               onClick={() => { setPage('zine'); window.scrollTo(0, 0); }}
-              className="px-[2rem] py-[0.75rem] border-[0.1875rem] border-cream text-cream font-zine text-[1.25rem] hover:bg-cream hover:text-black transition-colors"
+              className="px-[2rem] py-[0.75rem] border-[0.1875rem] border-cream text-cream font-zine text-[1.56rem] md:text-[1.44rem] hover:bg-cream hover:text-black transition-colors"
             >
               SEE OUR WORK ↓
             </button>
