@@ -7,9 +7,9 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How We Generated 1,500 Verified Actions for EatSure",
     category: "CAMPAIGN STORY",
     date: "2026-02-15",
-    author: "Angel Dagliya",
+    author: "GENZVERSE TEAM",
     excerpt: "Breaking down the Mumbai campus takeover that moved the needle for EatSure.",
-    heroImage: "https://ais-pre-k35fsrekis6h7oe5ujqskv-593910531853.asia-southeast1.run.app/eatsure-poster.png",
+    heroImage: "https://play-lh.googleusercontent.com/rge1TD1xUvaa32NNReRUFkAFWW9rqnpbRFt3_LfwKy--H26l29b236FUM4TCIF5mqTDA0-LDOmyln-r4rvQZmDk",
     content: `
       <h2>The Challenge</h2>
       <p>EatSure wanted to penetrate the dense college market in Mumbai. They didn't want just 'brand awareness'—they wanted verified app installs and orders.</p>
@@ -31,7 +31,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Building a 1,510 Member WhatsApp Empire for Gemini",
     category: "CULTURE",
     date: "2026-01-20",
-    author: "Angel Dagliya",
+    author: "GENZVERSE TEAM",
     excerpt: "How we turned a simple messaging app into a high-conversion community hub.",
     heroImage: "https://picsum.photos/seed/gemini/1200/800",
     content: `
@@ -47,7 +47,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "500+ Conversions in Surat: The ISPL Breakdown",
     category: "DROPS",
     date: "2026-02-01",
-    author: "Angel Dagliya",
+    author: "GENZVERSE TEAM",
     excerpt: "Surat isn't just a diamond city; it's a high-conversion playground for the right brand.",
     heroImage: "https://picsum.photos/seed/ispl/1200/800",
     content: `
@@ -62,7 +62,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "5,000+ Verified Actions: The Zuno Masterclass",
     category: "CAMPAIGN STORY",
     date: "2026-03-01",
-    author: "Angel Dagliya",
+    author: "GENZVERSE TEAM",
     excerpt: "How we scaled Zuno's student acquisition through a multi-city campus network.",
     heroImage: "https://picsum.photos/seed/zuno/1200/800",
     content: `
@@ -77,7 +77,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "4,000+ Instagram Stories: The District App Takeover",
     category: "CULTURE HITS",
     date: "2026-02-28",
-    author: "Angel Dagliya",
+    author: "GENZVERSE TEAM",
     excerpt: "Turning digital engagement into a physical movement with District App.",
     heroImage: "https://picsum.photos/seed/district/1200/800",
     content: `
@@ -92,7 +92,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Dell Gaming: Influencer Management Across 9 Cities",
     category: "BRAND BREAKDOWN",
     date: "2026-02-10",
-    author: "Angel Dagliya",
+    author: "GENZVERSE TEAM",
     excerpt: "Managing a complex web of influencers and events for a global giant.",
     heroImage: "https://picsum.photos/seed/dell/1200/800",
     content: `
@@ -116,14 +116,11 @@ export const CITIES = [
 ];
 
 export const STATS = [
-  { value: "5,000+", label: "Verified Actions — Zuno Campaign", note: "verified ✓", color: "bg-pink" },
-  { value: "1,510", label: "New WhatsApp Members — Gemini", note: "no cap", color: "bg-lime" },
   { value: "1,500+", label: "Verified Actions — EatSure Mumbai", note: "verified ✓", color: "bg-blue-400" },
   { value: "300+", label: "Conversions — ISPL Surat 2026", note: "no cap", color: "bg-yellow-400" },
-  { value: "4,000+", label: "Instagram Stories — District App", note: "verified ✓", color: "bg-purple-400" },
-  { value: "750+", label: "Participants — Dell Gaming", note: "gaming", color: "bg-emerald-400" },
-  { value: "300+", label: "Participants — ASUS", note: "gaming", color: "bg-cyan-400" },
-  { value: "1,200+", label: "Participants — HP Gaming", note: "gaming", color: "bg-orange-500" }
+  { value: "4,000+", label: "Instagram Stories — District Events", note: "verified ✓", color: "bg-purple-400" },
+  { value: "2,250+", label: "Participants — Gaming Events (Dell, ASUS, HP)", note: "gaming", color: "bg-emerald-400" },
+  { value: "Many More", label: "Campaigns & Activations", note: "live", color: "bg-pink" }
 ];
 
-export const BRANDS = ["ZUNO", "GEMINI", "EATSURE", "ISPL", "DISTRICT APP", "DELL", "ASUS", "HP", "SHEIN", "IIT BOMBAY", "MOOD INDIGO"];
+export const BRANDS = ["GEMINI", "EATSURE", "ISPL", "DISTRICT APP", "DELL", "ASUS", "HP", "SHEIN", "IIT BOMBAY", "MOOD INDIGO"];
