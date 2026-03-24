@@ -1,6 +1,6 @@
 ---
 id: "007"
-  title: "Genzverse Campaign: Best in the World"
+title: "Genzverse Campaign: Best in the World"
 category: "Events"
 date: "2026-03-24"
 author: "GENZVERSE TEAM"
