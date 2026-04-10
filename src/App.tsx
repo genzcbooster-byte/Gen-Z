@@ -4,11 +4,9 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import ReactMarkdown from 'react-markdown';
-import { CITIES, STATS, BRANDS } from './constants';
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'motion/react';
+import { BLOG_POSTS, CITIES, STATS, BRANDS } from './constants';
 import { BlogPost, Page } from './types';
-import { getAllPosts, getLatestPosts } from './lib/markdown';
 import { 
   Users, 
   Trophy, 
@@ -81,6 +79,46 @@ const Marquee = ({ text, speed = 30, reverse = false, className = "" }: { text: 
   );
 };
 
+const HackerCounter = ({ value, suffix = "" }: { value: number, suffix?: string }) => {
+  const [display, setDisplay] = useState("0");
+  const nodeRef = useRef(null);
+  const isInView = useInView(nodeRef, { once: true, amount: 0.5 });
+  const finalValue = value.toString();
+  const chars = "0123456789X$!@#%&*";
+
+  useEffect(() => {
+    if (isInView) {
+      let iteration = 0;
+      const duration = 2000; // 2 seconds
+      const steps = finalValue.length * 10;
+      const intervalTime = duration / steps;
+
+      const interval = setInterval(() => {
+        setDisplay(
+          finalValue
+            .split("")
+            .map((char, index) => {
+              if (index < iteration) {
+                return finalValue[index];
+              }
+              return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join("")
+        );
+
+        if (iteration >= finalValue.length) {
+          clearInterval(interval);
+        }
+
+        iteration += 1 / 10;
+      }, intervalTime);
+      return () => clearInterval(interval);
+    }
+  }, [isInView, finalValue]);
+
+  return <span ref={nodeRef} className="font-mono tracking-tighter">{display}{suffix}</span>;
+};
+
 const Navbar = ({ setPage }: { setPage: (p: Page) => void }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -151,7 +189,7 @@ const Navbar = ({ setPage }: { setPage: (p: Page) => void }) => {
 
 // --- Pages ---
 
-const HomePage = ({ setPage, setSelectedPost, latestPosts }: { setPage: (p: Page) => void, setSelectedPost: (p: BlogPost) => void, latestPosts: BlogPost[] }) => {
+const HomePage = ({ setPage, setSelectedPost }: { setPage: (p: Page) => void, setSelectedPost: (p: BlogPost) => void }) => {
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section */}
@@ -255,7 +293,7 @@ const HomePage = ({ setPage, setSelectedPost, latestPosts }: { setPage: (p: Page
           <div className="w-[6rem] h-[0.375rem] bg-pink relative z-10" />
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[1.5rem] relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-[1.5rem] relative z-10 mb-[4rem]">
           {STATS.map((stat, i) => (
             <motion.div
               key={i}
@@ -263,15 +301,26 @@ const HomePage = ({ setPage, setSelectedPost, latestPosts }: { setPage: (p: Page
               whileInView={{ scale: 1, opacity: 1, rotate: i % 2 === 0 ? -2 : 2 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05, type: "spring", stiffness: 200 }}
-              className={`brutal-card p-[1.5em] relative group hover:rotate-0 transition-transform ${stat.color}`}
+              className={`brutal-card p-[2em] relative group hover:rotate-0 transition-transform ${stat.color} flex flex-col items-center text-center`}
             >
-              <div className="text-[2.5rem] md:text-[3.5rem] font-display text-black mb-[0.25rem] drop-shadow-[0.125rem_0.125rem_0_white] leading-none">{stat.value}</div>
-              <div className="text-[0.875rem] font-zine leading-tight text-black uppercase">{stat.label}</div>
+              <div className="text-[3rem] md:text-[4.5rem] font-display text-black mb-[0.5rem] drop-shadow-[0.125rem_0.125rem_0_white] leading-none">
+                <HackerCounter value={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className="text-[1.25rem] font-zine leading-tight text-black uppercase">{stat.label}</div>
               <div className="absolute -top-[0.75rem] -right-[0.75rem] bg-black text-white px-[0.5rem] py-[0.125rem] text-[0.625rem] font-accent rotate-6 brutal-border shadow-[0.125rem_0.125rem_0_#8FCC00]">
                 {stat.note}
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="flex justify-center relative z-10">
+          <button 
+            onClick={() => { setPage('zine'); window.scrollTo(0, 0); }}
+            className="bg-black text-cream px-[3rem] py-[1.25rem] brutal-border-pink brutal-shadow-lime font-zine text-[1.5rem] hover:-translate-y-[0.25rem] transition-transform"
+          >
+            SEE OUR CASE STUDIES →
+          </button>
         </div>
       </section>
 
@@ -442,46 +491,42 @@ const HomePage = ({ setPage, setSelectedPost, latestPosts }: { setPage: (p: Page
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-[2rem]">
-          {latestPosts.length > 0 && (
-            <>
-              <div className="md:col-span-8">
-                <div 
-                  className="brutal-card bg-black text-cream h-[30rem] relative group cursor-pointer overflow-hidden border-pink border-[0.25rem]"
-                  onClick={() => { setSelectedPost(latestPosts[0]); setPage('post'); window.scrollTo(0, 0); }}
-                >
-                  <img src={latestPosts[0].heroImage} className="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" referrerPolicy="no-referrer" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-                  <div className="absolute bottom-[2rem] left-[2rem] right-[2rem]">
-                    <div className="bg-pink text-white px-[0.75rem] py-[0.125rem] inline-block text-[0.75rem] font-zine mb-[1rem] brutal-border shadow-[0.1875rem_0.1875rem_0_black]">[{latestPosts[0].category}]</div>
-                    <h3 className="text-[1.5rem] md:text-[2rem] group-hover:text-pink transition-colors leading-tight">{latestPosts[0].title}</h3>
-                    <p className="mt-[1rem] text-cream/80 font-body text-[0.8rem] max-w-[35rem] line-clamp-2">{latestPosts[0].excerpt}</p>
-                    <div className="mt-[1.5rem] flex items-center gap-[0.75rem]">
-                      <div className="w-[2rem] h-[0.1875rem] bg-lime" />
-                      <span className="font-zine text-[0.75rem] text-lime">READ CASE STUDY</span>
-                    </div>
-                  </div>
+          <div className="md:col-span-8">
+            <div 
+              className="brutal-card bg-black text-cream h-[30rem] relative group cursor-pointer overflow-hidden border-pink border-[0.25rem]"
+              onClick={() => { setSelectedPost(BLOG_POSTS[0]); setPage('post'); window.scrollTo(0, 0); }}
+            >
+              <img src={BLOG_POSTS[0].heroImage} className="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" referrerPolicy="no-referrer" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div className="absolute bottom-[2rem] left-[2rem] right-[2rem]">
+                <div className="bg-pink text-white px-[0.75rem] py-[0.125rem] inline-block text-[0.75rem] font-zine mb-[1rem] brutal-border shadow-[0.1875rem_0.1875rem_0_black]">[{BLOG_POSTS[0].category}]</div>
+                <h3 className="text-[1.5rem] md:text-[2rem] group-hover:text-pink transition-colors leading-tight">{BLOG_POSTS[0].title}</h3>
+                <p className="mt-[1rem] text-cream/80 font-body text-[0.8rem] max-w-[35rem] line-clamp-2">{BLOG_POSTS[0].excerpt}</p>
+                <div className="mt-[1.5rem] flex items-center gap-[0.75rem]">
+                  <div className="w-[2rem] h-[0.1875rem] bg-lime" />
+                  <span className="font-zine text-[0.75rem] text-lime">READ CASE STUDY</span>
                 </div>
               </div>
-              <div className="md:col-span-4 flex flex-col gap-[2rem]">
-                {latestPosts.slice(1, 3).map((post, i) => (
-                  <div 
-                    key={i} 
-                    className={`brutal-card p-[1.5em] h-[14rem] flex flex-col justify-between cursor-pointer group transition-all hover:bg-pink/10 ${i === 0 ? '-rotate-1' : 'rotate-1'}`}
-                    onClick={() => { setSelectedPost(post); setPage('post'); window.scrollTo(0, 0); }}
-                  >
-                    <div>
-                      <div className="bg-lime text-black px-[0.5rem] py-[0.125rem] inline-block text-[0.625rem] font-zine mb-[0.75rem] brutal-border">[{post.category}]</div>
-                      <h3 className="text-[1.1rem] leading-tight group-hover:text-pink transition-colors">{post.title}</h3>
-                    </div>
-                    <div className="flex justify-between items-center mt-[0.75rem]">
-                      <div className="text-[0.625rem] font-bold opacity-50">{post.date}</div>
-                      <div className="text-pink font-zine group-hover:translate-x-[0.25rem] transition-transform text-[0.875rem]">→</div>
-                    </div>
-                  </div>
-                ))}
+            </div>
+          </div>
+          <div className="md:col-span-4 flex flex-col gap-[2rem]">
+            {BLOG_POSTS.slice(1, 3).map((post, i) => (
+              <div 
+                key={i} 
+                className={`brutal-card p-[1.5em] h-[14rem] flex flex-col justify-between cursor-pointer group transition-all hover:bg-pink/10 ${i === 0 ? '-rotate-1' : 'rotate-1'}`}
+                onClick={() => { setSelectedPost(post); setPage('post'); window.scrollTo(0, 0); }}
+              >
+                <div>
+                  <div className="bg-lime text-black px-[0.5rem] py-[0.125rem] inline-block text-[0.625rem] font-zine mb-[0.75rem] brutal-border">[{post.category}]</div>
+                  <h3 className="text-[1.1rem] leading-tight group-hover:text-pink transition-colors">{post.title}</h3>
+                </div>
+                <div className="flex justify-between items-center mt-[0.75rem]">
+                  <div className="text-[0.625rem] font-bold opacity-50">{post.date}</div>
+                  <div className="text-pink font-zine group-hover:translate-x-[0.25rem] transition-transform text-[0.875rem]">→</div>
+                </div>
               </div>
-            </>
-          )}
+            ))}
+          </div>
         </div>
 
         <div className="mt-[4rem] flex justify-center">
@@ -497,7 +542,7 @@ const HomePage = ({ setPage, setSelectedPost, latestPosts }: { setPage: (p: Page
   );
 };
 
-const ZinePage = ({ setPage, setSelectedPost, posts }: { setPage: (p: Page) => void, setSelectedPost: (p: BlogPost) => void, posts: BlogPost[] }) => {
+const ZinePage = ({ setPage, setSelectedPost }: { setPage: (p: Page) => void, setSelectedPost: (p: BlogPost) => void }) => {
   return (
     <div className="bg-black min-h-screen">
       <header className="py-[8rem] px-[1.5em] md:px-[5em] border-b-[0.3125rem] border-pink">
@@ -514,7 +559,7 @@ const ZinePage = ({ setPage, setSelectedPost, posts }: { setPage: (p: Page) => v
       </header>
 
       <main className="p-[1.5em] md:p-[5em] grid grid-cols-1 md:grid-cols-3 gap-[2.5rem]">
-        {posts.map((post, i) => {
+        {BLOG_POSTS.map((post, i) => {
           const isBig = i === 0;
           const colors = ['bg-pink', 'bg-lime', 'bg-blue-400', 'bg-yellow-400', 'bg-purple-400', 'bg-orange-500'];
           const cardColor = colors[i % colors.length];
@@ -594,9 +639,8 @@ const PostPage = ({ post, setPage }: { post: BlogPost, setPage: (p: Page) => voi
             prose-h3:text-[2.25rem]
             prose-blockquote:font-display prose-blockquote:text-[3rem] prose-blockquote:text-cream prose-blockquote:border-none prose-blockquote:rotate-[-1deg] prose-blockquote:my-[5rem] prose-blockquote:text-center
             prose-li:list-disc prose-li:marker:text-lime"
-        >
-          <ReactMarkdown>{post.content}</ReactMarkdown>
-        </div>
+          dangerouslySetInnerHTML={{ __html: post.content }} 
+        />
 
         <div className="mt-[5rem] flex flex-wrap gap-[1rem]">
           {post.tags.map(tag => (
@@ -818,17 +862,82 @@ const ContactPage = () => {
   );
 };
 
+const StudentsPage = () => {
+  const options = [
+    { 
+      title: "GET A SPONSORSHIP", 
+      desc: "Fuel your campus events with the right brand backing. We bridge the gap between your vision and brand budgets.", 
+      color: "bg-pink", 
+      link: "https://wa.me/9316106151?text=I'm%20looking%20for%20a%20sponsorship%20for%20my%20campus%20event." 
+    },
+    { 
+      title: "WANNA WORK AT GENZVERSE", 
+      desc: "Join the force. Build movements. Scale potential. We're always looking for the brightest minds to lead our campus networks.", 
+      color: "bg-lime", 
+      link: "https://wa.me/9316106151?text=I'm%20interested%20in%20working%20at%20Genzverse." 
+    },
+    { 
+      title: "WANNA EXPERIENCE EVENTS WITH GENZVERSE", 
+      desc: "Get exclusive access to the most high-octane events in the country. From gaming arenas to tech takeovers.", 
+      color: "bg-blue-400", 
+      link: "https://wa.me/9316106151?text=I%20want%20to%20experience%20Genzverse%20events." 
+    }
+  ];
+
+  return (
+    <div className="bg-black min-h-screen py-[6rem] px-[1.5em] md:px-[5em] flex flex-col">
+      <motion.div
+        initial={{ x: -20, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        className="mb-[3rem]"
+      >
+        <h1 className="text-[3.5rem] md:text-[6.5rem] leading-none">STUDENTS.</h1>
+        <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">// YOUR GATEWAY TO THE ECOSYSTEM.</p>
+      </motion.div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[2rem] flex-grow">
+        {options.map((opt, i) => (
+          <motion.div
+            key={i}
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1 }}
+            className={`brutal-card p-[2.5em] flex flex-col h-full ${opt.color} group relative overflow-hidden`}
+          >
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
+              <Zap size="6rem" />
+            </div>
+            
+            <div className="flex-grow flex flex-col">
+              <h2 className="text-[2.5rem] font-display text-black leading-tight mb-6 group-hover:text-white transition-colors relative z-10">
+                {opt.title}
+              </h2>
+              <p className="text-black/80 font-body text-[1.1rem] mb-8 font-medium leading-relaxed relative z-10">
+                {opt.desc}
+              </p>
+            </div>
+
+            <div className="mt-auto relative z-10">
+              <a
+                href={opt.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full py-4 bg-black text-cream brutal-border-white brutal-shadow-black font-zine text-[1.25rem] group-hover:bg-white group-hover:text-black transition-all gap-3"
+              >
+                APPLY NOW <ArrowRight size="1.5rem" />
+              </a>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   const [page, setPage] = useState<Page>('home');
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [latestPosts, setLatestPosts] = useState<BlogPost[]>([]);
-
-  useEffect(() => {
-    const allPosts = getAllPosts();
-    setPosts(allPosts);
-    setLatestPosts(allPosts.slice(0, 3));
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -845,7 +954,7 @@ export default function App() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <HomePage setPage={setPage} setSelectedPost={setSelectedPost} latestPosts={latestPosts} />
+              <HomePage setPage={setPage} setSelectedPost={setSelectedPost} />
             </motion.div>
           )}
           {page === 'work' && (
@@ -865,7 +974,7 @@ export default function App() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <ZinePage setPage={setPage} setSelectedPost={setSelectedPost} posts={posts} />
+              <ZinePage setPage={setPage} setSelectedPost={setSelectedPost} />
             </motion.div>
           )}
           {page === 'contact' && (
@@ -884,9 +993,8 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="bg-black min-h-screen flex items-center justify-center"
             >
-              <h1 className="text-[3.75rem] font-display text-lime">FOR STUDENTS PAGE COMING SOON.</h1>
+              <StudentsPage />
             </motion.div>
           )}
           {page === 'brands' && (
