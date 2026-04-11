@@ -77,9 +77,10 @@ export const Home = () => {
             >
               <img 
                 src="https://i.postimg.cc/cCN86MQF/Untitled-design-3-removebg-preview.png" 
-                alt="GENZVERSE" 
+                alt="Genzverse - India's #1 Student Marketing Ecosystem" 
                 className="w-[15rem] md:w-[20rem] h-auto"
                 referrerPolicy="no-referrer"
+                loading="eager"
               />
             </motion.div>
           </div>

@@ -5,33 +5,52 @@ import { Footer } from './Footer';
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
+    const moveCursor = (e: PointerEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
+      setIsVisible(true);
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
+    const handlePointerOver = (e: PointerEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest('button, a, .brutal-card')) {
+      if (target.closest('button, a, .brutal-card, [role="button"]')) {
         setIsHovering(true);
       } else {
         setIsHovering(false);
       }
     };
 
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mouseover', handleMouseOver);
+    const handlePointerLeave = () => {
+      setIsVisible(false);
+    };
+
+    // Pointer events are supported in all modern browsers including Safari/iOS
+    window.addEventListener('pointermove', moveCursor);
+    window.addEventListener('pointerover', handlePointerOver);
+    window.addEventListener('pointerleave', handlePointerLeave);
+    
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('pointermove', moveCursor);
+      window.removeEventListener('pointerover', handlePointerOver);
+      window.removeEventListener('pointerleave', handlePointerLeave);
     };
   }, []);
 
+  // Use @supports or simple visibility logic
+  // On touch devices, the cursor should follow the finger
   return (
     <div
-      className={`custom-cursor hidden md:block ${isHovering ? 'hovering' : ''}`}
-      style={{ left: `${position.x / 16}rem`, top: `${position.y / 16}rem` }}
+      className={`custom-cursor pointer-events-none fixed z-[10000] rounded-full transition-transform duration-200 ease-out ${
+        isHovering ? 'hovering' : ''
+      } ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      style={{ 
+        left: 0,
+        top: 0,
+        transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
+        // Ensure it works on Safari/iOS by using translate3d for hardware acceleration
+      }}
     />
   );
 };

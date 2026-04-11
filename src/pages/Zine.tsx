@@ -102,7 +102,13 @@ export const Zine = () => {
               >
                 <Link to={`/zine/${post.slug}`} className="flex flex-col h-full">
                   <div className={`${isBig ? 'h-[25rem]' : 'h-[15.625rem]'} overflow-hidden relative border-b-[0.25rem] border-black`}>
-                    <img src={post.heroImage} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" referrerPolicy="no-referrer" loading="lazy" />
+                    <img 
+                      src={post.heroImage} 
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" 
+                      referrerPolicy="no-referrer" 
+                      loading="lazy" 
+                    />
                     <div className="absolute top-[1rem] left-[1rem] bg-black text-white px-[0.75rem] py-[0.25rem] text-[0.75rem] font-bold brutal-border">
                       [{post.category}]
                     </div>
