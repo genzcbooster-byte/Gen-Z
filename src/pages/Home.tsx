@@ -196,7 +196,7 @@ export const Home = () => {
           <h2 className="text-[2.5rem] md:text-[4.5rem] px-[0.4em] md:px-[0.75em] mb-[1.5rem] relative z-10 whitespace-nowrap">BRANDS WE'VE MOVED.</h2>
         </div>
         <div className="relative z-10">
-          <Marquee text={BRANDS.join(" • ")} speed={40} className="bg-white border-y-[0.1875rem] border-black py-2" />
+          <Marquee text={BRANDS.map(b => b.name).join(" • ")} speed={40} className="bg-white border-y-[0.1875rem] border-black py-2" />
         </div>
 
         <div className="mt-[3rem] px-[1.5em] md:px-[5em] relative z-10 flex justify-center">

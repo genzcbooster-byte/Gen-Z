@@ -155,4 +155,15 @@ export const STATS = [
   { value: "50", label: "Cities Covered", suffix: "+", note: "pan-india", color: "bg-emerald-400" }
 ];
 
-export const BRANDS = ["ASUS", "DELL", "SAMSUNG", "ROYAL ENFIELD", "BOMBAY SHAVING CO", "GEMINI", "DLF", "SHEINVERSE", "NOOKY", "GLADFUL", "EATSURE", "ISPL"];
+export const BRANDS = [
+  { name: "DELL", logo: "https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg" },
+  { name: "SAMSUNG", logo: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" },
+  { name: "ROYAL ENFIELD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Royal_Enfield_logo.svg/1200px-Royal_Enfield_logo.svg.png" },
+  { name: "BOMBAY SHAVING CO", logo: "https://cdn.shopify.com/s/files/1/0554/3872/9405/files/Bombay_Shaving_Company_Logo.png" },
+  { name: "GEMINI", logo: "https://www.gstatic.com/lamda/images/gemini_spark_f6e8c0329b898b0f6732.svg" },
+  { name: "DLF", logo: "https://seeklogo.com/images/D/dlf-logo-3B0C6D0E4D-seeklogo.com.png" },
+  { name: "NOOKY", logo: "https://trynooky.in/cdn/shop/files/nooky_logo.png" },
+  { name: "GLADFUL", logo: "https://gladful.in/cdn/shop/files/gladful_logo.png" },
+  { name: "EATSURE", logo: "https://eatsure.com/assets/images/eatsure-logo.svg" },
+  { name: "ASUS ROG", logo: "https://press.asus.com/assets/w_640,h_640/90767418-95b3-4934-b729-d5a6b1e97bd3/ROG-logo-white.png" }
+];

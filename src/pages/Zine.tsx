@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { BLOG_POSTS } from '../constants';
 
 export const Zine = () => {
+  const [visibleCount, setVisibleCount] = useState(6);
+  const hasMore = visibleCount < BLOG_POSTS.length;
+
+  const loadMore = () => {
+    setVisibleCount(prev => prev + 3);
+  };
+
   return (
     <div className="bg-black min-h-screen">
       <header className="py-[8rem] px-[1.5em] md:px-[5em] border-b-[0.3125rem] border-pink">
@@ -20,7 +27,7 @@ export const Zine = () => {
       </header>
 
       <main className="p-[1.5em] md:p-[5em] grid grid-cols-1 md:grid-cols-3 gap-[2.5rem]">
-        {BLOG_POSTS.map((post, i) => {
+        {BLOG_POSTS.slice(0, visibleCount).map((post, i) => {
           const isBig = i === 0;
           const colors = ['bg-pink', 'bg-lime', 'bg-blue-400', 'bg-yellow-400', 'bg-purple-400', 'bg-orange-500'];
           const cardColor = colors[i % colors.length];
@@ -61,11 +68,17 @@ export const Zine = () => {
         </div>
       </main>
 
-      <div className="px-[5em] pb-[5rem]">
-        <button className="w-full py-[2.5rem] bg-cream text-black text-[3rem] font-display brutal-border brutal-shadow hover:bg-lime transition-colors">
-          LOAD MORE ↓
-        </button>
-      </div>
+      {hasMore && (
+        <div className="px-[1.5em] md:px-[5em] pb-[5rem]">
+          <button 
+            onClick={loadMore}
+            className="w-full py-[2.5rem] bg-cream text-black text-[3rem] font-display brutal-border brutal-shadow hover:bg-lime transition-colors"
+          >
+            LOAD MORE ↓
+          </button>
+        </div>
+      )}
     </div>
   );
 };
+
