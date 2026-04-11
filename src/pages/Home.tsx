@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Users, Trophy, Megaphone, Rocket, Sparkles, Globe } from 'lucide-react';
 import { Marquee } from '../components/Marquee';
+import { SlotCounter } from '../components/SlotCounter';
 import { STATS, BRANDS, BLOG_POSTS, CITIES } from '../constants';
 
 export const Home = () => {
@@ -99,28 +100,24 @@ export const Home = () => {
         <div className="absolute inset-0 bg-pattern-dots opacity-10 pointer-events-none" />
         <div className="absolute top-0 right-0 w-[16rem] h-[16rem] bg-pink/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-[8rem]" />
         <div className="flex flex-col items-center text-center mb-[3rem]">
-          <h2 className="text-[2.5rem] md:text-[4.5rem] mb-[0.5rem] italic relative z-10 whitespace-nowrap">THE RECEIPTS.</h2>
+          <h2 className="text-[2.5rem] md:text-[4.5rem] mb-[0.5rem] italic relative z-10 whitespace-nowrap">THE RESULTS.</h2>
           <div className="w-[6rem] h-[0.375rem] bg-pink relative z-10" />
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[1.5rem] relative z-10 mb-[4rem]">
           {STATS.map((stat, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ scale: 0.8, opacity: 0, rotate: i % 2 === 0 ? -5 : 5 }}
-              whileInView={{ scale: 1, opacity: 1, rotate: i % 2 === 0 ? -2 : 2 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, type: "spring", stiffness: 200 }}
-              className={`brutal-card p-[2em] relative group hover:rotate-0 transition-transform ${stat.color} flex flex-col items-center text-center`}
+              className={`brutal-card p-[2em] relative group ${stat.color} flex flex-col items-center text-center`}
             >
               <div className="text-[3rem] md:text-[4.5rem] font-space font-bold text-black mb-[0.5rem] drop-shadow-[0.125rem_0.125rem_0_white] leading-none">
-                {stat.value}{stat.suffix}
+                <SlotCounter value={stat.value} suffix={stat.suffix} />
               </div>
               <div className="text-[1.25rem] font-zine leading-tight text-black uppercase">{stat.label}</div>
               <div className="absolute -top-[0.75rem] -right-[0.75rem] bg-black text-white px-[0.5rem] py-[0.125rem] text-[0.625rem] font-accent rotate-6 brutal-border shadow-[0.125rem_0.125rem_0_#8FCC00]">
                 {stat.note}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
