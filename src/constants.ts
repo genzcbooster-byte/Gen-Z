@@ -157,13 +157,12 @@ export const STATS = [
 
 export const BRANDS = [
   { name: "DELL", logo: "https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg" },
-  { name: "SAMSUNG", logo: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" },
-  { name: "ROYAL ENFIELD", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Royal_Enfield_logo.svg/1200px-Royal_Enfield_logo.svg.png" },
-  { name: "BOMBAY SHAVING CO", logo: "https://cdn.shopify.com/s/files/1/0554/3872/9405/files/Bombay_Shaving_Company_Logo.png" },
-  { name: "GEMINI", logo: "https://www.gstatic.com/lamda/images/gemini_spark_f6e8c0329b898b0f6732.svg" },
-  { name: "DLF", logo: "https://seeklogo.com/images/D/dlf-logo-3B0C6D0E4D-seeklogo.com.png" },
-  { name: "NOOKY", logo: "https://trynooky.in/cdn/shop/files/nooky_logo.png" },
-  { name: "GLADFUL", logo: "https://gladful.in/cdn/shop/files/gladful_logo.png" },
-  { name: "EATSURE", logo: "https://eatsure.com/assets/images/eatsure-logo.svg" },
+  { name: "SAMSUNG", logo: "https://www.glotechrepairs.co.uk/news/wp-content/uploads/2016/07/samsung-logo-4-1024x675.png" },
+  { name: "ROYAL ENFIELD", logo: "https://images.classic.com/uploads/make/Royal-Enfield.png?w=250&h=250" },
+  { name: "BOMBAY SHAVING CO", logo: "https://www.shopyvision.com/wp-content/uploads/2026/01/Bombey-Shaving-Company-Logo-150x150.png" },
+  { name: "GEMINI", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/500px-Google_Gemini_logo.svg.png" },
+  { name: "DLF", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/DLF_logo.svg/1280px-DLF_logo.svg.png" },
+  { name: "NOOKY", logo: "https://arisepoint.in/wp-content/uploads/2025/12/9.png" },
+  { name: "EATSURE", logo: "https://cdn.gyftr.com/sbiapp/images/brands/logos/9930_Logo.png" },
   { name: "ASUS ROG", logo: "https://press.asus.com/assets/w_640,h_640/90767418-95b3-4934-b729-d5a6b1e97bd3/ROG-logo-white.png" }
 ];

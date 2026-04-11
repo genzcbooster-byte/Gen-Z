@@ -13,30 +13,25 @@ export const Home = () => {
       <section className="h-screen bg-black flex flex-col md:flex-row items-center justify-center md:justify-between px-[1.5em] md:px-[5em] relative overflow-hidden text-center md:text-left">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute inset-0 bg-pattern-grid text-white/5 opacity-20" />
-          <motion.div 
-            animate={{ 
-              x: [0, 100, 0],
-              y: [0, -50, 0],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-[5rem] -left-[5rem] w-[37.5rem] h-[37.5rem] bg-pink/10 blur-[7.5rem] rounded-full"
-          />
-          <motion.div 
-            animate={{ 
-              x: [0, -100, 0],
-              y: [0, 50, 0],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-[5rem] -right-[5rem] w-[31.25rem] h-[31.25rem] bg-lime/10 blur-[6.25rem] rounded-full"
-          />
-          <div className="absolute inset-0 bg-pattern-dots text-lime/10 opacity-30" />
-          <motion.div 
-            animate={{ y: ['-100%', '100%'] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            className="absolute left-0 right-0 h-[0.125rem] bg-lime/20 shadow-[0_0_0.9375rem_rgba(143,204,0,0.5)] z-0"
-          />
+            <motion.div 
+              className="absolute -top-[5rem] -left-[5rem] w-[37.5rem] h-[37.5rem] bg-pink/10 blur-[7.5rem] rounded-full will-change-transform"
+              style={{
+                animation: 'slow-float-1 20s linear infinite'
+              }}
+            />
+            <motion.div 
+              className="absolute -bottom-[5rem] -right-[5rem] w-[31.25rem] h-[31.25rem] bg-lime/10 blur-[6.25rem] rounded-full will-change-transform"
+              style={{
+                animation: 'slow-float-2 25s linear infinite'
+              }}
+            />
+            <div className="absolute inset-0 bg-pattern-dots text-lime/10 opacity-30" />
+            <div 
+              className="absolute left-0 right-0 h-[0.125rem] bg-lime/20 shadow-[0_0_0.9375rem_rgba(143,204,0,0.5)] z-0 will-change-transform"
+              style={{
+                animation: 'scanline 8s linear infinite'
+              }}
+            />
         </div>
 
         <div className="z-10 flex flex-col items-center md:items-start md:w-3/5">

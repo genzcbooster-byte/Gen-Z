@@ -1,10 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 import { BRANDS } from '../constants';
 
-const Hexagon = ({ brand, index }: { brand: typeof BRANDS[0], index: number }) => {
+const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: number, onClick: () => void }) => {
   return (
     <div
+      onClick={onClick}
       className="relative w-[100px] h-[115px] md:w-[130px] md:h-[150px] flex items-center justify-center group cursor-grab active:cursor-grabbing transition-transform duration-300 hover:scale-110"
       style={{
         clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
@@ -18,6 +20,7 @@ const Hexagon = ({ brand, index }: { brand: typeof BRANDS[0], index: number }) =
           alt={brand.name} 
           className="w-10 h-10 md:w-12 md:h-12 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
           referrerPolicy="no-referrer"
+          loading="lazy"
         />
         <span className="mt-1 text-[0.5rem] md:text-[0.6rem] font-display text-white opacity-0 group-hover:opacity-100 transition-opacity uppercase truncate max-w-full px-2">
           {brand.name}
@@ -28,10 +31,15 @@ const Hexagon = ({ brand, index }: { brand: typeof BRANDS[0], index: number }) =
 };
 
 export const Brands = () => {
+  const navigate = useNavigate();
   // Create a 7x7 grid for a "large enough" feel
   const gridSize = 7;
   const totalHexagons = gridSize * gridSize;
   const gridItems = Array.from({ length: totalHexagons }).map((_, i) => BRANDS[i % BRANDS.length]);
+
+  const handleBrandClick = (brandName: string) => {
+    navigate(`/zine?search=${encodeURIComponent(brandName)}`);
+  };
 
   return (
     <div className="bg-black min-h-screen py-[6rem] px-[1.5em] md:px-[5em] overflow-hidden">
@@ -54,20 +62,21 @@ export const Brands = () => {
           drag
           dragConstraints={{ left: -800, right: 0, top: -800, bottom: 0 }}
           initial={{ x: -400, y: -400 }}
-          className="absolute flex flex-col gap-2 md:gap-4 p-20"
+          className="absolute flex flex-col gap-1 md:gap-1 p-20"
           style={{ width: '2000px' }}
         >
           {Array.from({ length: gridSize }).map((_, rowIndex) => (
             <div 
               key={rowIndex} 
-              className="flex gap-2 md:gap-4"
-              style={{ marginLeft: rowIndex % 2 === 0 ? '0' : '55px' }}
+              className="flex gap-1 md:gap-1"
+              style={{ marginLeft: rowIndex % 2 === 0 ? '0' : '50px' }}
             >
               {gridItems.slice(rowIndex * gridSize, (rowIndex + 1) * gridSize).map((brand, colIndex) => (
                 <Hexagon 
                   key={`${rowIndex}-${colIndex}`} 
                   brand={brand} 
                   index={rowIndex * gridSize + colIndex} 
+                  onClick={() => handleBrandClick(brand.name)}
                 />
               ))}
             </div>
@@ -79,7 +88,7 @@ export const Brands = () => {
         
         {/* Instructions */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-lime px-4 py-1 brutal-border text-[0.75rem] font-bold z-20 animate-pulse">
-          SWIPE TO EXPLORE THE CLOUD
+          SWIPE TO EXPLORE • CLICK TO SEE STORIES
         </div>
       </div>
 
