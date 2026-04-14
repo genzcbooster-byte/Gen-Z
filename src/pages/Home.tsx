@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom';
 import { Users, Trophy, Megaphone, Rocket, Sparkles, Globe } from 'lucide-react';
 import { Marquee } from '../components/Marquee';
 import { SlotCounter } from '../components/SlotCounter';
-import { STATS, BRANDS, BLOG_POSTS, CITIES } from '../constants';
+import { STATS, BLOG_POSTS, CITIES } from '../constants';
+import { BRANDS } from '../data/brands';
+import { useSEO } from '../hooks/useSEO';
 
 export const Home = () => {
+  useSEO("Genzverse | India's #1 Student Marketing Ecosystem", "We don't sell ads. We build movements. Connect your brand with the largest student network across 200+ colleges in India.");
+
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section */}

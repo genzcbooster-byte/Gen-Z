@@ -45,16 +45,16 @@ From high-refresh-rate gaming to deep-dive AI sessions, we covered it all.
   },
   {
     id: "003",
-    slug: "samsung-s26-ultra-promo",
-    title: "Samsung S26 Ultra Pro Max: The Mumbai & Delhi Takeover",
+    slug: "samsung-s26-promo",
+    title: "Samsung S26: The Mumbai & Delhi Takeover",
     category: "DROPS",
     date: "2026-03-01",
     author: "GENZVERSE TEAM",
-    excerpt: "The most anticipated drop of the year. We owned the streets of Mumbai and Delhi for the S26 Ultra launch.",
+    excerpt: "The most anticipated drop of the year. We owned the streets of Mumbai and Delhi for the S26 launch.",
     heroImage: "https://sundayguardianlive.com/wp-content/uploads/2026/02/samsung-galaxy-s26-ultra-launch-in-india-check-expected-price-specifications-features-ai-upgrades-all-you-need-to-know.jpg",
     content: `
-# The Pro Max Energy
-Samsung S26 Ultra Pro Max needed a launch that felt as premium as the phone. We activated across Mumbai and Delhi on April 5th, 11th, and 18th, creating massive hype and direct engagement.
+# The S26 Energy
+Samsung S26 needed a launch that felt as premium as the phone. We activated across Mumbai and Delhi on April 5th, 11th, and 18th, creating massive hype and direct engagement.
 
 It wasn't just a promo; it was a cultural moment.
     `,
@@ -98,7 +98,7 @@ Royal Enfield wanted to connect with the next generation of riders in the North 
     date: "2026-02-28",
     author: "GENZVERSE TEAM",
     excerpt: "Grooming is a flex. We managed a massive influencer campaign for Bombay Shaving Co that actually converted.",
-    heroImage: "https://images.unsplash.com/photo-1585915423133-196199b45a0e?q=80&w=1200&h=800&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1626285861696-9f0bf5a49c6d?q=80&w=1200&h=800&auto=format&fit=crop",
     content: `
 # Sharp Looks, Sharp Strategy
 We activated a network of creators to show that grooming isn't a chore—it's part of the lifestyle. The Bombay Shaving Co campaign saw massive engagement and a direct spike in brand love among Gen Z men.
@@ -153,15 +153,4 @@ export const STATS = [
   { value: "1,00,000", label: "indian Campus Ambassadors", suffix: "+", note: "verified ✓", color: "bg-blue-400" },
   { value: "2,000", label: "Student Creators", suffix: "+", note: "no cap", color: "bg-yellow-400" },
   { value: "50", label: "Cities Covered", suffix: "+", note: "pan-india", color: "bg-emerald-400" }
-];
-
-export const BRANDS = [
-  { name: "DELL", logo: "https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg" },
-  { name: "SAMSUNG", logo: "https://www.glotechrepairs.co.uk/news/wp-content/uploads/2016/07/samsung-logo-4-1024x675.png" },
-  { name: "ROYAL ENFIELD", logo: "https://images.classic.com/uploads/make/Royal-Enfield.png?w=250&h=250" },
-  { name: "GEMINI", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/500px-Google_Gemini_logo.svg.png" },
-  { name: "DLF", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/DLF_logo.svg/1280px-DLF_logo.svg.png" },
-  { name: "NOOKY", logo: "https://arisepoint.in/wp-content/uploads/2025/12/9.png" },
-  { name: "EATSURE", logo: "https://cdn.gyftr.com/sbiapp/images/brands/logos/9930_Logo.png" },
-  { name: "ASUS ROG", logo: "https://press.asus.com/assets/w_640,h_640/90767418-95b3-4934-b729-d5a6b1e97bd3/ROG-logo-white.png" }
 ];

@@ -42,7 +42,7 @@ const CustomCursor = () => {
   // On touch devices, the cursor should follow the finger
   return (
     <div
-      className={`custom-cursor pointer-events-none fixed z-[10000] rounded-full transition-transform duration-200 ease-out ${
+      className={`custom-cursor pointer-events-none fixed z-[10000] rounded-full ${
         isHovering ? 'hovering' : ''
       } ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       style={{ 

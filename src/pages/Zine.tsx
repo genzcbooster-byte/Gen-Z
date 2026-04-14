@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { BLOG_POSTS } from '../constants';
+import { useSEO } from '../hooks/useSEO';
 
 export const Zine = () => {
+  useSEO("The Zine | Genzverse", "Culture. Campaigns. Campus. Chaos. Read the latest drops, campaign stories, and brand breakdowns from Genzverse.");
+
   const [searchParams, setSearchParams] = useSearchParams();
   const initialSearch = searchParams.get('search') || '';
   const [searchQuery, setSearchQuery] = useState(initialSearch);
@@ -15,12 +18,15 @@ export const Zine = () => {
     setVisibleCount(6); // Reset pagination on search change
   }, [searchParams]);
 
-  const filteredPosts = BLOG_POSTS.filter(post => 
-    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.author.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredPosts = useMemo(() => {
+    const query = searchQuery.toLowerCase();
+    return BLOG_POSTS.filter(post => 
+      post.title.toLowerCase().includes(query) ||
+      post.excerpt.toLowerCase().includes(query) ||
+      post.category.toLowerCase().includes(query) ||
+      post.author.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
 
   const hasMore = visibleCount < filteredPosts.length;
 

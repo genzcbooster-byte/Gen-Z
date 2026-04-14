@@ -21,7 +21,6 @@ export const Navbar = () => {
       <Link 
         to="/"
         className="text-[2.6rem] md:text-[2.4rem] font-display cursor-pointer flex items-center" 
-        onClick={() => window.scrollTo(0, 0)}
       >
         <span className="text-pink">GENZVERSE</span>
       </Link>
@@ -31,7 +30,6 @@ export const Navbar = () => {
           <Link
             key={item.label}
             to={item.path}
-            onClick={() => window.scrollTo(0, 0)}
             className={cn(
               "font-display text-[1.75rem] md:text-[1.6rem] relative group transition-colors",
               (item.label === 'STUDENTS' || item.label === 'BRANDS') ? 'text-lime hover:text-pink' : 'text-cream hover:text-pink',
@@ -66,10 +64,7 @@ export const Navbar = () => {
                 key={item.label}
                 to={item.path}
                 className="text-[2.25rem] font-display text-cream hover:text-pink transition-colors"
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  window.scrollTo(0, 0);
-                }}
+                onClick={() => setIsMenuOpen(false)}
               >
                 {item.label}
               </Link>

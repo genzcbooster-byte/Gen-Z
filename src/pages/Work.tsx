@@ -1,91 +1,92 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { CAMPAIGNS } from '../data/work';
+import { useSEO } from '../hooks/useSEO';
 
 export const Work = () => {
-  const campaignStats = [
-    { brand: "ZUNO", stat: "3,000–5,000", label: "Verified Actions", color: "bg-pink" },
-    { brand: "GEMINI", stat: "1,510", label: "New Members Joined", color: "bg-lime" },
-    { brand: "EATSURE", stat: "1,500+", label: "Verified Actions", color: "bg-blue-500" },
-    { brand: "SUNRISE", stat: "1,624", label: "Verified Actions", color: "bg-yellow-400" },
-    { brand: "DISTRICT APP", stat: "4,000+", label: "Instagram Stories", color: "bg-purple-500" },
-    { brand: "ISPL", stat: "300+", label: "Conversions", color: "bg-orange-500" },
-    { brand: "DELL GAMING", stat: "750+", label: "Participants", color: "bg-emerald-400" },
-    { brand: "ASUS", stat: "300+", label: "Participants", color: "bg-cyan-400" },
-    { brand: "HP GAMING", stat: "1,200+", label: "Participants", color: "bg-orange-600" }
-  ];
+  useSEO("Our Work | Genzverse — Campus Marketing Campaigns", "Measurable outcomes. Real communities. Verified results. Explore our flagship campaigns with top brands.");
 
   return (
-    <div className="bg-black min-h-screen py-[6rem] px-[1.5em] md:px-[5em]">
-      <h1 className="text-[3.5rem] md:text-[6.5rem] leading-none mb-[3rem] whitespace-nowrap text-white">THE WORK.</h1>
-      <p className="text-lime text-[1.25rem] mb-[5rem] font-body">// Measurable outcomes. Real communities. Verified results.</p>
+    <div className="bg-black min-h-screen">
+      {/* Hero Section */}
+      <section className="pt-[10rem] pb-[6rem] px-[1.5em] md:px-[5em] border-b-[0.3125rem] border-pink">
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <h1 className="text-[4rem] md:text-[9rem] leading-[0.85] text-white font-display tracking-tighter mb-[2rem]">
+            THE <br /> WORK.
+          </h1>
+          <div className="flex flex-col md:flex-row gap-[2rem] md:gap-[4rem] mt-[4rem] border-t-[0.125rem] border-cream/20 pt-[2rem]">
+            <div>
+              <div className="text-[3rem] md:text-[4rem] font-display text-lime leading-none">200+</div>
+              <div className="text-[1rem] font-body text-cream/70 uppercase tracking-widest mt-2">Colleges</div>
+            </div>
+            <div>
+              <div className="text-[3rem] md:text-[4rem] font-display text-pink leading-none">1,00,000+</div>
+              <div className="text-[1rem] font-body text-cream/70 uppercase tracking-widest mt-2">Ambassadors</div>
+            </div>
+            <div>
+              <div className="text-[3rem] md:text-[4rem] font-display text-blue-400 leading-none">9+</div>
+              <div className="text-[1rem] font-body text-cream/70 uppercase tracking-widest mt-2">Flagship Campaigns</div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2.5rem]">
-        {campaignStats.map((item, i) => (
+      {/* Editorial Campaign Strips */}
+      <section className="flex flex-col">
+        {CAMPAIGNS.map((campaign, i) => (
           <motion.div
-            key={i}
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ delay: i * 0.05 }}
-            className={`brutal-card p-[2.5em] flex flex-col justify-between h-[18.75rem] ${item.color}`}
+            key={campaign.id}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: i * 0.1 }}
+            className={`w-full min-h-[50vh] md:min-h-[60vh] flex flex-col justify-between p-[2rem] md:p-[5rem] bg-gradient-to-br ${campaign.gradient} ${campaign.textColor} border-b-[0.3125rem] border-black relative overflow-hidden group`}
           >
-            <div className="text-[1.5rem] font-zine text-black border-b-[0.125rem] border-black pb-[0.5rem] mb-[1rem]">{item.brand}</div>
-            <div className="text-[4.5rem] font-display text-black leading-none">{item.stat}</div>
-            <div className="text-[1.25rem] font-zine text-black/80 mt-[0.5rem]">{item.label}</div>
+            {/* Background noise/texture */}
+            <div className="absolute inset-0 bg-pattern-dots opacity-10 mix-blend-overlay pointer-events-none" />
+            
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-[2rem]">
+              <div className="text-[0.875rem] md:text-[1.25rem] font-body font-bold tracking-[0.2em] uppercase border-b-2 border-current pb-2">
+                {campaign.category}
+              </div>
+              <div className="text-[1.5rem] md:text-[2.5rem] font-zine uppercase text-right">
+                {campaign.stats}
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-[4rem] md:mt-[8rem]">
+              <h2 className="text-[4rem] md:text-[10rem] font-display leading-[0.8] tracking-tighter group-hover:scale-[1.02] transition-transform duration-500 origin-left">
+                {campaign.brand}
+              </h2>
+              <p className="text-[1.25rem] md:text-[2.5rem] font-body font-medium mt-[2rem] max-w-[40rem] leading-tight opacity-90">
+                {campaign.outcome}
+              </p>
+            </div>
           </motion.div>
         ))}
-      </div>
+      </section>
 
-      <div className="mt-[8rem] border-t-[0.3125rem] border-pink pt-[5rem]">
-        <h2 className="text-[3.75rem] md:text-[5rem] mb-[3rem] uppercase text-white">Event Marketing</h2>
-        <div className="space-y-[2rem] mb-[5rem]">
-          {[
-            "QS Study Abroad Fair – 500+ student visits across 6 cities",
-            "WPL Speed Queen – Regional event marketing with 200+ participants"
-          ].map((exp, i) => (
-            <div key={i} className="flex items-center gap-[1.5rem] group cursor-default">
-              <div className="w-[1rem] h-[1rem] bg-lime brutal-border group-hover:bg-pink transition-colors" />
-              <div className="text-[1.5rem] md:text-[1.875rem] font-body group-hover:translate-x-[0.5rem] transition-transform text-white">{exp}</div>
-            </div>
-          ))}
-        </div>
-
-        <h2 className="text-[3.75rem] md:text-[5rem] mb-[3rem] uppercase text-white">Gaming Events</h2>
-        <div className="space-y-[2rem] mb-[5rem]">
-          {[
-            "Dell Gaming – Event marketing & influencer management across 9 cities",
-            "ASUS & HP Gaming – Multi-city event marketing and management"
-          ].map((exp, i) => (
-            <div key={i} className="flex items-center gap-[1.5rem] group cursor-default">
-              <div className="w-[1rem] h-[1rem] bg-lime brutal-border group-hover:bg-pink transition-colors" />
-              <div className="text-[1.5rem] md:text-[1.875rem] font-body group-hover:translate-x-[0.5rem] transition-transform text-white">{exp}</div>
-            </div>
-          ))}
-        </div>
-
-        <h2 className="text-[3.75rem] md:text-[5rem] mb-[3rem] uppercase text-white">Influencer Marketing</h2>
-        <div className="space-y-[2rem] mb-[5rem]">
-          {[
-            "SHEIN – Influencer engagement at IIT Bombay (Mood Indigo)"
-          ].map((exp, i) => (
-            <div key={i} className="flex items-center gap-[1.5rem] group cursor-default">
-              <div className="w-[1rem] h-[1rem] bg-lime brutal-border group-hover:bg-pink transition-colors" />
-              <div className="text-[1.5rem] md:text-[1.875rem] font-body group-hover:translate-x-[0.5rem] transition-transform text-white">{exp}</div>
-            </div>
-          ))}
-        </div>
-
-        <h2 className="text-[3.75rem] md:text-[5rem] mb-[3rem] uppercase text-white">Campus Activation</h2>
-        <div className="space-y-[2rem]">
-          {[
-            "Gujarat Titans (IPL) – College-level marketing initiative"
-          ].map((exp, i) => (
-            <div key={i} className="flex items-center gap-[1.5rem] group cursor-default">
-              <div className="w-[1rem] h-[1rem] bg-lime brutal-border group-hover:bg-pink transition-colors" />
-              <div className="text-[1.5rem] md:text-[1.875rem] font-body group-hover:translate-x-[0.5rem] transition-transform text-white">{exp}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* CTA Section */}
+      <section className="py-[8rem] px-[1.5em] md:px-[5em] bg-cream text-black text-center flex flex-col items-center border-b-[0.3125rem] border-black">
+        <h2 className="text-[3.5rem] md:text-[7rem] font-display leading-[0.9] tracking-tighter mb-[2rem]">
+          WANT YOUR BRAND <br /> IN THIS LIST?
+        </h2>
+        <p className="text-[1.25rem] md:text-[1.5rem] font-body mb-[4rem] max-w-[30rem]">
+          Stop running generic ads. Start building a movement with the largest student network in India.
+        </p>
+        <a 
+          href="https://wa.me/9316106151" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-block bg-black text-lime px-[3rem] py-[1.5rem] brutal-border-black brutal-shadow font-zine text-[1.5rem] hover:-translate-y-[0.25rem] hover:bg-lime hover:text-black transition-all uppercase"
+        >
+          LET'S TALK →
+        </a>
+      </section>
     </div>
   );
 };

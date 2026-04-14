@@ -2,10 +2,16 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { BLOG_POSTS } from '../constants';
+import { useSEO } from '../hooks/useSEO';
 
 export const Post = () => {
   const { slug } = useParams();
   const post = BLOG_POSTS.find(p => p.slug === slug);
+
+  useSEO(
+    post ? `${post.title} | Genzverse Zine` : "Post Not Found | Genzverse",
+    post ? post.excerpt : "This post could not be found."
+  );
 
   if (!post) {
     return (

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Instagram, MessageCircle, Linkedin } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 export const Contact = () => {
+  useSEO("Contact | Genzverse — Let's Talk", "Ready to build a movement? Get in touch with Genzverse for campus marketing and student networks.");
+
   return (
     <div className="bg-pink min-h-screen py-[6rem] px-[1.5em] md:px-[5em] flex flex-col md:flex-row gap-[5rem]">
       <div className="w-full md:w-1/2">
@@ -15,9 +18,9 @@ export const Contact = () => {
             <div className="text-[0.875rem] font-zine mb-[0.5rem] opacity-60">WHATSAPP US</div>
             <div className="text-[2.5rem] font-display">93161-06151</div>
           </a>
-          <a href="mailto:info@genzverse.space" className="block brutal-card p-[2em] bg-cream text-black hover:bg-lime transition-colors">
+          <a href="mailto:genzverse@gmail.com" className="block brutal-card p-[2em] bg-cream text-black hover:bg-lime transition-colors">
             <div className="text-[0.875rem] font-zine mb-[0.5rem] opacity-60">EMAIL US</div>
-            <div className="text-[2.5rem] font-display">info@genzverse.space</div>
+            <div className="text-[2.5rem] font-display break-all">genzverse@gmail.com</div>
           </a>
         </div>
       </div>

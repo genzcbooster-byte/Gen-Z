@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Zap, ArrowRight, Trophy, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { LEADERBOARD_DATA } from '../data/leaderboard';
+import { useSEO } from '../hooks/useSEO';
 
 const Leaderboard = () => {
   return (
@@ -23,7 +25,7 @@ const Leaderboard = () => {
       </div>
 
       <div className="space-y-[1rem]">
-        {LEADERBOARD_DATA.map((entry, i) => (
+        {LEADERBOARD_DATA.slice(0, 10).map((entry, i) => (
           <motion.div
             key={entry.id}
             initial={{ x: -20, opacity: 0 }}
@@ -40,7 +42,7 @@ const Leaderboard = () => {
               <span className="font-display text-[2rem] md:text-[3rem] w-[3rem]">{entry.rank}.</span>
               <div className="flex flex-col">
                 <span className="font-display text-[1.5rem] md:text-[2.5rem] leading-none">{entry.name}</span>
-                <span className="text-[0.75rem] font-bold opacity-60 uppercase tracking-widest">Verified Ambassador</span>
+                <span className="text-[0.75rem] font-bold opacity-60 uppercase tracking-widest">{entry.location || "India"}</span>
               </div>
             </div>
             <div className="flex flex-col items-end">
@@ -51,8 +53,14 @@ const Leaderboard = () => {
         ))}
       </div>
       
-      <div className="mt-[3rem] text-center">
-        <p className="font-body text-[1rem] text-black/60 italic">
+      <div className="mt-[3rem] text-center flex flex-col items-center gap-4">
+        <Link 
+          to="/payouts"
+          className="inline-flex items-center justify-center py-4 px-8 bg-black text-lime brutal-border-lime font-zine text-[1.25rem] hover:bg-lime hover:text-black transition-all gap-3 uppercase"
+        >
+          VIEW ALL PAYOUTS <ArrowRight size="1.5rem" />
+        </Link>
+        <p className="font-body text-[1rem] text-black/60 italic mt-4">
           Want to see your name here? Join the force and start building.
         </p>
       </div>
@@ -60,27 +68,29 @@ const Leaderboard = () => {
   );
 };
 
+const OPTIONS = [
+  { 
+    title: "GET A SPONSORSHIP", 
+    desc: "Fuel your campus events with the right brand backing. We bridge the gap between your vision and brand budgets.", 
+    color: "bg-pink", 
+    link: "https://wa.me/9316106151?text=I'm%20looking%20for%20a%20sponsorship%20for%20my%20campus%20event." 
+  },
+  { 
+    title: "WANNA WORK AT GENZVERSE", 
+    desc: "Join the force. Build movements. Scale potential. We're always looking for the brightest minds to lead our campus networks.", 
+    color: "bg-lime", 
+    link: "https://wa.me/9316106151?text=I'm%20interested%20in%20working%20at%20Genzverse." 
+  },
+  { 
+    title: "WANNA EXPERIENCE EVENTS WITH GENZVERSE", 
+    desc: "Get exclusive access to the most high-octane events in the country. From gaming arenas to tech takeovers.", 
+    color: "bg-blue-400", 
+    link: "https://wa.me/9316106151?text=I%20want%20to%20experience%20Genzverse%20events." 
+  }
+];
+
 export const Students = () => {
-  const options = [
-    { 
-      title: "GET A SPONSORSHIP", 
-      desc: "Fuel your campus events with the right brand backing. We bridge the gap between your vision and brand budgets.", 
-      color: "bg-pink", 
-      link: "https://wa.me/9316106151?text=I'm%20looking%20for%20a%20sponsorship%20for%20my%20campus%20event." 
-    },
-    { 
-      title: "WANNA WORK AT GENZVERSE", 
-      desc: "Join the force. Build movements. Scale potential. We're always looking for the brightest minds to lead our campus networks.", 
-      color: "bg-lime", 
-      link: "https://wa.me/9316106151?text=I'm%20interested%20in%20working%20at%20Genzverse." 
-    },
-    { 
-      title: "WANNA EXPERIENCE EVENTS WITH GENZVERSE", 
-      desc: "Get exclusive access to the most high-octane events in the country. From gaming arenas to tech takeovers.", 
-      color: "bg-blue-400", 
-      link: "https://wa.me/9316106151?text=I%20want%20to%20experience%20Genzverse%20events." 
-    }
-  ];
+  useSEO("Students | Genzverse", "Your gateway to the ecosystem. Get sponsorships, work at Genzverse, and experience high-octane events.");
 
   return (
     <div className="bg-black min-h-screen py-[6rem] px-[1.5em] md:px-[5em] flex flex-col">
@@ -96,7 +106,7 @@ export const Students = () => {
       <Leaderboard />
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-[2rem] flex-grow">
-        {options.map((opt, i) => (
+        {OPTIONS.map((opt, i) => (
           <motion.div
             key={i}
             initial={{ y: 50, opacity: 0 }}

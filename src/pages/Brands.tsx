@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
-import { BRANDS } from '../constants';
+import { BRANDS } from '../data/brands';
+import { useSEO } from '../hooks/useSEO';
 
 const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: number, onClick: () => void }) => {
+  const isInverted = brand.name === "BOMBAY SHAVING CO";
+  
   return (
     <div
       onClick={onClick}
@@ -18,7 +21,11 @@ const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: nu
         <img 
           src={brand.logo} 
           alt={brand.name} 
-          className="w-10 h-10 md:w-12 md:h-12 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+          className={`w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-300 ${
+            isInverted 
+              ? "filter invert group-hover:invert-0" 
+              : "filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0"
+          }`}
           referrerPolicy="no-referrer"
           loading="lazy"
         />
@@ -31,11 +38,13 @@ const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: nu
 };
 
 export const Brands = () => {
+  useSEO("Brands | Genzverse", "The force behind the movements. Swipe to explore the brands we've worked with.");
+
   const navigate = useNavigate();
   // Create a 7x7 grid for a "large enough" feel
   const gridSize = 7;
   const totalHexagons = gridSize * gridSize;
-  const gridItems = Array.from({ length: totalHexagons }).map((_, i) => BRANDS[i % BRANDS.length]);
+  const gridItems = useMemo(() => Array.from({ length: totalHexagons }).map((_, i) => BRANDS[i % BRANDS.length]), [totalHexagons]);
 
   const handleBrandClick = (brandName: string) => {
     navigate(`/zine?search=${encodeURIComponent(brandName)}`);

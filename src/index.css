@@ -167,7 +167,7 @@
   pointer-events: none;
   z-index: 10000;
   transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s;
+  transition: width 0.2s, height 0.2s, background 0.2s, transform 0.15s ease-out;
 }
 
 .custom-cursor.hovering {
