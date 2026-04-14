@@ -6,8 +6,15 @@ const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Check if device is a touch device
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      setIsTouchDevice(true);
+      return;
+    }
+
     const moveCursor = (e: PointerEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
@@ -38,11 +45,13 @@ const CustomCursor = () => {
     };
   }, []);
 
+  if (isTouchDevice) return null;
+
   // Use @supports or simple visibility logic
   // On touch devices, the cursor should follow the finger
   return (
     <div
-      className={`custom-cursor pointer-events-none fixed z-[10000] rounded-full ${
+      className={`custom-cursor pointer-events-none fixed z-[10000] rounded-full hidden md:block ${
         isHovering ? 'hovering' : ''
       } ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       style={{ 
