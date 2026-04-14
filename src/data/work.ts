@@ -36,8 +36,8 @@ export const CAMPAIGNS: Campaign[] = [
     category: "Food & Beverage",
     outcome: "Taking over campus cravings with targeted activations.",
     stats: "1,500+ Verified Actions",
-    gradient: "from-orange-500 to-yellow-400",
-    textColor: "text-black"
+    gradient: "from-purple-600 to-purple-900",
+    textColor: "text-white"
   },
   {
     id: "sunrise",

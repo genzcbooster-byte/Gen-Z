@@ -6,6 +6,8 @@ import { useSEO } from '../hooks/useSEO';
 
 const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: number, onClick: () => void }) => {
   const isInverted = brand.name === "BOMBAY SHAVING CO";
+  const colors = ["#00F0FF", "#B026FF", "#FFD700"];
+  const borderColor = colors[index % colors.length];
   
   return (
     <div
@@ -13,10 +15,13 @@ const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: nu
       className="relative w-[100px] h-[115px] md:w-[130px] md:h-[150px] flex items-center justify-center group cursor-grab active:cursor-grabbing transition-transform duration-300 hover:scale-110"
       style={{
         clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-        backgroundColor: index % 2 === 0 ? "#E8006F" : "#8FCC00",
+        backgroundColor: borderColor,
       }}
     >
-      <div className="absolute inset-[2px] bg-black" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }} />
+      <div 
+        className="absolute inset-[2px] bg-black transition-colors duration-300 group-hover:bg-zinc-900" 
+        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }} 
+      />
       <div className="relative z-10 p-4 flex flex-col items-center justify-center text-center pointer-events-none">
         <img 
           src={brand.logo} 
@@ -60,11 +65,11 @@ export const Brands = () => {
         >
           BRANDS.
         </motion.h1>
-        <p className="text-lime font-body tracking-widest uppercase">// THE FORCE BEHIND THE MOVEMENTS.</p>
+        <p className="text-cyan-400 font-body tracking-widest uppercase">// THE FORCE BEHIND THE MOVEMENTS.</p>
       </div>
 
       {/* Apple Watch Style Draggable Box */}
-      <div className="brutal-card bg-zinc-900 h-[400px] md:h-[600px] relative overflow-hidden border-[0.3125rem] border-pink cursor-move">
+      <div className="brutal-card bg-zinc-950 h-[400px] md:h-[600px] relative overflow-hidden border-[0.3125rem] border-cyan-400 cursor-move">
         <div className="absolute inset-0 bg-pattern-grid opacity-5 pointer-events-none z-0" />
         
         <motion.div 
@@ -96,12 +101,12 @@ export const Brands = () => {
         <div className="absolute inset-0 pointer-events-none z-10 shadow-[inset_0_0_100px_rgba(0,0,0,0.8)]" />
         
         {/* Instructions */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-lime px-4 py-1 brutal-border text-[0.75rem] font-bold z-20 animate-pulse">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/80 text-cyan-400 px-4 py-1 brutal-border border-cyan-400 text-[0.75rem] font-bold z-20 animate-pulse">
           SWIPE TO EXPLORE • CLICK TO SEE STORIES
         </div>
       </div>
 
-      <div className="mt-[5rem] brutal-card p-[3em] bg-pink text-white text-center relative overflow-hidden">
+      <div className="mt-[5rem] brutal-card p-[3em] bg-purple-600 text-white text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-diagonal opacity-20" />
         <h2 className="text-[3rem] md:text-[5rem] relative z-10">WANT TO BE THE NEXT HEX?</h2>
         <p className="font-body text-[1.25rem] mb-[2rem] relative z-10">Let's build your brand's biggest movement yet.</p>
@@ -109,7 +114,7 @@ export const Brands = () => {
           href="https://wa.me/9316106151" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="relative z-10 inline-block bg-black text-cream px-[3rem] py-[1.25rem] brutal-border-cream brutal-shadow-lime font-zine text-[1.5rem] hover:-translate-y-[0.25rem] transition-transform"
+          className="relative z-10 inline-block bg-black text-cyan-400 px-[3rem] py-[1.25rem] brutal-border-cyan-400 brutal-shadow-lime font-zine text-[1.5rem] hover:-translate-y-[0.25rem] transition-transform"
         >
           GET IN TOUCH →
         </a>

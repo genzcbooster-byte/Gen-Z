@@ -41,13 +41,12 @@ const Leaderboard = () => {
             <div className="flex items-center gap-[1.5rem] md:gap-[3rem]">
               <span className="font-display text-[2rem] md:text-[3rem] w-[3rem]">{entry.rank}.</span>
               <div className="flex flex-col">
-                <span className="font-display text-[1.5rem] md:text-[2.5rem] leading-none">{entry.name}</span>
+                <span className="font-display text-[2rem] md:text-[3.5rem] leading-none">{entry.name}</span>
                 <span className="text-[0.75rem] font-bold opacity-60 uppercase tracking-widest">{entry.location || "India"}</span>
               </div>
             </div>
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col items-end justify-center">
               <span className="font-display text-[2rem] md:text-[3.5rem] leading-none">{entry.earned}</span>
-              <span className="text-[0.75rem] font-bold opacity-60 uppercase tracking-widest">Total Payout</span>
             </div>
           </motion.div>
         ))}
