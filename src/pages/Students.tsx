@@ -7,59 +7,73 @@ import { useSEO } from '../hooks/useSEO';
 
 const Leaderboard = () => {
   return (
-    <div className="brutal-card bg-white p-[2em] md:p-[3em] mb-[5rem] relative overflow-hidden">
+    <div className="bg-black/40 backdrop-blur-3xl border border-white/20 rounded-[2rem] p-[2em] md:p-[3em] mb-[5rem] relative overflow-hidden shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
       <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
-        <Trophy size="8rem" className="text-pink" />
+        <Trophy size="8rem" className="text-white" />
       </div>
       
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-[3rem] gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-[3rem] gap-4 relative z-10">
         <div>
-          <h2 className="text-[3rem] md:text-[4.5rem] leading-tight text-black">HALL OF FAME.</h2>
-          <p className="text-pink font-zine text-[1rem] md:text-[1.25rem] tracking-widest uppercase">
+          <h2 className="text-[3rem] md:text-[4.5rem] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 font-display">HALL OF FAME.</h2>
+          <p className="text-white/60 font-zine text-[1rem] md:text-[1.25rem] tracking-widest uppercase">
             // THE TOP EARNERS IN THE ECOSYSTEM.
           </p>
         </div>
-        <div className="bg-lime text-black px-4 py-2 brutal-border font-bold flex items-center gap-2">
+        <div className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-4 py-2 rounded-full font-bold flex items-center gap-2 shadow-lg">
           <TrendingUp size="1.25rem" /> LIVE UPDATES
         </div>
       </div>
 
-      <div className="space-y-[1rem]">
-        {LEADERBOARD_DATA.slice(0, 10).map((entry, i) => (
-          <motion.div
-            key={entry.id}
-            initial={{ x: -20, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ delay: i * 0.05 }}
-            className={`flex items-center justify-between p-[1.5em] brutal-border ${
-              i === 0 ? 'bg-pink text-white' : 
-              i === 1 ? 'bg-lime text-black' : 
-              i === 2 ? 'bg-blue-400 text-black' : 
-              'bg-cream text-black'
-            } group hover:translate-x-2 transition-transform`}
-          >
-            <div className="flex items-center gap-[1.5rem] md:gap-[3rem]">
-              <span className="font-display text-[2rem] md:text-[3rem] w-[3rem]">{entry.rank}.</span>
-              <div className="flex flex-col">
-                <span className="font-display text-[2rem] md:text-[3.5rem] leading-none">{entry.name}</span>
-                <span className="text-[0.75rem] font-bold opacity-60 uppercase tracking-widest">{entry.location || "India"}</span>
+      <div className="space-y-[1rem] relative z-10">
+        {LEADERBOARD_DATA.slice(0, 10).map((entry, i) => {
+          // iOS 26 Glassmorphism row styling
+          const baseGlass = "bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-[1.5em] flex items-center justify-between transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:-translate-y-1";
+          
+          let amountGradientStyles = "text-white/80";
+          
+          if (i === 0) {
+            amountGradientStyles = "text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFA500] to-[#FF4500] font-extrabold drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]";
+          } else if (i === 1) {
+            amountGradientStyles = "text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#0080FF] to-[#8A2BE2] font-extrabold drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]";
+          } else if (i === 2) {
+            amountGradientStyles = "text-transparent bg-clip-text bg-gradient-to-r from-[#FF1493] to-[#FF69B4] font-extrabold drop-shadow-[0_0_10px_rgba(255,20,147,0.4)]";
+          }
+
+          return (
+            <motion.div
+              key={entry.id}
+              initial={{ x: -20, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ delay: i * 0.05 }}
+              className={baseGlass}
+            >
+              <div className="flex items-center gap-[1.5rem] md:gap-[3rem]">
+                <span className={`font-display text-[2rem] md:text-[3rem] w-[3rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
+                  {entry.rank}.
+                </span>
+                <div className="flex flex-col">
+                  <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none text-white`}>{entry.name}</span>
+                  <span className="text-[0.75rem] font-bold text-white/50 uppercase tracking-widest">{entry.location || "India"}</span>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col items-end justify-center">
-              <span className="font-display text-[2rem] md:text-[3.5rem] leading-none">{entry.earned}</span>
-            </div>
-          </motion.div>
-        ))}
+              <div className="flex flex-col items-end justify-center">
+                <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none ${amountGradientStyles}`}>
+                  {entry.earned}
+                </span>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
       
-      <div className="mt-[3rem] text-center flex flex-col items-center gap-4">
+      <div className="mt-[3rem] text-center flex flex-col items-center gap-4 relative z-10">
         <Link 
           to="/payouts"
-          className="inline-flex items-center justify-center py-4 px-8 bg-black text-lime brutal-border-lime font-zine text-[1.25rem] hover:bg-lime hover:text-black transition-all gap-3 uppercase"
+          className="inline-flex items-center justify-center py-4 px-8 bg-white/10 backdrop-blur-md rounded-full text-white border border-white/20 font-zine text-[1.25rem] hover:bg-white/20 transition-all gap-3 uppercase shadow-[0_0_15px_rgba(255,255,255,0.1)]"
         >
           VIEW ALL PAYOUTS <ArrowRight size="1.5rem" />
         </Link>
-        <p className="font-body text-[1rem] text-black/60 italic mt-4">
+        <p className="font-body text-[1rem] text-white/60 italic mt-4">
           Want to see your name here? Join the force and start building.
         </p>
       </div>

@@ -6,6 +6,7 @@ export interface Campaign {
   stats: string;
   gradient: string;
   textColor: string;
+  logo?: string;
 }
 
 /**
@@ -19,7 +20,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Driving massive student adoption across key universities.",
     stats: "5,000+ Verified Actions",
     gradient: "from-pink to-purple-600",
-    textColor: "text-white"
+    textColor: "text-white",
+    logo: "https://pplx-res.cloudinary.com/image/upload/pplx_search_images/24de9d1e747328571c1f2c2964ab64d0097020b6.jpg"
   },
   {
     id: "gemini",
@@ -28,7 +30,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Building the next generation of AI enthusiasts.",
     stats: "1,510 New Members",
     gradient: "from-blue-400 to-lime",
-    textColor: "text-black"
+    textColor: "text-black",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"
   },
   {
     id: "eatsure",
@@ -37,7 +40,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Taking over campus cravings with targeted activations.",
     stats: "1,500+ Verified Actions",
     gradient: "from-purple-600 to-purple-900",
-    textColor: "text-white"
+    textColor: "text-white",
+    logo: "https://cdn.gyftr.com/sbiapp/images/brands/logos/9930_Logo.png"
   },
   {
     id: "sunrise",
@@ -46,7 +50,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Creating high-energy moments for the youth demographic.",
     stats: "1,624 Verified Actions",
     gradient: "from-yellow-400 to-orange-500",
-    textColor: "text-black"
+    textColor: "text-black",
+    logo: "https://pplx-res.cloudinary.com/image/upload/pplx_search_images/622947689d877bf4e787017151b3c1e1f2b137de.jpg"
   },
   {
     id: "district-app",
@@ -55,7 +60,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Dominating the social feed with student-led content.",
     stats: "4,000+ Instagram Stories",
     gradient: "from-purple-500 to-pink",
-    textColor: "text-white"
+    textColor: "text-white",
+    logo: "https://pplx-res.cloudinary.com/image/upload/pplx_search_images/4bd9a634d15ff28e171da9bc17b6ffbb340c5398.jpg"
   },
   {
     id: "ispl",
@@ -64,7 +70,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Bringing the stadium energy directly to the campus.",
     stats: "300+ Conversions",
     gradient: "from-orange-500 to-red-600",
-    textColor: "text-white"
+    textColor: "text-white",
+    logo: "https://pplx-res.cloudinary.com/image/upload/pplx_search_images/f7e378f07d5c8b27e260f66686f0e35df1b5bc15.jpg"
   },
   {
     id: "dell-gaming",
@@ -73,7 +80,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Event marketing & influencer management across 9 cities.",
     stats: "750+ Participants",
     gradient: "from-blue-600 to-cyan-400",
-    textColor: "text-white"
+    textColor: "text-white",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg"
   },
   {
     id: "asus",
@@ -82,7 +90,8 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Multi-city event marketing and management.",
     stats: "300+ Participants",
     gradient: "from-zinc-900 to-zinc-700",
-    textColor: "text-white"
+    textColor: "text-white",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg"
   },
   {
     id: "hp-gaming",
@@ -91,6 +100,7 @@ export const CAMPAIGNS: Campaign[] = [
     outcome: "Connecting with the hardcore collegiate gaming community.",
     stats: "1,200+ Participants",
     gradient: "from-blue-500 to-indigo-600",
-    textColor: "text-white"
+    textColor: "text-white",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg"
   }
 ];

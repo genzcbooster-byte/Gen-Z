@@ -5,7 +5,7 @@ import { BRANDS } from '../data/brands';
 import { useSEO } from '../hooks/useSEO';
 
 const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: number, onClick: () => void }) => {
-  const isInverted = brand.name === "BOMBAY SHAVING CO";
+  const isBombay = brand.name === "BOMBAY SHAVING CO";
   const colors = ["#00F0FF", "#B026FF", "#FFD700"];
   const borderColor = colors[index % colors.length];
   
@@ -27,8 +27,8 @@ const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: nu
           src={brand.logo} 
           alt={brand.name} 
           className={`w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-300 ${
-            isInverted 
-              ? "filter invert group-hover:invert-0" 
+            isBombay 
+              ? "" 
               : "filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0"
           }`}
           referrerPolicy="no-referrer"

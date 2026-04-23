@@ -59,9 +59,21 @@ export const Work = () => {
             </div>
 
             <div className="relative z-10 mt-[4rem] md:mt-[6rem]">
-              <h2 className="text-[4rem] md:text-[6rem] lg:text-[7rem] font-display leading-[0.8] tracking-tighter group-hover:scale-[1.02] transition-transform duration-500 origin-left">
-                {campaign.brand}
-              </h2>
+              <div className="flex flex-col md:flex-row md:items-center gap-[1.5rem] md:gap-[2.5rem]">
+                {campaign.logo && (
+                  <div className="bg-white border-[0.25rem] border-black p-3 md:p-5 flex items-center justify-center brutal-shadow shadow-black -rotate-3 group-hover:rotate-0 transition-transform shrink-0 w-fit max-w-[10rem] md:max-w-[16rem]">
+                    <img 
+                      src={campaign.logo} 
+                      alt={campaign.brand} 
+                      className="w-auto h-auto max-h-[3rem] md:max-h-[4.5rem] object-contain mix-blend-multiply" 
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                )}
+                <h2 className="text-[4rem] md:text-[6rem] lg:text-[7rem] font-display leading-[0.8] tracking-tighter group-hover:scale-[1.02] transition-transform duration-500 origin-left">
+                  {campaign.brand}
+                </h2>
+              </div>
               <p className="text-[1.25rem] md:text-[1.75rem] lg:text-[2rem] font-body font-medium mt-[1.5rem] max-w-[40rem] lg:max-w-[50rem] leading-tight opacity-90">
                 {campaign.outcome}
               </p>

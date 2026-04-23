@@ -19,38 +19,52 @@ export const Payouts = () => {
         <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">// THE FULL LIST OF GENZVERSE EARNERS.</p>
       </motion.div>
 
-      <div className="brutal-card bg-white p-[2em] md:p-[3em] relative overflow-hidden">
+      <div className="bg-black/40 backdrop-blur-3xl border border-white/20 p-[2em] md:p-[3em] relative overflow-hidden rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
         <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
-          <Trophy size="8rem" className="text-pink" />
+          <Trophy size="8rem" className="text-white" />
         </div>
         
-        <div className="space-y-[1rem]">
-          {LEADERBOARD_DATA.map((entry, i) => (
-            <motion.div
-              key={entry.id}
-              initial={{ x: -20, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ delay: (i % 10) * 0.05 }}
-              viewport={{ once: true }}
-              className={`flex items-center justify-between p-[1.5em] brutal-border ${
-                i === 0 ? 'bg-pink text-white' : 
-                i === 1 ? 'bg-lime text-black' : 
-                i === 2 ? 'bg-blue-400 text-black' : 
-                'bg-cream text-black'
-              } group hover:translate-x-2 transition-transform`}
-            >
-              <div className="flex items-center gap-[1.5rem] md:gap-[3rem]">
-                <span className="font-display text-[2rem] md:text-[3rem] w-[3rem]">{entry.rank}.</span>
-                <div className="flex flex-col">
-                  <span className="font-display text-[2rem] md:text-[3.5rem] leading-none">{entry.name}</span>
-                  <span className="text-[0.75rem] font-bold opacity-60 uppercase tracking-widest">{entry.location || "India"}</span>
+        <div className="space-y-[1rem] relative z-10">
+          {LEADERBOARD_DATA.map((entry, i) => {
+            // iOS 26 Glassmorphism row styling
+            const baseGlass = "bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-[1.5em] flex items-center justify-between transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:-translate-y-1";
+            
+            let amountGradientStyles = "text-white/80";
+            
+            if (i === 0) {
+              amountGradientStyles = "text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFA500] to-[#FF4500] font-extrabold drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]";
+            } else if (i === 1) {
+              amountGradientStyles = "text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#0080FF] to-[#8A2BE2] font-extrabold drop-shadow-[0_0_10px_rgba(0,240,255,0.4)]";
+            } else if (i === 2) {
+              amountGradientStyles = "text-transparent bg-clip-text bg-gradient-to-r from-[#FF1493] to-[#FF69B4] font-extrabold drop-shadow-[0_0_10px_rgba(255,20,147,0.4)]";
+            }
+  
+            return (
+              <motion.div
+                key={entry.id}
+                initial={{ x: -20, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ delay: (i % 10) * 0.05 }}
+                viewport={{ once: true }}
+                className={baseGlass}
+              >
+                <div className="flex items-center gap-[1.5rem] md:gap-[3rem]">
+                  <span className={`font-display text-[2rem] md:text-[3rem] w-[3rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
+                    {entry.rank}.
+                  </span>
+                  <div className="flex flex-col">
+                    <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none text-white`}>{entry.name}</span>
+                    <span className="text-[0.75rem] font-bold text-white/50 uppercase tracking-widest">{entry.location || "India"}</span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col items-end justify-center">
-                <span className="font-display text-[2rem] md:text-[3.5rem] leading-none">{entry.earned}</span>
-              </div>
-            </motion.div>
-          ))}
+                <div className="flex flex-col items-end justify-center">
+                  <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none ${amountGradientStyles}`}>
+                    {entry.earned}
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>

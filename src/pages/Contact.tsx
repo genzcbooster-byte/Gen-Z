@@ -18,9 +18,9 @@ export const Contact = () => {
             <div className="text-[0.875rem] font-zine mb-[0.5rem] opacity-60">WHATSAPP US</div>
             <div className="text-[2.5rem] font-display">93161-06151</div>
           </a>
-          <a href="mailto:genzverse@gmail.com" className="block brutal-card p-[2em] bg-cream text-black hover:bg-lime transition-colors">
+          <a href="mailto:info@genzverse.space" className="block brutal-card p-[2em] bg-cream text-black hover:bg-lime transition-colors">
             <div className="text-[0.875rem] font-zine mb-[0.5rem] opacity-60">EMAIL US</div>
-            <div className="text-[2.5rem] font-display break-all">genzverse@gmail.com</div>
+            <div className="text-[2.5rem] font-display break-all">info@genzverse.space</div>
           </a>
         </div>
       </div>

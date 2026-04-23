@@ -38,7 +38,7 @@ export const Footer = () => {
           <h4 className="font-zine text-[1.25rem] mb-[0.5rem]">CONTACT</h4>
           <p className="font-body text-[0.875rem]">
             93161-06151 <br />
-            <a href="mailto:genzverse@gmail.com" className="hover:text-pink underline break-all">genzverse@gmail.com</a>
+            <a href="mailto:info@genzverse.space" className="hover:text-pink underline break-all">info@genzverse.space</a>
           </p>
           <div className="flex gap-[1rem] mt-[1.5rem]">
             <a href="https://www.instagram.com/genzverse.io/" target="_blank" rel="noopener noreferrer" className="w-[2.5rem] h-[2.5rem] brutal-border bg-pink text-white flex items-center justify-center font-zine rotate-3 hover:rotate-0 transition-transform cursor-pointer">
