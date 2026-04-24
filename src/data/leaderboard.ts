@@ -19,7 +19,6 @@ const RAW_LIST = [
   "Ganesh - 21100 mumbai",
   "Harsh Modi - 15000rs Mumbai",
   "Harsh & Sid - 37500rs Delhi",
-  "Aman - 37000 Kolhapur",
   "Sairaj - 12260rs pune",
   "Achal - 11000 mumbai",
   "Smit 10745 ahemdabad",
