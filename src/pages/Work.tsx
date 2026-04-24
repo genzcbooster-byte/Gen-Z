@@ -4,7 +4,11 @@ import { CAMPAIGNS } from '../data/work';
 import { useSEO } from '../hooks/useSEO';
 
 export const Work = () => {
-  useSEO("Our Work | Genzverse — Campus Marketing Campaigns", "Measurable outcomes. Real communities. Verified results. Explore our flagship campaigns with top brands.");
+  useSEO({
+    title: "Our Work | Genzverse Campaigns",
+    description: "Explore our record-breaking student marketing campaigns for brands like Dell, Samsung, and Asus. Authentic engagement across 200+ Indian colleges.",
+    keywords: "student campaign case studies, campus marketing results, gen z marketing examples"
+  });
 
   return (
     <div className="bg-black min-h-screen">

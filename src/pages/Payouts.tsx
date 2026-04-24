@@ -4,7 +4,14 @@ import { Trophy, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LEADERBOARD_DATA } from '../data/leaderboard';
 
+import { useSEO } from '../hooks/useSEO';
+
 export const Payouts = () => {
+  useSEO({
+    title: "Leaderboard | Genzverse Force Earners",
+    description: "The full list of top student earners in the Genzverse ecosystem. Transparency, impact, and rewards for the next generation.",
+    keywords: "student payouts, genzverse earnings, campus marketing rewards"
+  });
   return (
     <div className="bg-black min-h-screen py-[6rem] px-[1.5em] md:px-[5em] flex flex-col">
       <motion.div
@@ -48,8 +55,8 @@ export const Payouts = () => {
                 viewport={{ once: true }}
                 className={baseGlass}
               >
-                <div className="flex items-center gap-[1.5rem] md:gap-[3rem]">
-                  <span className={`font-display text-[2rem] md:text-[3rem] w-[3rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
+                <div className="flex items-center gap-[0.25rem] md:gap-[0.5rem]">
+                  <span className={`font-display text-[2rem] md:text-[3rem] w-fit min-w-[1.5rem] md:min-w-[2.5rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
                     {entry.rank}.
                   </span>
                   <div className="flex flex-col">

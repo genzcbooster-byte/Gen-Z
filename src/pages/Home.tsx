@@ -9,7 +9,12 @@ import { BRANDS } from '../data/brands';
 import { useSEO } from '../hooks/useSEO';
 
 export const Home = () => {
-  useSEO("Genzverse | India's #1 Student Marketing Ecosystem", "We don't sell ads. We build movements. Connect your brand with the largest student network across 200+ colleges in India.");
+  useSEO({
+    title: "Genzverse | India's Leading Student Marketing Ecosystem",
+    description: "Genzverse bridges the gap between top brands and the massive Indian student community. We don't sell ads, we build movements through 1,00,000+ campus ambassadors.",
+    keywords: "youth marketing agency, student marketing india, campus ambassador program, gen z branding, college influencer marketing",
+    image: "https://i.postimg.cc/cCN86MQF/Untitled-design-3-removebg-preview.png"
+  });
 
   return (
     <div className="overflow-x-hidden">

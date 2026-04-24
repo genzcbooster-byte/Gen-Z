@@ -6,7 +6,11 @@ import { BLOG_POSTS } from '../constants';
 import { useSEO } from '../hooks/useSEO';
 
 export const Zine = () => {
-  useSEO("The Zine | Genzverse", "Culture. Campaigns. Campus. Chaos. Read the latest drops, campaign stories, and brand breakdowns from Genzverse.");
+  useSEO({
+    title: "GenzZine | Youth Culture & Marketing Insights",
+    description: "Deep dives into Gen Z culture, marketing trends, and the latest movements in the student ecosystem.",
+    keywords: "gen z culture blog, student marketing insights, youth trends india"
+  });
 
   const [searchParams, setSearchParams] = useSearchParams();
   const initialSearch = searchParams.get('search') || '';

@@ -3,7 +3,11 @@ import { Instagram, MessageCircle, Linkedin } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
 
 export const Contact = () => {
-  useSEO("Contact | Genzverse — Let's Talk", "Ready to build a movement? Get in touch with Genzverse for campus marketing and student networks.");
+  useSEO({
+    title: "Contact Us | Connect with Genzverse",
+    description: "Ready to build a movement? Get in touch with Genzverse for high-octane campus marketing and student-driven campaigns.",
+    keywords: "contact genzverse, campus marketing inquiry, student brand collaborations"
+  });
 
   return (
     <div className="bg-pink min-h-screen py-[6rem] px-[1.5em] md:px-[5em] flex flex-col md:flex-row gap-[5rem]">

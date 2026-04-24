@@ -22,19 +22,8 @@ const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: nu
         className="absolute inset-[2px] bg-black transition-colors duration-300 group-hover:bg-zinc-900" 
         style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }} 
       />
-      <div className="relative z-10 p-4 flex flex-col items-center justify-center text-center pointer-events-none">
-        <img 
-          src={brand.logo} 
-          alt={brand.name} 
-          className={`w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-300 ${
-            isBombay 
-              ? "" 
-              : "filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0"
-          }`}
-          referrerPolicy="no-referrer"
-          loading="lazy"
-        />
-        <span className="mt-1 text-[0.5rem] md:text-[0.6rem] font-display text-white opacity-0 group-hover:opacity-100 transition-opacity uppercase truncate max-w-full px-2">
+      <div className="relative z-10 p-2 flex flex-col items-center justify-center text-center pointer-events-none w-full">
+        <span className="text-[1rem] md:text-[1.2rem] lg:text-[1.3rem] font-display text-white transition-all duration-300 uppercase leading-none break-words px-2 group-hover:scale-110">
           {brand.name}
         </span>
       </div>
@@ -43,7 +32,11 @@ const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: nu
 };
 
 export const Brands = () => {
-  useSEO("Brands | Genzverse", "The force behind the movements. Swipe to explore the brands we've worked with.");
+  useSEO({
+    title: "Brand Partners | Genzverse Force",
+    description: "The force behind the movements. See the global brands that trust Genzverse to scale their student engagement in India.",
+    keywords: "brand partners genzverse, student marketing clients, college engagement brands"
+  });
 
   const navigate = useNavigate();
   // Create a 7x7 grid for a "large enough" feel

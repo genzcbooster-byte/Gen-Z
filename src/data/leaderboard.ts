@@ -12,18 +12,19 @@ export interface LeaderboardEntry {
  * The list is automatically sorted by rank based on the order here.
  */
 const RAW_LIST = [
-  "Surya - 1,67,720rs delhi",
-  "Navya - 97000 delhi",
+  "Surya - 169107.5rs delhi",
+  "Navya - 97333 delhi",
   "Kaustav - 30,000rs",
   "Sahil - 17500 approx pune",
-  "Ganesh - 16700 mumbai",
+  "Ganesh - 21100 mumbai",
   "Harsh Modi - 15000rs Mumbai",
-  "Harsh & Sid - 14400rs Delhi",
+  "Harsh & Sid - 37500rs Delhi",
+  "Aman - 37000 Kolhapur",
   "Sairaj - 12260rs pune",
   "Achal - 11000 mumbai",
   "Smit 10745 ahemdabad",
   "Rishi Chopda - 7700rs ahemdabad",
-  "Rajas- 7050 mumbai",
+  "Rajas- 8450 mumbai",
   "Devansh - 6700 Pune",
   "Shivam - 6700 Gwalior",
   "Kishan - 6121rs Vadodara",
@@ -33,20 +34,21 @@ const RAW_LIST = [
   "Rejolin - 4938rs chennai",
   "Bhaskar - 4000 Hyderabad",
   "Prateek - 4000rs Lucknow",
-  "Aman - 3700 kohlapur",
   "Abu talha - 2860 delhi",
   "Gautham - 2800rs Vizag",
   "Rahul - 1900 pune",
   "Mritikka 1600 assam",
   "Praveen - 1150rs coimbatore",
   "Karnav - 1000rs ludhiana",
-  "Prabhas - 5000 telangana"
+  "Prabhas - 5000 telangana",
+  "Jishan - 12500 bangalore",
+  "Sarthak - 2000"
 ];
 
 const parseEntry = (entry: string) => {
   // Try to match the pattern: Name - Amount [Currency] Location
   // Also handles cases without hyphens like "Smit 10745 ahemdabad"
-  const match = entry.match(/([a-zA-Z\s&]+?)\s*(?:-\s*)?([\d,]+(?:K|rs)?)\s*(?:approx\s*)?([a-zA-Z\s]*)/i);
+  const match = entry.match(/([a-zA-Z\s&]+?)\s*(?:-\s*)?([\d,.]+(?:\s?K|rs)?)\s*(?:approx\s*)?([a-zA-Z\s]*)/i);
   
   if (match) {
     const name = match[1].trim();
@@ -58,11 +60,14 @@ const parseEntry = (entry: string) => {
     if (amountStr.endsWith('k')) {
       numericValue = parseFloat(amountStr.replace('k', '')) * 1000;
     } else {
-      numericValue = parseInt(amountStr.replace(/[^0-9]/g, ''), 10);
+      numericValue = parseFloat(amountStr.replace(/[^0-9.]/g, ''));
     }
 
     // Format amount nicely (e.g., 1,67,720)
-    const formattedAmount = numericValue.toLocaleString('en-IN');
+    const formattedAmount = numericValue.toLocaleString('en-IN', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 0
+    });
 
     // Capitalize location
     const formattedLocation = location 

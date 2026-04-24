@@ -47,8 +47,8 @@ const Leaderboard = () => {
               transition={{ delay: i * 0.05 }}
               className={baseGlass}
             >
-              <div className="flex items-center gap-[1.5rem] md:gap-[3rem]">
-                <span className={`font-display text-[2rem] md:text-[3rem] w-[3rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
+              <div className="flex items-center gap-[0.25rem] md:gap-[0.5rem]">
+                <span className={`font-display text-[2rem] md:text-[3rem] w-fit min-w-[1.5rem] md:min-w-[2.5rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
                   {entry.rank}.
                 </span>
                 <div className="flex flex-col">
@@ -103,7 +103,11 @@ const OPTIONS = [
 ];
 
 export const Students = () => {
-  useSEO("Students | Genzverse", "Your gateway to the ecosystem. Get sponsorships, work at Genzverse, and experience high-octane events.");
+  useSEO({
+    title: "Students Hub | Join the Genzverse Force",
+    description: "Your gateway to the ecosystem. Get sponsorships, work at Genzverse, and experience high-octane events while building your career.",
+    keywords: "student earning opportunities, campus ambassador job, college student sponsorships india"
+  });
 
   return (
     <div className="bg-black min-h-screen py-[6rem] px-[1.5em] md:px-[5em] flex flex-col">
