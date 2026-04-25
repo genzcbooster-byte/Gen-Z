@@ -104,43 +104,46 @@ export const Students = () => {
         <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">{studentsData.hero_subtitle || "// YOUR GATEWAY TO THE ECOSYSTEM."}</p>
       </motion.div>
 
-      <Leaderboard />
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[2rem] flex-grow">
-        {(studentsData.options || []).map((opt: any, i: number) => (
-          <motion.div
-            key={i}
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
-            className={`brutal-card p-[2.5em] flex flex-col h-full ${opt.color} group relative overflow-hidden`}
-          >
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
-              <Zap size="6rem" />
-            </div>
-            
-            <div className="flex-grow flex flex-col">
-              <h2 className="text-[2.5rem] font-display text-black leading-tight mb-6 group-hover:text-white transition-colors relative z-10">
-                {opt.title}
-              </h2>
-              <p className="text-black/80 font-body text-[1.1rem] mb-8 font-medium leading-relaxed relative z-10">
-                {opt.desc}
-              </p>
-            </div>
+      <div className="flex flex-col lg:flex-row gap-[3rem]">
+        <div className="w-full lg:w-2/3">
+          <Leaderboard />
+        </div>
+        <div className="w-full lg:w-1/3 flex flex-col gap-[2rem] flex-grow">
+          {(studentsData.options || []).map((opt: any, i: number) => (
+            <motion.div
+              key={i}
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`brutal-card p-[2.5em] flex flex-col h-full ${opt.color} group relative overflow-hidden`}
+            >
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
+                <Zap size="6rem" />
+              </div>
+              
+              <div className="flex-grow flex flex-col">
+                <h2 className="text-[2.5rem] font-display text-black leading-tight mb-6 group-hover:text-white transition-colors relative z-10">
+                  {opt.title}
+                </h2>
+                <p className="text-black/80 font-body text-[1.1rem] mb-8 font-medium leading-relaxed relative z-10">
+                  {opt.desc}
+                </p>
+              </div>
 
-            <div className="mt-auto relative z-10">
-              <a
-                href={opt.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full py-4 bg-black text-cream brutal-border-white brutal-shadow-black font-zine text-[1.25rem] group-hover:bg-white group-hover:text-black transition-all gap-3"
-              >
-                APPLY NOW <ArrowRight size="1.5rem" />
-              </a>
-            </div>
-          </motion.div>
-        ))}
+              <div className="mt-auto relative z-10">
+                <a
+                  href={opt.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full py-4 bg-black text-cream brutal-border-white brutal-shadow-black font-zine text-[1.25rem] group-hover:bg-white group-hover:text-black transition-all gap-3"
+                >
+                  APPLY NOW <ArrowRight size="1.5rem" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
