@@ -3,6 +3,11 @@ import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { BRANDS } from '../data/brands';
 import { useSEO } from '../hooks/useSEO';
+import { parseMD } from '../lib/markdown';
+
+// @ts-ignore
+import rawBrands from '../content/brands.md?raw';
+const { data: brandsData } = parseMD(rawBrands);
 
 const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: number, onClick: () => void }) => {
   const isBombay = brand.name === "BOMBAY SHAVING CO";
@@ -54,11 +59,11 @@ export const Brands = () => {
         <motion.h1 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-[4rem] md:text-[8rem] leading-none text-white mb-4"
+          className="text-[4rem] md:text-[6.5rem] lg:text-[8rem] leading-none text-white mb-4"
         >
-          BRANDS.
+          {brandsData.hero_title || "BRANDS."}
         </motion.h1>
-        <p className="text-cyan-400 font-body tracking-widest uppercase">// THE FORCE BEHIND THE MOVEMENTS.</p>
+        <p className="text-cyan-400 font-body tracking-widest uppercase">{brandsData.hero_subtitle || "// THE FORCE BEHIND THE MOVEMENTS."}</p>
       </div>
 
       {/* Apple Watch Style Draggable Box */}
@@ -101,15 +106,15 @@ export const Brands = () => {
 
       <div className="mt-[5rem] brutal-card p-[3em] bg-purple-600 text-white text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-diagonal opacity-20" />
-        <h2 className="text-[3rem] md:text-[5rem] relative z-10">WANT TO BE THE NEXT HEX?</h2>
-        <p className="font-body text-[1.25rem] mb-[2rem] relative z-10">Let's build your brand's biggest movement yet.</p>
+        <h2 className="text-[3rem] md:text-[4rem] lg:text-[5rem] relative z-10">{brandsData.cta_heading || "WANT TO BE THE NEXT HEX?"}</h2>
+        <p className="font-body text-[1.25rem] mb-[2rem] relative z-10">{brandsData.cta_body || "Let's build your brand's biggest movement yet."}</p>
         <a 
-          href="https://wa.me/9316106151" 
+          href={brandsData.cta_link || "https://wa.me/9316106151"} 
           target="_blank" 
           rel="noopener noreferrer"
           className="relative z-10 inline-block bg-black text-cyan-400 px-[3rem] py-[1.25rem] brutal-border-cyan-400 brutal-shadow-lime font-zine text-[1.5rem] hover:-translate-y-[0.25rem] transition-transform"
         >
-          GET IN TOUCH →
+          {brandsData.cta_button || "GET IN TOUCH →"}
         </a>
       </div>
     </div>

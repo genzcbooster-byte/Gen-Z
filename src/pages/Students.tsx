@@ -4,6 +4,11 @@ import { Zap, ArrowRight, Trophy, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LEADERBOARD_DATA } from '../data/leaderboard';
 import { useSEO } from '../hooks/useSEO';
+import { parseMD } from '../lib/markdown';
+
+// @ts-ignore
+import rawStudents from '../content/students.md?raw';
+const { data: studentsData } = parseMD(rawStudents);
 
 const Leaderboard = () => {
   return (
@@ -14,13 +19,13 @@ const Leaderboard = () => {
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-[3rem] gap-4 relative z-10">
         <div>
-          <h2 className="text-[3rem] md:text-[4.5rem] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 font-display">HALL OF FAME.</h2>
+          <h2 className="text-[3rem] md:text-[3.5rem] lg:text-[4.5rem] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 font-display">{studentsData.leaderboard_heading || "HALL OF FAME."}</h2>
           <p className="text-white/60 font-zine text-[1rem] md:text-[1.25rem] tracking-widest uppercase">
-            // THE TOP EARNERS IN THE ECOSYSTEM.
+            {studentsData.leaderboard_subtitle || "// THE TOP EARNERS IN THE ECOSYSTEM."}
           </p>
         </div>
         <div className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-4 py-2 rounded-full font-bold flex items-center gap-2 shadow-lg">
-          <TrendingUp size="1.25rem" /> LIVE UPDATES
+          <TrendingUp size="1.25rem" /> {studentsData.leaderboard_status || "LIVE UPDATES"}
         </div>
       </div>
 
@@ -48,16 +53,16 @@ const Leaderboard = () => {
               className={baseGlass}
             >
               <div className="flex items-center gap-[0.25rem] md:gap-[0.5rem]">
-                <span className={`font-display text-[2rem] md:text-[3rem] w-fit min-w-[1.5rem] md:min-w-[2.5rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
+                <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] w-fit min-w-[1.5rem] md:min-w-[2.5rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
                   {entry.rank}.
                 </span>
                 <div className="flex flex-col">
-                  <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none text-white`}>{entry.name}</span>
+                  <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3.5rem] leading-none text-white`}>{entry.name}</span>
                   <span className="text-[0.75rem] font-bold text-white/50 uppercase tracking-widest">{entry.location || "India"}</span>
                 </div>
               </div>
               <div className="flex flex-col items-end justify-center">
-                <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none ${amountGradientStyles}`}>
+                <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3.5rem] leading-none ${amountGradientStyles}`}>
                   {entry.earned}
                 </span>
               </div>
@@ -68,39 +73,18 @@ const Leaderboard = () => {
       
       <div className="mt-[3rem] text-center flex flex-col items-center gap-4 relative z-10">
         <Link 
-          to="/payouts"
+          to={studentsData.leaderboard_cta_link || "/payouts"}
           className="inline-flex items-center justify-center py-4 px-8 bg-white/10 backdrop-blur-md rounded-full text-white border border-white/20 font-zine text-[1.25rem] hover:bg-white/20 transition-all gap-3 uppercase shadow-[0_0_15px_rgba(255,255,255,0.1)]"
         >
-          VIEW ALL PAYOUTS <ArrowRight size="1.5rem" />
+          {studentsData.leaderboard_cta || "VIEW ALL PAYOUTS"} <ArrowRight size="1.5rem" />
         </Link>
         <p className="font-body text-[1rem] text-white/60 italic mt-4">
-          Want to see your name here? Join the force and start building.
+          {studentsData.leaderboard_cta_note || "Want to see your name here? Join the force and start building."}
         </p>
       </div>
     </div>
   );
 };
-
-const OPTIONS = [
-  { 
-    title: "GET A SPONSORSHIP", 
-    desc: "Fuel your campus events with the right brand backing. We bridge the gap between your vision and brand budgets.", 
-    color: "bg-pink", 
-    link: "https://wa.me/9316106151?text=I'm%20looking%20for%20a%20sponsorship%20for%20my%20campus%20event." 
-  },
-  { 
-    title: "WANNA WORK AT GENZVERSE", 
-    desc: "Join the force. Build movements. Scale potential. We're always looking for the brightest minds to lead our campus networks.", 
-    color: "bg-lime", 
-    link: "https://wa.me/9316106151?text=I'm%20interested%20in%20working%20at%20Genzverse." 
-  },
-  { 
-    title: "WANNA EXPERIENCE EVENTS WITH GENZVERSE", 
-    desc: "Get exclusive access to the most high-octane events in the country. From gaming arenas to tech takeovers.", 
-    color: "bg-blue-400", 
-    link: "https://wa.me/9316106151?text=I%20want%20to%20experience%20Genzverse%20events." 
-  }
-];
 
 export const Students = () => {
   useSEO({
@@ -116,14 +100,14 @@ export const Students = () => {
         animate={{ x: 0, opacity: 1 }}
         className="mb-[3rem]"
       >
-        <h1 className="text-[3.5rem] md:text-[6.5rem] leading-none text-white">STUDENTS.</h1>
-        <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">// YOUR GATEWAY TO THE ECOSYSTEM.</p>
+        <h1 className="text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] leading-none text-white">{studentsData.hero_title || "STUDENTS."}</h1>
+        <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">{studentsData.hero_subtitle || "// YOUR GATEWAY TO THE ECOSYSTEM."}</p>
       </motion.div>
 
       <Leaderboard />
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-[2rem] flex-grow">
-        {OPTIONS.map((opt, i) => (
+        {(studentsData.options || []).map((opt: any, i: number) => (
           <motion.div
             key={i}
             initial={{ y: 50, opacity: 0 }}

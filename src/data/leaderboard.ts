@@ -1,3 +1,5 @@
+import { parseMD } from '../lib/markdown';
+
 export interface LeaderboardEntry {
   id: string;
   name: string;
@@ -6,48 +8,16 @@ export interface LeaderboardEntry {
   location?: string;
 }
 
-/**
- * EDIT THIS LIST TO UPDATE THE LEADERBOARD
- * Format: "Name - Amount Location"
- * The list is automatically sorted by rank based on the order here.
- */
-const RAW_LIST = [
-  "Surya - 169107.5rs delhi",
-  "Navya - 97333 delhi",
-  "Kaustav - 30,000rs",
-  "Sahil - 17500 approx pune",
-  "Ganesh - 21100 mumbai",
-  "Harsh Modi - 15000rs Mumbai",
-  "Harsh & Sid - 37500rs Delhi",
-  "Sairaj - 12260rs pune",
-  "Achal - 11000 mumbai",
-  "Smit 10745 ahemdabad",
-  "Rishi Chopda - 7700rs ahemdabad",
-  "Rajas- 8450 mumbai",
-  "Devansh - 6700 Pune",
-  "Shivam - 6700 Gwalior",
-  "Kishan - 6121rs Vadodara",
-  "Dharshini - 6100rs chennai",
-  "Shreyas - 5600 bangalore",
-  "Divyanshi - 5000 delhi",
-  "Rejolin - 4938rs chennai",
-  "Bhaskar - 4000 Hyderabad",
-  "Prateek - 4000rs Lucknow",
-  "Abu talha - 2860 delhi",
-  "Gautham - 2800rs Vizag",
-  "Rahul - 1900 pune",
-  "Mritikka 1600 assam",
-  "Praveen - 1150rs coimbatore",
-  "Karnav - 1000rs ludhiana",
-  "Prabhas - 5000 telangana",
-  "Jishan - 12500 bangalore",
-  "Sarthak - 2000"
-];
+// @ts-ignore
+import rawStudents from '../content/students.md?raw';
+const { data: studentsData } = parseMD(rawStudents);
+
+const RAW_LIST: string[] = studentsData.leaderboard_raw_list || [];
 
 const parseEntry = (entry: string) => {
   // Try to match the pattern: Name - Amount [Currency] Location
   // Also handles cases without hyphens like "Smit 10745 ahemdabad"
-  const match = entry.match(/([a-zA-Z\s&]+?)\s*(?:-\s*)?([\d,.]+(?:\s?K|rs)?)\s*(?:approx\s*)?([a-zA-Z\s]*)/i);
+  const match = entry.match(/([a-zA-Z\s&]+?)\s*(?:[-|]\s*)?([\d,.]+(?:\s?K|rs)?)\s*(?:approx\s*)?(?:[-|]\s*)?([a-zA-Z\s]*)/i);
   
   if (match) {
     const name = match[1].trim();

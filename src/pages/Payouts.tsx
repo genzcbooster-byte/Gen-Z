@@ -3,8 +3,12 @@ import { motion } from 'motion/react';
 import { Trophy, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LEADERBOARD_DATA } from '../data/leaderboard';
-
 import { useSEO } from '../hooks/useSEO';
+import { parseMD } from '../lib/markdown';
+
+// @ts-ignore
+import rawStudents from '../content/students.md?raw';
+const { data: studentsData } = parseMD(rawStudents);
 
 export const Payouts = () => {
   useSEO({
@@ -20,10 +24,10 @@ export const Payouts = () => {
         className="mb-[3rem]"
       >
         <Link to="/students" className="inline-flex items-center gap-2 text-lime hover:text-pink transition-colors mb-4 font-zine uppercase tracking-widest">
-          <ArrowLeft size="1.25rem" /> BACK TO STUDENTS
+          <ArrowLeft size="1.25rem" /> {studentsData.payouts_back_button || "BACK TO STUDENTS"}
         </Link>
-        <h1 className="text-[3.5rem] md:text-[6.5rem] leading-none text-white">ALL PAYOUTS.</h1>
-        <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">// THE FULL LIST OF GENZVERSE EARNERS.</p>
+        <h1 className="text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] leading-none text-white">{studentsData.payouts_title || "ALL PAYOUTS."}</h1>
+        <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">{studentsData.payouts_subtitle || "// THE FULL LIST OF GENZVERSE EARNERS."}</p>
       </motion.div>
 
       <div className="bg-black/40 backdrop-blur-3xl border border-white/20 p-[2em] md:p-[3em] relative overflow-hidden rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
@@ -56,16 +60,16 @@ export const Payouts = () => {
                 className={baseGlass}
               >
                 <div className="flex items-center gap-[0.25rem] md:gap-[0.5rem]">
-                  <span className={`font-display text-[2rem] md:text-[3rem] w-fit min-w-[1.5rem] md:min-w-[2.5rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
+                  <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] w-fit min-w-[1.5rem] md:min-w-[2.5rem] ${i < 3 ? 'text-white' : 'text-white/60'}`}>
                     {entry.rank}.
                   </span>
                   <div className="flex flex-col">
-                    <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none text-white`}>{entry.name}</span>
+                    <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3.5rem] leading-none text-white`}>{entry.name}</span>
                     <span className="text-[0.75rem] font-bold text-white/50 uppercase tracking-widest">{entry.location || "India"}</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-end justify-center">
-                  <span className={`font-display text-[2rem] md:text-[3.5rem] leading-none ${amountGradientStyles}`}>
+                  <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3.5rem] leading-none ${amountGradientStyles}`}>
                     {entry.earned}
                   </span>
                 </div>

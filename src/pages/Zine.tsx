@@ -4,6 +4,11 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { BLOG_POSTS } from '../constants';
 import { useSEO } from '../hooks/useSEO';
+import { parseMD } from '../lib/markdown';
+
+// @ts-ignore
+import rawZine from '../content/zine.md?raw';
+const { data: zineData } = parseMD(rawZine);
 
 export const Zine = () => {
   useSEO({
@@ -56,15 +61,15 @@ export const Zine = () => {
   return (
     <div className="bg-black min-h-screen">
       <header className="py-[8rem] px-[1.5em] md:px-[5em] border-b-[0.3125rem] border-pink">
-        <h1 className="text-[4.8rem] md:text-[7.2rem] leading-none text-cream whitespace-nowrap">THE ZINE</h1>
-        <p className="text-lime text-[1rem] mt-[1rem]">// culture. campaigns. campus. chaos.</p>
+        <h1 className="text-[4.8rem] md:text-[5.5rem] lg:text-[7.2rem] leading-none text-cream whitespace-nowrap">{zineData.hero_title || "THE ZINE"}</h1>
+        <p className="text-lime text-[1rem] mt-[1rem]">{zineData.hero_subtitle || "// culture. campaigns. campus. chaos."}</p>
         
         <div className="mt-[3rem] flex flex-col md:flex-row gap-[1.5rem] items-start md:items-center">
           <div className="relative w-full md:w-[25rem]">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-black z-10" size={20} />
             <input 
               type="text"
-              placeholder="SEARCH THE ZINE..."
+              placeholder={zineData.search_placeholder || "SEARCH THE ZINE..."}
               value={searchQuery}
               onChange={handleSearchChange}
               className="w-full bg-cream text-black pl-12 pr-12 py-3 brutal-border brutal-shadow-pink font-zine focus:outline-none focus:bg-white transition-colors"
@@ -79,7 +84,7 @@ export const Zine = () => {
             )}
           </div>
           <div className="flex flex-wrap gap-[1rem]">
-            {['LATEST DROPS', 'CAMPAIGN STORIES', 'CULTURE HITS', 'BRAND BREAKDOWNS'].map((tag, i) => (
+            {(zineData.tags || ['LATEST DROPS', 'CAMPAIGN STORIES', 'CULTURE HITS', 'BRAND BREAKDOWNS']).map((tag: string, i: number) => (
               <button 
                 key={i} 
                 onClick={() => {
@@ -139,14 +144,14 @@ export const Zine = () => {
           })
         ) : (
           <div className="md:col-span-3 py-[10rem] text-center">
-            <h2 className="text-[3rem] md:text-[5rem] font-display text-pink italic">NO RESULTS FOUND.</h2>
-            <p className="text-cream font-body mt-4 tracking-widest uppercase">TRY SEARCHING FOR SOMETHING ELSE.</p>
+            <h2 className="text-[3rem] md:text-[4rem] lg:text-[5rem] font-display text-pink italic">{zineData.no_results_heading || "NO RESULTS FOUND."}</h2>
+            <p className="text-cream font-body mt-4 tracking-widest uppercase">{zineData.no_results_subheading || "TRY SEARCHING FOR SOMETHING ELSE."}</p>
           </div>
         )}
 
         <div className="md:col-span-3 py-[5rem] flex justify-center">
-          <div className="text-[3rem] md:text-[5rem] font-display text-pink -rotate-2 border-y-[0.3125rem] border-pink py-[1rem] w-full text-center">
-            "NO CAP. JUST IMPACT."
+          <div className="text-[3rem] md:text-[4rem] lg:text-[5rem] font-display text-pink -rotate-2 border-y-[0.3125rem] border-pink py-[1rem] w-full text-center">
+            {zineData.featured_quote || '"NO CAP. JUST IMPACT."'}
           </div>
         </div>
       </main>
@@ -157,7 +162,7 @@ export const Zine = () => {
             onClick={loadMore}
             className="w-full py-[2.5rem] bg-cream text-black text-[3rem] font-display brutal-border brutal-shadow hover:bg-lime transition-colors"
           >
-            LOAD MORE ↓
+            {zineData.load_more_button || "LOAD MORE ↓"}
           </button>
         </div>
       )}

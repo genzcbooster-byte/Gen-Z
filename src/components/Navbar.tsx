@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
+import { parseMD } from '../lib/markdown';
+
+// @ts-ignore
+import rawNavbar from '../content/navbar.md?raw';
+const { data: navData } = parseMD(rawNavbar);
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  const navItems = [
-    { label: 'HOME', path: '/' },
-    { label: 'WORK', path: '/work' },
-    { label: 'ZINE', path: '/zine' },
-    { label: 'STUDENTS', path: '/students' },
-    { label: 'BRANDS', path: '/brands' },
-    { label: 'CONTACT', path: '/contact' },
-  ];
+  const navItems = navData.items || [];
 
   return (
     <nav className="sticky top-0 z-50 bg-black border-b-[0.1875rem] border-pink px-[1.5em] py-[1em] flex justify-between items-center">
@@ -22,11 +20,11 @@ export const Navbar = () => {
         to="/"
         className="text-[2.6rem] md:text-[2.4rem] font-display cursor-pointer flex items-center" 
       >
-        <span className="text-pink">GENZVERSE</span>
+        <span className="text-pink">{navData.logo_text || "GENZVERSE"}</span>
       </Link>
 
       <div className="hidden md:flex gap-[2.5rem]">
-        {navItems.map((item) => (
+        {navItems.map((item: any) => (
           <Link
             key={item.label}
             to={item.path}
@@ -59,7 +57,7 @@ export const Navbar = () => {
             exit={{ opacity: 0, x: '100%' }}
             className="fixed inset-0 bg-black z-40 flex flex-col items-center justify-center gap-8"
           >
-            {navItems.map((item) => (
+            {navItems.map((item: any) => (
               <Link
                 key={item.label}
                 to={item.path}

@@ -1,12 +1,17 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { Users, Trophy, Megaphone, Rocket, Sparkles, Globe } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { Marquee } from '../components/Marquee';
 import { SlotCounter } from '../components/SlotCounter';
-import { STATS, BLOG_POSTS, CITIES } from '../constants';
+import { BLOG_POSTS } from '../constants';
 import { BRANDS } from '../data/brands';
 import { useSEO } from '../hooks/useSEO';
+import { parseMD } from '../lib/markdown';
+
+// @ts-ignore
+import rawHome from '../content/home.md?raw';
+const { data: homeData } = parseMD(rawHome);
 
 export const Home = () => {
   useSEO({
@@ -45,22 +50,22 @@ export const Home = () => {
 
         <div className="z-10 flex flex-col items-center md:items-start md:w-3/5">
           <div className="inline-block bg-lime text-black px-[0.75rem] py-[0.25rem] brutal-border brutal-shadow mb-[1.5rem] text-[0.6rem] md:text-[0.75rem] font-bold">
-            YOUTH-LED CAMPAIGN FORCE.
+            {homeData.hero_tag || "YOUTH-LED CAMPAIGN FORCE."}
           </div>
-          <h1 className="text-[3.2rem] md:text-[4.9rem] leading-[0.9] mb-[1.5rem] p-[0.5rem]">
-            WE DON'T <br />
-            SELL ADS. <br />
-            <span className="text-pink glitch-text">WE BUILD MOVEMENTS.</span>
+          <h1 className="text-[3.2rem] md:text-[4rem] lg:text-[4.5rem] leading-[0.9] mb-[1.5rem] p-[0.5rem]">
+            {homeData.hero_title_line1 || "WE DON'T"} <br />
+            {homeData.hero_title_line2 || "SELL ADS."} <br />
+            <span className="text-pink glitch-text">{homeData.hero_title_highlight || "WE BUILD MOVEMENTS."}</span>
           </h1>
           <p className="text-cream/70 text-[1.06rem] md:text-[1.1rem] mb-[2.5rem] max-w-[32rem]">
-            // Scaling Potential
+            {homeData.hero_subtitle || "// Scaling Potential"}
           </p>
           <div className="flex flex-col sm:flex-row gap-[1rem]">
             <Link 
-              to="/work"
+              to={homeData.hero_cta_link || "/work"}
               className="px-[2rem] py-[0.75rem] border-[0.1875rem] border-cream text-cream font-zine text-[1.56rem] md:text-[1.44rem] hover:bg-cream hover:text-black transition-colors"
             >
-              SEE OUR WORK ↓
+              {homeData.hero_cta || "SEE OUR WORK ↓"}
             </Link>
           </div>
         </div>
@@ -82,11 +87,11 @@ export const Home = () => {
                 rotate: [-2, 2, -2]
               }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="text-[8rem] md:text-[12rem] font-display leading-none select-none flex items-center justify-center relative z-10"
+              className="text-[8rem] md:text-[8rem] lg:text-[10rem] font-display leading-none select-none flex items-center justify-center relative z-10"
             >
               <img 
-                src="https://i.postimg.cc/cCN86MQF/Untitled-design-3-removebg-preview.png" 
-                alt="Genzverse - India's #1 Student Marketing Ecosystem" 
+                src={homeData.hero_image || "https://i.postimg.cc/cCN86MQF/Untitled-design-3-removebg-preview.png"} 
+                alt={homeData.hero_image_alt || "Genzverse - India's #1 Student Marketing Ecosystem"} 
                 className="w-[15rem] md:w-[20rem] h-auto"
                 referrerPolicy="no-referrer"
                 loading="eager"
@@ -96,7 +101,7 @@ export const Home = () => {
         </div>
 
         <div className="absolute bottom-0 left-0 w-full bg-lime text-black">
-          <Marquee text="GENZVERSE • INDIA'S #1 STUDENT MARKETING ECOSYSTEM • SINCE MAY 2024 • CAMPUS TO CAMPAIGN • VERIFIED RESULTS • " />
+          <Marquee text={homeData.hero_marquee || "GENZVERSE • INDIA'S #1 STUDENT MARKETING ECOSYSTEM • SINCE MAY 2024 • CAMPUS TO CAMPAIGN • VERIFIED RESULTS • "} />
         </div>
       </section>
 
@@ -105,17 +110,17 @@ export const Home = () => {
         <div className="absolute inset-0 bg-pattern-dots opacity-10 pointer-events-none" />
         <div className="absolute top-0 right-0 w-[16rem] h-[16rem] bg-pink/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-[8rem]" />
         <div className="flex flex-col items-center text-center mb-[3rem]">
-          <h2 className="text-[2.5rem] md:text-[4.5rem] mb-[0.5rem] italic relative z-10 whitespace-nowrap">THE RESULTS.</h2>
+          <h2 className="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] mb-[0.5rem] italic relative z-10 whitespace-nowrap">{homeData.stats_heading || "THE RESULTS."}</h2>
           <div className="w-[6rem] h-[0.375rem] bg-pink relative z-10" />
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[1.5rem] relative z-10 mb-[4rem]">
-          {STATS.map((stat, i) => (
+          {(homeData.stats || []).map((stat: any, i: number) => (
             <div
               key={i}
               className={`brutal-card p-[2em] relative group ${stat.color} flex flex-col items-center text-center`}
             >
-              <div className="text-[3rem] md:text-[4.5rem] font-space font-bold text-black mb-[0.5rem] drop-shadow-[0.125rem_0.125rem_0_white] leading-none">
+              <div className="text-[3rem] md:text-[3.5rem] lg:text-[4rem] font-space font-bold text-black mb-[0.5rem] drop-shadow-[0.125rem_0.125rem_0_white] leading-none">
                 <SlotCounter value={stat.value} suffix={stat.suffix} />
               </div>
               <div className="text-[1.25rem] font-zine leading-tight text-black uppercase">{stat.label}</div>
@@ -128,10 +133,10 @@ export const Home = () => {
 
         <div className="flex justify-center relative z-10">
           <Link 
-            to="/zine"
+            to={homeData.stats_cta_link || "/zine"}
             className="bg-black text-cream px-[3rem] py-[1.25rem] brutal-border-pink brutal-shadow-lime font-zine text-[1.5rem] hover:-translate-y-[0.25rem] transition-transform"
           >
-            SEE OUR CASE STUDIES →
+            {homeData.stats_cta || "SEE OUR CASE STUDIES →"}
           </Link>
         </div>
       </section>
@@ -144,21 +149,16 @@ export const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[2.5rem] md:text-[4.5rem] font-display relative z-10 whitespace-nowrap text-white"
+            className="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] font-display relative z-10 whitespace-nowrap text-white"
           >
-            WHAT WE <span className="text-pink">ACTUALLY</span> DO.
+            {homeData.services_heading_start || "WHAT WE"} <span className="text-pink">{homeData.services_heading_highlight || "ACTUALLY"}</span> {homeData.services_heading_end || "DO."}
           </motion.h2>
         </div>
 
         <div className="flex flex-wrap border-cream/10 border relative z-10 mx-auto max-w-[80rem]">
-          {[
-            { title: "COMMUNITY & CAMPUS", body: "The ecosystem backbone. Connecting brands with students through peer-driven engagement inside college ecosystems.", icon: Users, tag: "ECOSYSTEM", color: "lime" },
-            { title: "EVENTS & EXPERIENCES", body: "Live, on-ground youth engagements designed for high recall and physical brand interaction.", icon: Trophy, tag: "LIVE", color: "pink" },
-            { title: "CONTENT & MEDIA", body: "Campaign amplification layer ensuring authentic youth storytelling and bulk promotion.", icon: Megaphone, tag: "AMPLIFY", color: "lime" },
-            { title: "BRAND SOLUTIONS", body: "The commercial engine. Solving brand objectives through outcome-driven youth campaigns.", icon: Rocket, tag: "GROWTH", color: "pink" },
-            { title: "TALENT & CREATORS", body: "Relevant youth voices for campaigns and live engagements. Campaign-specific creator activation.", icon: Sparkles, tag: "PEOPLE", color: "lime" },
-            { title: "TSF – THE SAMVIDHAN FORUM", body: "Purpose-led vertical focused on youth awareness, dialogue, and institutional engagement.", icon: Globe, tag: "PURPOSE", color: "cream" }
-          ].map((service, i) => (
+          {(homeData.services || []).map((service: any, i: number) => {
+            const IconComponent = (LucideIcons as any)[service.icon] || LucideIcons.Circle;
+            return (
             <motion.div 
               key={i}
               initial={{ opacity: 0 }}
@@ -178,7 +178,7 @@ export const Home = () => {
                 [{service.tag}]
               </div>
               <div className="relative z-10 mb-[2rem] text-lime group-hover:scale-110 transition-transform duration-300">
-                <service.icon size="2.5rem" strokeWidth={1.5} />
+                <IconComponent size="2.5rem" strokeWidth={1.5} />
               </div>
               <h3 className="text-[1.75rem] mb-[1rem] font-display uppercase tracking-tight leading-none relative z-10 group-hover:text-white transition-colors text-white">
                 {service.title}
@@ -187,7 +187,7 @@ export const Home = () => {
                 {service.body}
               </p>
             </motion.div>
-          ))}
+          )})}
         </div>
       </section>
 
@@ -195,7 +195,7 @@ export const Home = () => {
       <section className="bg-cream text-black py-12 relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-blueprint opacity-10 pointer-events-none" />
         <div className="flex flex-col items-center text-center mb-[2rem]">
-          <h2 className="text-[2.5rem] md:text-[4.5rem] px-[0.4em] md:px-[0.75em] mb-[1.5rem] relative z-10 whitespace-nowrap">BRANDS WE'VE MOVED.</h2>
+          <h2 className="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] px-[0.4em] md:px-[0.75em] mb-[1.5rem] relative z-10 whitespace-nowrap">{homeData.brand_wall_heading || "BRANDS WE'VE MOVED."}</h2>
         </div>
         <div className="relative z-10">
           <Marquee text={BRANDS.map(b => b.name).join(" • ")} speed={40} className="bg-white border-y-[0.1875rem] border-black py-2" />
@@ -206,17 +206,17 @@ export const Home = () => {
             <div className="absolute inset-0 opacity-20 bg-pattern-diagonal text-black" />
             <div className="z-10 text-center md:text-left relative">
               <div className="absolute -top-[1.25rem] left-0 md:left-0 bg-lime text-black px-[0.75rem] py-[0.125rem] text-[0.625rem] font-bold brutal-border shadow-[0.125rem_0.125rem_0_black] uppercase">
-                Let's build a movement.
+                {homeData.contact_banner_tag || "Let's build a movement."}
               </div>
-              <h3 className="text-[2.5rem] md:text-[3.5rem] drop-shadow-[0.125rem_0.125rem_0_white]">YOUR BRAND NEXT?</h3>
+              <h3 className="text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] drop-shadow-[0.125rem_0.125rem_0_white]">{homeData.contact_banner_heading || "YOUR BRAND NEXT?"}</h3>
             </div>
             <a 
-              href="https://wa.me/9316106151" 
+              href={homeData.contact_banner_link || "https://wa.me/9316106151"} 
               target="_blank" 
               rel="noopener noreferrer"
               className="z-10 bg-black text-cream px-[2rem] py-[1rem] brutal-border-cream brutal-shadow-pink font-zine text-[1.25rem] hover:-translate-y-[0.25rem] transition-transform"
             >
-              → CONTACT US
+              {homeData.contact_banner_cta || "→ CONTACT US"}
             </a>
           </div>
         </div>
@@ -226,13 +226,13 @@ export const Home = () => {
       <section className="bg-black py-[4em] px-[1.5em] md:px-[5em]">
         <div className="flex flex-col md:flex-row justify-between items-center mb-[3rem] gap-[2rem] text-center md:text-left">
           <div className="w-full flex flex-col items-center md:items-start">
-            <h2 className="text-[2.5rem] md:text-[4.5rem] leading-none font-display whitespace-nowrap text-white">OUR TURF.</h2>
-            <p className="text-lime font-body mt-[0.5rem] text-[0.875rem] md:text-[1rem] uppercase tracking-wider">// Tier-1 and Tier-2 penetration. 15+ cities and counting.</p>
+            <h2 className="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] leading-none font-display whitespace-nowrap text-white">{homeData.cities_heading || "OUR TURF."}</h2>
+            <p className="text-lime font-body mt-[0.5rem] text-[0.875rem] md:text-[1rem] uppercase tracking-wider">{homeData.cities_subtitle || "// Tier-1 and Tier-2 penetration. 15+ cities and counting."}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-[1rem]">
-          {CITIES.map((city, i) => (
+          {(homeData.cities || []).map((city: any, i: number) => (
             <motion.div 
               key={i}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -250,7 +250,7 @@ export const Home = () => {
             </motion.div>
           ))}
           <div className="brutal-card bg-lime border-black p-[1rem] flex items-center justify-center text-center group hover:bg-white transition-colors min-h-[8rem]">
-            <div className="font-display text-black text-[1rem] md:text-[1.25rem] leading-tight">AND <br />MANY <br />MORE.</div>
+            <div className="font-display text-black text-[1rem] md:text-[1.25rem] leading-tight whitespace-pre-wrap">{homeData.cities_more_text || "AND \nMANY \nMORE."}</div>
           </div>
         </div>
       </section>
