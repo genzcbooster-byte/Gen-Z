@@ -1,5 +1,6 @@
 {
-  "name": "Genzverse",
+  "name": "Genzverse website",
   "description": "India's #1 student-first marketing ecosystem. We don't sell ads, we build movements.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": []
 }
