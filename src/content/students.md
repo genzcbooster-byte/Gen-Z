@@ -27,7 +27,7 @@ leaderboard_raw_list:
   - "Divyanshi | 5000 | Delhi"
   - "Bhaskar | 4000 | Hyderabad"
   - "Rajas | 8450 | Mumbai"
-  - "Dharshini | 6100 | Chennai"
+  - "Dharshini | 6850 | Chennai"
   - "Prabhas | 500 | Telangana"
   - "Ganesh | 21100 | Mumbai"
   - "Praveen | 1150 | Coimbatore"
