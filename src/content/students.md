@@ -25,9 +25,9 @@ options:
 
 leaderboard_raw_list:
   - "Divyanshi | 5000 | Delhi"
-  - "Bhaskar | 4000 | Hyderabad"
+  - "Bhaskar | 5500 | Hyderabad"
   - "Rajas | 8450 | Mumbai"
-  - "Dharshini | 6850 | Chennai"
+  - "Dharshini | 9950 | Chennai"
   - "Prabhas | 500 | Telangana"
   - "Ganesh | 21100 | Mumbai"
   - "Praveen | 1150 | Coimbatore"
@@ -49,7 +49,7 @@ leaderboard_raw_list:
   - "Harsh Modi | 15000 | Mumbai"
   - "Rishi Chopda | 7700 | Ahmedabad"
   - "Harsh & Sid | 37500 | Delhi"
-  - "Abu talha | 2860 | Delhi"
+  - "Abu talha | 4460 | Delhi"
   - "Gautham | 2800 | Vizag"
   - "Shivam | 6700 | Gwalior"
   - "Karnav | 1000 | Ludhiana"

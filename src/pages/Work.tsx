@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { useSEO } from '../hooks/useSEO';
 import { parseMD } from '../lib/markdown';
+import EventsTimeline from '../components/EventsTimeline';
 
 // @ts-ignore
 import rawWork from '../content/work.md?raw';
@@ -79,6 +80,8 @@ export const Work = () => {
           </motion.div>
         ))}
       </section>
+
+      <EventsTimeline />
 
       {/* CTA Section */}
       <section className="py-[6rem] md:py-[8rem] px-[1.5em] md:px-[5em] bg-cream text-black text-center flex flex-col items-center border-b-[0.3125rem] border-black">
