@@ -22,5 +22,5 @@ community_label: "COMMUNITY"
 community_link: "https://chat.whatsapp.com/IuFnL5VEjfS08csklpEXja?mode=ems_copy_t"
 
 hq_label: "Headquarters"
-hq_value: "Ahmedabad // Mumbai // Delhi // India"
+hq_value: "Surat // Gujarat // India"
 ---

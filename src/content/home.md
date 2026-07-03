@@ -18,7 +18,7 @@ stats:
   - value: "1,00,000"
     label: "indian Campus Ambassadors"
     suffix: "+"
-    note: "verified ✓"
+    note: "verified"
     color: "bg-blue-400"
   - value: "2,000"
     label: "Student Creators"
@@ -28,7 +28,7 @@ stats:
   - value: "50"
     label: "Cities Covered"
     suffix: "+"
-    note: "pan-india"
+    note: "pan india"
     color: "bg-emerald-400"
 
 # Services

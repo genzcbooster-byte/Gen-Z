@@ -42,14 +42,14 @@ export const FAQ = () => {
   };
 
   return (
-    <div id="faq-section" className="w-full mt-20 border-t border-white/10 pt-16">
+    <div id="faq-section" className="w-full mt-20 border-t border-black/10 dark:border-white/10 pt-16 transition-colors duration-300">
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 bg-zinc-900/80 border border-white/5 rounded-full px-4 py-1.5 mb-4 text-[0.7rem] font-soehne font-bold uppercase tracking-widest">
-          <Sparkles size="0.8rem" className="text-zinc-400" />
+        <div className="inline-flex items-center gap-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full px-4 py-1.5 mb-4 text-[0.7rem] font-soehne font-bold uppercase tracking-widest text-black dark:text-white transition-colors duration-300">
+          <Sparkles size="0.8rem" className="text-zinc-600 dark:text-zinc-400" />
           Got Questions?
         </div>
-        <h2 className="font-canela text-[2.2rem] md:text-[3rem] font-bold tracking-tight text-white">
-          Onboarding & Expectations <span className="italic text-zinc-400 font-normal">FAQ</span>
+        <h2 className="font-canela text-[2.2rem] md:text-[3rem] font-bold tracking-tight text-black dark:text-white transition-colors duration-300">
+          Onboarding & Expectations <span className="italic text-zinc-600 dark:text-zinc-400 font-normal">FAQ</span>
         </h2>
         <p className="font-soehne text-zinc-500 text-xs md:text-sm max-w-[28rem] mx-auto mt-2 uppercase tracking-wider">
           // EVERYTHING YOU NEED TO KNOW ABOUT STARTING YOUR JOURNEY
@@ -62,7 +62,7 @@ export const FAQ = () => {
           return (
             <div
               key={index}
-              className="glass-liquid-card rounded-2xl border border-white/5 overflow-hidden transition-all duration-300 hover:border-white/15"
+              className="glass-liquid-card rounded-2xl border border-black/5 dark:border-white/5 overflow-hidden transition-all duration-300 hover:border-black/15 dark:hover:border-white/15"
             >
               <button
                 onClick={() => toggleIndex(index)}
@@ -70,14 +70,14 @@ export const FAQ = () => {
               >
                 <div className="flex items-start gap-4 pr-4">
                   <HelpCircle size="1.2rem" className="text-zinc-500 mt-0.5 flex-shrink-0" />
-                  <span className="font-soehne text-sm md:text-base font-semibold text-white tracking-wide leading-snug">
+                  <span className="font-soehne text-sm md:text-base font-semibold text-black dark:text-white tracking-wide leading-snug transition-colors duration-300">
                     {item.question}
                   </span>
                 </div>
                 <motion.div
                   animate={{ rotate: isOpen ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
-                  className="text-zinc-400 flex-shrink-0"
+                  className="text-zinc-500 flex-shrink-0"
                 >
                   <ChevronDown size="1.2rem" />
                 </motion.div>
@@ -91,7 +91,7 @@ export const FAQ = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.25, ease: "easeInOut" }}
                   >
-                    <div className="px-6 pb-6 pl-14 text-zinc-400 font-soehne text-xs md:text-sm leading-relaxed border-t border-white/5 pt-4">
+                    <div className="px-6 pb-6 pl-14 text-zinc-600 dark:text-zinc-400 font-soehne text-xs md:text-sm leading-relaxed border-t border-black/5 dark:border-white/5 pt-4 transition-colors duration-300">
                       {item.answer}
                     </div>
                   </motion.div>

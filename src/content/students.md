@@ -1,13 +1,13 @@
 ---
 hero_title: "STUDENTS."
-hero_subtitle: "// YOUR GATEWAY TO THE ECOSYSTEM."
+hero_subtitle: "// YOUR GATEWAY TO THE COMMUNITY."
 
 leaderboard_heading: "HALL OF FAME."
-leaderboard_subtitle: "// THE TOP EARNERS IN THE ECOSYSTEM."
+leaderboard_subtitle: "// THE TOP EARNERS IN THE COMMUNITY."
 leaderboard_status: "LIVE UPDATES"
 leaderboard_cta: "VIEW ALL PAYOUTS"
 leaderboard_cta_link: "/payouts"
-leaderboard_cta_note: "Want to see your name here? Join the force and start building."
+leaderboard_cta_note: "Want to see your name here? Join the community and start building."
 
 leaderboard_raw_list:
   - "Divyanshi | 5000 | Delhi"
