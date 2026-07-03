@@ -5,7 +5,7 @@ export interface Brand {
   logo: string;
 }
 
-const brandFiles = import.meta.glob('../content/brands/*.md', { query: '?raw', import: 'default', eager: true });
+const brandFiles = (import.meta as any).glob('../content/brands/*.md', { query: '?raw', import: 'default', eager: true });
 
 export const BRANDS: Brand[] = Object.values(brandFiles).map((raw: any) => {
   const { data } = parseMD(raw as string);

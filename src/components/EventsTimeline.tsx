@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MapPin, CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { MapPin, CheckCircle2, Calendar } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const EVENTS_DATA = [
   { date: "2026-05-09", name: "QS Study Abroad Fair", location: "New Delhi · Le Meridien", category: "QS Study Abroad" },
@@ -21,10 +21,10 @@ const EVENTS_DATA = [
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "QS Study Abroad": "bg-purple-500 text-white",
-  "StudyIN": "bg-green-500 text-white",
-  "Samsung": "bg-amber-500 text-black",
-  "US Polo": "bg-pink text-black"
+  "QS Study Abroad": "bg-indigo-500/10 border-indigo-500/30 text-indigo-300",
+  "StudyIN": "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
+  "Samsung": "bg-amber-500/10 border-amber-500/30 text-amber-300",
+  "US Polo": "bg-rose-500/10 border-rose-500/30 text-rose-300"
 };
 
 const FILTERS = ["All events", "QS Study Abroad", "StudyIN", "Samsung", "US Polo"];
@@ -45,66 +45,66 @@ export default function EventsTimeline() {
     const day = d.toLocaleDateString("en-US", { day: "numeric" });
     const month = d.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
     
-    const badgeColor = CATEGORY_COLORS[event.category] || "bg-gray-500 text-white";
+    const badgeColor = CATEGORY_COLORS[event.category] || "bg-white/5 border-white/10 text-zinc-300";
 
     return (
-      <div key={`${event.name}-${event.location}-${event.date}`} className={`flex gap-4 md:gap-6 relative pl-8 md:pl-0 ${isPast ? 'opacity-60' : 'opacity-100'}`}>
+      <div key={`${event.name}-${event.location}-${event.date}`} className={`flex gap-4 md:gap-8 relative pl-8 md:pl-0 ${isPast ? 'opacity-50' : 'opacity-100'}`}>
         {/* Timeline line for mobile */}
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-white/20 md:hidden" />
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10 md:hidden" />
         
         {/* Mobile node */}
-        <div className={`absolute left-[-4px] top-6 w-2.5 h-2.5 rounded-full md:hidden ${isPast ? 'bg-white/40' : 'bg-lime shadow-[0_0_10px_rgba(204,255,0,0.5)]'}`} />
+        <div className={`absolute left-[-4px] top-6 w-2.5 h-2.5 rounded-full md:hidden ${isPast ? 'bg-zinc-700' : 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]'}`} />
 
-        {/* Date block (hidden on very small screens, displayed in card instead, but let's keep it visible on md+) */}
-        <div className="hidden md:flex flex-col items-end pt-2 w-[5rem] shrink-0">
-          <span className="font-display text-3xl text-white leading-none">{day}</span>
-          <span className="font-zine text-sm text-lime tracking-widest">{month}</span>
+        {/* Date block */}
+        <div className="hidden md:flex flex-col items-end pt-3 w-[6rem] shrink-0">
+          <span className="font-canela text-3xl text-white font-bold leading-none">{day}</span>
+          <span className="font-soehne text-[0.7rem] text-zinc-400 font-bold tracking-widest uppercase mt-1">{month}</span>
         </div>
 
         {/* Timeline Desktop Node & Line */}
         <div className="hidden md:flex flex-col items-center relative mr-2">
           {/* Node */}
-          <div className={`w-4 h-4 rounded-full mt-3 z-10 brutal-border-white ${isPast ? 'bg-gray-500' : 'bg-lime'}`} />
+          <div className={`w-3.5 h-3.5 rounded-full mt-4 z-10 border-2 border-black ${isPast ? 'bg-zinc-700' : 'bg-white'}`} />
           {/* Vertical Line */}
-          <div className="absolute top-7 bottom-[-2rem] w-px bg-white/20" />
+          <div className="absolute top-8 bottom-[-2rem] w-px bg-white/10" />
         </div>
 
         {/* Event Card */}
-        <div className={`flex-1 brutal-card p-4 md:p-6 bg-white/5 border border-white/10 backdrop-blur-sm relative overflow-hidden transition-all hover:bg-white/10 ${!isPast ? 'hover:-translate-y-1 hover:border-white/30' : ''}`}>
+        <div className={`flex-1 glass-liquid-card p-5 md:p-6 rounded-[2rem] relative overflow-hidden transition-all duration-300 ${!isPast ? 'hover:-translate-y-1 hover:border-white/20' : ''}`}>
           
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
               {/* Mobile Date */}
-              <div className="md:hidden flex items-baseline gap-2 mb-2">
-                <span className="font-display text-2xl text-white leading-none">{day}</span>
-                <span className="font-zine text-xs text-lime tracking-widest">{month}</span>
+              <div className="md:hidden flex items-baseline gap-2 mb-3">
+                <span className="font-canela text-2xl text-white font-bold leading-none">{day}</span>
+                <span className="font-soehne text-xs text-zinc-400 font-bold tracking-widest uppercase">{month}</span>
               </div>
               
-              <div className="flex items-center gap-3 mb-2">
-                <span className={`text-[0.65rem] font-bold uppercase px-2 py-0.5 tracking-wider ${badgeColor}`}>
+              <div className="flex flex-wrap items-center gap-2.5 mb-3">
+                <span className={`text-[0.65rem] font-bold uppercase px-2.5 py-1 rounded-full border tracking-wider ${badgeColor}`}>
                   {event.category}
                 </span>
                 {isPast && (
-                  <span className="flex items-center gap-1 text-[0.65rem] font-bold uppercase text-white/60 bg-white/10 px-2 py-0.5">
+                  <span className="flex items-center gap-1 text-[0.65rem] font-bold uppercase text-zinc-500 bg-white/5 border border-white/5 px-2.5 py-1 rounded-full">
                     <CheckCircle2 size={10} /> Completed
                   </span>
                 )}
               </div>
               
-              <h3 className={`font-display text-2xl md:text-3xl leading-tight ${isPast ? 'text-white/80' : 'text-white'}`}>
+              <h3 className={`font-canela text-xl md:text-2xl font-bold leading-snug tracking-tight ${isPast ? 'text-zinc-400' : 'text-white'}`}>
                 {event.name}
               </h3>
               
-              <div className="flex items-center gap-2 mt-3 text-white/70 font-body text-sm md:text-base">
-                <MapPin size={16} className="text-lime shrink-0" />
+              <div className="flex items-center gap-2 mt-4 text-zinc-400 font-soehne text-xs md:text-sm">
+                <MapPin size={14} className="text-zinc-500 shrink-0" />
                 <span>{event.location}</span>
               </div>
             </div>
             
             {/* CTA button (only for upcoming) */}
             {!isPast && (
-              <div className="mt-4 sm:mt-0">
-                <button className="bg-lime text-black font-zine text-xs md:text-sm px-4 py-2 brutal-border-white hover:bg-white hover:text-black transition-colors uppercase whitespace-nowrap">
+              <div className="mt-4 sm:mt-0 self-end sm:self-center">
+                <button className="bg-white text-black font-soehne text-xs font-bold px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors uppercase whitespace-nowrap">
                   View Details
                 </button>
               </div>
@@ -116,27 +116,27 @@ export default function EventsTimeline() {
   };
 
   return (
-    <section className="py-[4rem] md:py-[6rem] px-[1.5em] md:px-[5em] bg-black border-b-[0.3125rem] border-pink">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-[3rem] md:mb-[5rem] flex flex-col items-center text-center">
-          <h2 className="text-[3rem] md:text-[4.5rem] lg:text-[5.5rem] font-display text-white leading-none mb-4 whitespace-pre-wrap">
-            {"THE \nTAKEOVER."}
+    <section className="py-[4rem] px-[1.5em] md:px-0">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-[3.5rem] flex flex-col items-center text-center">
+          <h2 className="font-canela text-[2.8rem] md:text-[3.8rem] lg:text-[4.2rem] text-white leading-none mb-3">
+            The Takeover
           </h2>
-          <p className="text-lime font-body text-lg uppercase tracking-widest">
-            // LIVE CAMPAIGNS & ACTIVATIONS
+          <p className="text-zinc-500 font-soehne text-xs md:text-sm uppercase tracking-widest">
+            // LIVE CAMPAIGNS & ACTIVATIONS IN THE WILD
           </p>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-[4rem]">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
           {FILTERS.map(filter => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`font-zine text-xs md:text-sm uppercase tracking-wider px-4 py-2 transition-all ${
+              className={`font-soehne text-[0.7rem] font-bold uppercase tracking-widest px-4.5 py-2 rounded-full transition-all duration-300 border ${
                 activeFilter === filter 
-                  ? 'bg-pink text-white brutal-border border-white scale-105' 
-                  : 'bg-white/5 text-white/70 border border-white/20 hover:bg-white/10'
+                  ? 'bg-white text-black border-white scale-105' 
+                  : 'bg-zinc-900/40 text-zinc-400 border-white/5 hover:text-white hover:border-white/20'
               }`}
             >
               {filter}
@@ -148,25 +148,25 @@ export default function EventsTimeline() {
         <div className="flex flex-col gap-8 md:gap-12 relative">
           
           {upcomingEvents.length > 0 && (
-            <div className="mb-8">
+            <div className="flex flex-col gap-8 md:gap-10">
               {upcomingEvents.map(event => renderEvent(event, false))}
             </div>
           )}
 
           {upcomingEvents.length === 0 && pastEvents.length === 0 && (
-            <div className="text-center py-12 text-white/50 font-body uppercase tracking-widest">
+            <div className="text-center py-12 text-zinc-500 font-soehne uppercase tracking-widest text-xs">
               No events found for this category.
             </div>
           )}
 
           {pastEvents.length > 0 && (
             <div>
-              <div className="flex items-center gap-4 my-8 md:my-12">
-                <div className="h-px bg-white/20 flex-1" />
-                <span className="font-zine text-white/40 uppercase tracking-widest text-sm">Past Missions</span>
-                <div className="h-px bg-white/20 flex-1" />
+              <div className="flex items-center gap-4 my-10 md:my-14">
+                <div className="h-px bg-white/5 flex-1" />
+                <span className="font-soehne text-zinc-600 uppercase tracking-widest text-[0.65rem] font-bold">Past Missions</span>
+                <div className="h-px bg-white/5 flex-1" />
               </div>
-              <div className="flex flex-col gap-8 md:gap-12">
+              <div className="flex flex-col gap-8 md:gap-10">
                 {pastEvents.map(event => renderEvent(event, true))}
               </div>
             </div>

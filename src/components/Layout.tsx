@@ -1,79 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useLocation, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 
-const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-  useEffect(() => {
-    // Check if device is a touch device
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      setIsTouchDevice(true);
-      return;
-    }
-
-    const moveCursor = (e: PointerEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
-    };
-
-    const handlePointerOver = (e: PointerEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('button, a, .brutal-card, [role="button"]')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
-    };
-
-    const handlePointerLeave = () => {
-      setIsVisible(false);
-    };
-
-    // Pointer events are supported in all modern browsers including Safari/iOS
-    window.addEventListener('pointermove', moveCursor);
-    window.addEventListener('pointerover', handlePointerOver);
-    window.addEventListener('pointerleave', handlePointerLeave);
-    
-    return () => {
-      window.removeEventListener('pointermove', moveCursor);
-      window.removeEventListener('pointerover', handlePointerOver);
-      window.removeEventListener('pointerleave', handlePointerLeave);
-    };
-  }, []);
-
-  if (isTouchDevice) return null;
-
-  // Use @supports or simple visibility logic
-  // On touch devices, the cursor should follow the finger
-  return (
-    <div
-      className={`custom-cursor pointer-events-none fixed z-[10000] rounded-full hidden md:block ${
-        isHovering ? 'hovering' : ''
-      } ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-      style={{ 
-        left: 0,
-        top: 0,
-        transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
-        // Ensure it works on Safari/iOS by using translate3d for hardware acceleration
-      }}
-    />
-  );
-};
-
 export const Layout = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  // Showcase everywhere (no excluded pages)
+  const showOverlay = !isDismissed;
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
       <div className="grain-overlay" />
-      <CustomCursor />
       <Navbar />
       <main className="flex-grow">
         {children}
       </main>
       <Footer />
+
+      <AnimatePresence>
+        {showOverlay && (
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            transition={{ type: "spring", stiffness: 200, damping: 25 }}
+            className="fixed bottom-0 left-0 right-0 z-[100] w-full"
+          >
+            <div className="glass-liquid-card py-4 px-6 rounded-none border-t border-b-0 border-l-0 border-r-0 border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.4)] flex items-center relative overflow-hidden group">
+              {/* Subtle background glow effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 blur-xl opacity-10 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="flex-1 flex justify-center relative z-10">
+                <Link
+                  to="/join-now"
+                  className="inline-flex items-center gap-2 bg-white text-black px-16 py-3.5 rounded-xl font-soehne font-bold uppercase tracking-widest text-[0.9rem] hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 transition-all duration-300"
+                >
+                  Join Now <ArrowRight size="1rem" />
+                </Link>
+              </div>
+              
+              <button 
+                onClick={() => setIsDismissed(true)}
+                className="p-2 hover:bg-white/10 rounded-lg text-zinc-500 hover:text-white transition-colors relative z-10 cursor-pointer absolute right-4 md:right-8 top-1/2 -translate-y-1/2"
+                title="Dismiss"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

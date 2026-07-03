@@ -1,6 +1,8 @@
 {
   "name": "Genzverse website",
-  "description": "India's #1 student-first marketing ecosystem. We don't sell ads, we build movements.",
+  "description": "India's coolest student community.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

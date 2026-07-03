@@ -9,20 +9,6 @@ leaderboard_cta: "VIEW ALL PAYOUTS"
 leaderboard_cta_link: "/payouts"
 leaderboard_cta_note: "Want to see your name here? Join the force and start building."
 
-options:
-  - title: "GET A SPONSORSHIP"
-    desc: "Fuel your campus events with the right brand backing. We bridge the gap between your vision and brand budgets."
-    color: "bg-pink"
-    link: "https://docs.google.com/forms/d/e/1FAIpQLScNdViY_k5XqWEyvOP109d-SvyCToJWeVHiDvEbafmuWS500g/viewform"
-  - title: "WANNA WORK AT GENZVERSE"
-    desc: "Join the force. Build movements. Scale potential. We're always looking for the brightest minds to lead our campus networks."
-    color: "bg-lime"
-    link: "https://wa.me/9316106151?text=I'm%20interested%20in%20working%20at%20Genzverse."
-  - title: "WANNA EXPERIENCE EVENTS WITH GENZVERSE"
-    desc: "Get exclusive access to the most high-octane events in the country. From gaming arenas to tech takeovers."
-    color: "bg-blue-400"
-    link: "https://chat.whatsapp.com/IuFnL5VEjfS08csklpEXja?mode=ems_copy_t"
-
 leaderboard_raw_list:
   - "Divyanshi | 5000 | Delhi"
   - "Bhaskar | 5500 | Hyderabad"

@@ -1,19 +1,19 @@
 ---
-hero_tag: "YOUTH-LED CAMPAIGN FORCE."
-hero_title_line1: "WE DON'T"
-hero_title_line2: "SELL ADS."
-hero_title_highlight: "WE BUILD MOVEMENTS."
+hero_tag: "Student First Marketing Ecosystem"
+hero_title_line1: "INDIA'S"
+hero_title_line2: "COOLEST"
+hero_title_highlight: "STUDENT COMMUNITY."
 hero_subtitle: "// Scaling Potential"
 hero_cta: "SEE OUR WORK ↓"
 hero_cta_link: "/work"
 hero_image: "https://i.postimg.cc/cCN86MQF/Untitled-design-3-removebg-preview.png"
-hero_image_alt: "Genzverse - India's #1 Student Marketing Ecosystem"
-hero_marquee: "GENZVERSE • INDIA'S #1 STUDENT MARKETING ECOSYSTEM • SINCE MAY 2024 • CAMPUS TO CAMPAIGN • VERIFIED RESULTS • "
+hero_image_alt: "Genzverse - India's #1 Student First Marketing Ecosystem"
+hero_marquee: "GENZVERSE • INDIA'S #1 STUDENT FIRST MARKETING ECOSYSTEM • SINCE MAY 2024 • CAMPUS TO CAMPAIGN • VERIFIED RESULTS • "
 
 # Stats
-stats_heading: "THE RESULTS."
+stats_heading: "OUR NETWORK"
 stats_cta: "SEE OUR CASE STUDIES →"
-stats_cta_link: "/zine"
+stats_cta_link: "/work"
 stats:
   - value: "1,00,000"
     label: "indian Campus Ambassadors"

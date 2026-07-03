@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat&family=Archivo+Black&family=Vollkorn:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat&family=Archivo+Black&family=Vollkorn:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -9,6 +9,8 @@
   --font-zine: "Archivo Black", sans-serif;
   --font-rounded-serif: "Vollkorn", serif;
   --font-space: "Space Grotesk", sans-serif;
+  --font-canela: "Canela Display", "Cormorant Garamond", "Playfair Display", serif;
+  --font-soehne: "Söhne", "Inter", sans-serif;
 
   --color-pink: #E8006F;
   --color-pink-dark: #B5005A;
@@ -27,7 +29,6 @@
 @layer base {
   body {
     @apply bg-black text-cream font-body selection:bg-lime selection:text-black;
-    cursor: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -109,8 +110,8 @@
   }
 
   @keyframes glitch {
-    0% { text-shadow: 0.125rem 0 #E8006F, -0.125rem 0 #8FCC00; clip-path: inset(0 0 98% 0); }
-    10% { text-shadow: -0.125rem 0 #E8006F, 0.125rem 0 #8FCC00; clip-path: inset(20% 0 60% 0); }
+    0% { text-shadow: 0.125rem 0 #FFFFFF, -0.125rem 0 #71717a; clip-path: inset(0 0 98% 0); }
+    10% { text-shadow: -0.125rem 0 #FFFFFF, 0.125rem 0 #71717a; clip-path: inset(20% 0 60% 0); }
     20% { clip-path: inset(60% 0 20% 0); }
     30% { text-shadow: none; clip-path: inset(0); }
     100% { text-shadow: none; clip-path: inset(0); }
@@ -156,23 +157,51 @@
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100vh); }
 }
-
-.custom-cursor {
-  position: fixed;
-  width: 1.25rem;
-  height: 1.25rem;
-  background: var(--color-lime);
-  border: 0.125rem solid black;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s, transform 0.15s ease-out;
+@keyframes morph-liquid {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+  }
+  33% {
+    border-radius: 30% 60% 70% 30% / 50% 60% 30% 60%;
+    transform: translate(40px, -60px) rotate(120deg) scale(1.15);
+  }
+  66% {
+    border-radius: 50% 50% 30% 70% / 40% 40% 60% 60%;
+    transform: translate(-30px, 40px) rotate(240deg) scale(0.9);
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translate(0px, 0px) rotate(360deg) scale(1);
+  }
 }
 
-.custom-cursor.hovering {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: white;
-  mix-blend-mode: difference;
+.animate-liquid-morph-1 {
+  animation: morph-liquid 18s ease-in-out infinite;
 }
+
+.animate-liquid-morph-2 {
+  animation: morph-liquid 24s ease-in-out infinite reverse;
+}
+
+.glass-liquid-card {
+  background: rgba(15, 15, 15, 0.45);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.glass-liquid-card-light {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+

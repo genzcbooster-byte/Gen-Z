@@ -15,12 +15,12 @@ export const Navbar = () => {
   const navItems = navData.items || [];
 
   return (
-    <nav className="sticky top-0 z-50 bg-black border-b-[0.1875rem] border-pink px-[1.5em] py-[1em] flex justify-between items-center">
+    <nav className="sticky top-0 z-50 bg-black border-b border-white/10 px-[1.5em] py-[1em] flex justify-between items-center">
       <Link 
         to="/"
-        className="text-[2.6rem] md:text-[2.4rem] font-display cursor-pointer flex items-center" 
+        className="text-[2.20rem] md:text-[2rem] font-canela font-extrabold tracking-tight cursor-pointer flex items-center" 
       >
-        <span className="text-pink">{navData.logo_text || "GENZVERSE"}</span>
+        <span className="text-white">{navData.logo_text || "GENZVERSE"}</span>
       </Link>
 
       <div className="hidden md:flex gap-[2.5rem]">
@@ -29,24 +29,24 @@ export const Navbar = () => {
             key={item.label}
             to={item.path}
             className={cn(
-              "font-display text-[1.75rem] md:text-[1.6rem] relative group transition-colors",
-              (item.label === 'STUDENTS' || item.label === 'BRANDS') ? 'text-lime hover:text-pink' : 'text-cream hover:text-pink',
-              location.pathname === item.path && "text-pink"
+              "font-soehne text-[1.1rem] tracking-wider uppercase relative group transition-colors",
+              "text-zinc-400 hover:text-white",
+              location.pathname === item.path && "text-white font-semibold"
             )}
           >
             {item.label}
             <span className={cn(
-              "absolute -bottom-[0.25rem] left-0 h-[0.25rem] bg-lime transition-all group-hover:w-full",
+              "absolute -bottom-[0.25rem] left-0 h-[0.125rem] bg-white transition-all group-hover:w-full",
               location.pathname === item.path ? "w-full" : "w-0"
             )} />
           </Link>
         ))}
       </div>
 
-      <button className="md:hidden text-pink z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-        <div className={cn("w-[2rem] h-[0.25rem] bg-current mb-[0.25rem] transition-all", isMenuOpen && "rotate-45 translate-y-[0.5rem]")} />
-        <div className={cn("w-[2rem] h-[0.25rem] bg-current mb-[0.25rem] transition-all", isMenuOpen && "opacity-0")} />
-        <div className={cn("w-[2rem] h-[0.25rem] bg-current transition-all", isMenuOpen && "-rotate-45 -translate-y-[0.5rem]")} />
+      <button className="md:hidden text-white z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <div className={cn("w-[1.5rem] h-[0.125rem] bg-current mb-[0.25rem] transition-all", isMenuOpen && "rotate-45 translate-y-[0.375rem]")} />
+        <div className={cn("w-[1.5rem] h-[0.125rem] bg-current mb-[0.25rem] transition-all", isMenuOpen && "opacity-0")} />
+        <div className={cn("w-[1.5rem] h-[0.125rem] bg-current transition-all", isMenuOpen && "-rotate-45 -translate-y-[0.375rem]")} />
       </button>
 
       <AnimatePresence>
@@ -61,7 +61,7 @@ export const Navbar = () => {
               <Link
                 key={item.label}
                 to={item.path}
-                className="text-[2.25rem] font-display text-cream hover:text-pink transition-colors"
+                className="text-[2rem] font-canela text-zinc-400 hover:text-white transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.label}

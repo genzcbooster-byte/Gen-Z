@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Zap, ArrowRight, Trophy, TrendingUp } from 'lucide-react';
+import { ArrowRight, Trophy, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LEADERBOARD_DATA } from '../data/leaderboard';
 import { useSEO } from '../hooks/useSEO';
@@ -19,8 +19,8 @@ const Leaderboard = () => {
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-[3rem] gap-4 relative z-10">
         <div>
-          <h2 className="text-[3rem] md:text-[3.5rem] lg:text-[4.5rem] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 font-display">{studentsData.leaderboard_heading || "HALL OF FAME."}</h2>
-          <p className="text-white/60 font-zine text-[1rem] md:text-[1.25rem] tracking-widest uppercase">
+          <h2 className="text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 font-canela font-bold tracking-tight">{studentsData.leaderboard_heading || "HALL OF FAME."}</h2>
+          <p className="text-white/60 font-soehne text-[0.8rem] md:text-[0.9rem] tracking-widest uppercase font-bold">
             {studentsData.leaderboard_subtitle || "// THE TOP EARNERS IN THE ECOSYSTEM."}
           </p>
         </div>
@@ -98,52 +98,22 @@ export const Students = () => {
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        className="mb-[3rem]"
+        className="mb-[3rem] flex flex-col md:flex-row md:items-end md:justify-between gap-6"
       >
-        <h1 className="text-[3.5rem] md:text-[5rem] lg:text-[6.5rem] leading-none text-white">{studentsData.hero_title || "STUDENTS."}</h1>
-        <p className="text-lime text-[1.25rem] font-body tracking-widest mt-4">{studentsData.hero_subtitle || "// YOUR GATEWAY TO THE ECOSYSTEM."}</p>
+        <div>
+          <h1 className="font-canela text-[3.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-bold leading-[0.95] tracking-tight text-white">{studentsData.hero_title || "STUDENTS."}</h1>
+          <p className="text-zinc-400 font-soehne text-[0.95rem] tracking-wider mt-4 uppercase">{studentsData.hero_subtitle || "// YOUR GATEWAY TO THE ECOSYSTEM."}</p>
+        </div>
+        <Link
+          to="/join-now"
+          className="bg-white text-black font-soehne font-bold uppercase tracking-widest text-xs px-8 py-4.5 rounded-full hover:-translate-y-0.5 hover:shadow-2xl transition-all duration-300 w-fit"
+        >
+          JOIN THE FORCE NOW →
+        </Link>
       </motion.div>
 
-      <div className="flex flex-col lg:flex-row gap-[3rem]">
-        <div className="w-full lg:w-2/3">
-          <Leaderboard />
-        </div>
-        <div className="w-full lg:w-1/3 flex flex-col gap-[2rem] flex-grow">
-          {(studentsData.options || []).map((opt: any, i: number) => (
-            <motion.div
-              key={i}
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className={`brutal-card p-[2.5em] flex flex-col h-full ${opt.color} group relative overflow-hidden`}
-            >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity pointer-events-none">
-                <Zap size="6rem" />
-              </div>
-              
-              <div className="flex-grow flex flex-col">
-                <h2 className="text-[2.5rem] font-display text-black leading-tight mb-6 group-hover:text-white transition-colors relative z-10">
-                  {opt.title}
-                </h2>
-                <p className="text-black/80 font-body text-[1.1rem] mb-8 font-medium leading-relaxed relative z-10">
-                  {opt.desc}
-                </p>
-              </div>
-
-              <div className="mt-auto relative z-10">
-                <a
-                  href={opt.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full py-4 bg-black text-cream brutal-border-white brutal-shadow-black font-zine text-[1.25rem] group-hover:bg-white group-hover:text-black transition-all gap-3"
-                >
-                  APPLY NOW <ArrowRight size="1.5rem" />
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+      <div className="w-full">
+        <Leaderboard />
       </div>
     </div>
   );

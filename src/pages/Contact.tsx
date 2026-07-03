@@ -1,5 +1,6 @@
 import React from 'react';
-import { Instagram, MessageCircle, Linkedin } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Instagram, MessageCircle, Linkedin, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
 import { parseMD } from '../lib/markdown';
 
@@ -15,49 +16,153 @@ export const Contact = () => {
   });
 
   return (
-    <div className="bg-pink min-h-screen py-[6rem] px-[1.5em] md:px-[5em] flex flex-col md:flex-row gap-[5rem]">
-      <div className="w-full md:w-1/2">
-        <h1 className="text-[6.25rem] md:text-[7.5rem] lg:text-[9.375rem] leading-none text-black mb-[3rem]">{contactData.hero_title_line1 || "LET'S"} <br />{contactData.hero_title_line2 || "TALK."}</h1>
-        <p className="text-black text-[1.5rem] font-body mb-[3rem] max-w-[30rem]">
-          {contactData.hero_subtitle || "Ready to build a movement? Whether you're a brand looking for Gen Z penetration or a student leader wanting to join the force, we're live."}
-        </p>
-        
-        <div className="space-y-[2rem]">
-          <a href={contactData.whatsapp_link || "https://wa.me/9316106151"} target="_blank" rel="noopener noreferrer" className="block brutal-card p-[2em] bg-black text-cream hover:bg-lime hover:text-black transition-colors">
-            <div className="text-[0.875rem] font-zine mb-[0.5rem] opacity-60">{contactData.whatsapp_label || "WHATSAPP US"}</div>
-            <div className="text-[2.5rem] font-display">{contactData.whatsapp_number || "93161-06151"}</div>
-          </a>
-          <a href={`mailto:${contactData.email_address || "info@genzverse.space"}`} className="block brutal-card p-[2em] bg-cream text-black hover:bg-lime transition-colors">
-            <div className="text-[0.875rem] font-zine mb-[0.5rem] opacity-60">{contactData.email_label || "EMAIL US"}</div>
-            <div className="text-[2.5rem] font-display break-all">{contactData.email_address || "info@genzverse.space"}</div>
-          </a>
-        </div>
+    <div className="bg-black text-white min-h-screen py-[6rem] px-[1.5em] md:px-[5em] relative overflow-hidden flex flex-col items-center">
+      
+      {/* Liquid Glass Background Blobs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[10%] left-[-10%] w-[30rem] h-[30rem] bg-zinc-800/10 blur-[8rem] rounded-full animate-liquid-morph-1" />
+        <div className="absolute bottom-[15%] right-[-10%] w-[35rem] h-[35rem] bg-zinc-900/15 blur-[9rem] rounded-full animate-liquid-morph-2" />
+        <div className="absolute top-[40%] left-[40%] w-[25rem] h-[25rem] bg-zinc-700/5 blur-[8rem] rounded-full animate-liquid-morph-1" />
       </div>
 
-      <div className="w-full md:w-1/2 flex flex-col justify-center">
-        <div className="brutal-card p-[3em] bg-black text-cream relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-[8rem] h-[8rem] bg-lime opacity-20 -translate-y-1/2 translate-x-1/2 rotate-45" />
-          <h2 className="text-[3rem] mb-[2rem]">{contactData.socials_heading || "OUR SOCIALS"}</h2>
-          <div className="grid grid-cols-1 gap-[1.5rem]">
-            <a href={contactData.instagram_link || "https://www.instagram.com/genzverse.io/"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group">
-              <span className="text-[2.5rem] font-display group-hover:text-pink transition-colors">{contactData.instagram_label || "INSTAGRAM"}</span>
-              <span className="text-[1.5rem] font-zine text-pink">→</span>
-            </a>
-            <a href={contactData.linkedin_link || "https://in.linkedin.com/company/genzverse"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group">
-              <span className="text-[2.5rem] font-display group-hover:text-lime transition-colors">{contactData.linkedin_label || "LINKEDIN"}</span>
-              <span className="text-[1.5rem] font-zine text-lime">→</span>
-            </a>
-            <a href={contactData.community_link || "https://chat.whatsapp.com/IuFnL5VEjfS08csklpEXja?mode=ems_copy_t"} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group">
-              <span className="text-[2.5rem] font-display group-hover:text-blue-400 transition-colors">{contactData.community_label || "COMMUNITY"}</span>
-              <span className="text-[1.5rem] font-zine text-blue-400">→</span>
-            </a>
+      <div className="w-full max-w-[72rem] relative z-10 flex flex-col md:flex-row gap-12 mt-4">
+        
+        {/* Left Side: Copy and Direct Triggers */}
+        <div className="w-full md:w-1/2 flex flex-col justify-center">
+          <div className="inline-block w-fit bg-white/10 text-white border border-white/20 rounded-full px-4 py-1.5 mb-6 text-[0.7rem] md:text-[0.75rem] font-soehne font-bold uppercase tracking-widest backdrop-blur-md">
+            // REACH THE ECOSYSTEM
           </div>
           
-          <div className="mt-[4rem] pt-[2rem] border-t border-cream/20">
-            <div className="text-[0.875rem] font-body opacity-60 uppercase tracking-widest">{contactData.hq_label || "Headquarters"}</div>
-            <div className="text-[1.25rem] font-zine mt-[0.5rem]">{contactData.hq_value || "Ahmedabad // Mumbai // Delhi // India"}</div>
+          <h1 className="font-canela text-[3.5rem] md:text-[5rem] lg:text-[6rem] font-bold leading-[0.95] text-white tracking-tight mb-6">
+            {contactData.hero_title_line1 || "LET'S"} <br />
+            <span className="italic text-zinc-400 font-normal">{contactData.hero_title_line2 || "TALK."}</span>
+          </h1>
+          
+          <p className="font-soehne text-zinc-400 text-sm md:text-base max-w-[28rem] leading-relaxed mb-12">
+            {contactData.hero_subtitle || "Ready to build a movement? Whether you're a brand looking for Gen Z penetration or a student leader wanting to join the force, we're live."}
+          </p>
+          
+          <div className="space-y-6">
+            {/* WhatsApp Card */}
+            <a 
+              href={contactData.whatsapp_link || "https://wa.me/9316106151"} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group glass-liquid-card rounded-[2rem] p-6 md:p-8 flex items-center justify-between border border-white/5 hover:border-white/25 hover:shadow-[0_15px_30px_rgba(255,255,255,0.03)] transition-all duration-500"
+            >
+              <div className="flex items-center gap-5">
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-zinc-300 group-hover:text-white transition-colors duration-300 group-hover:scale-110 transform">
+                  <MessageCircle size="1.5rem" />
+                </div>
+                <div>
+                  <div className="font-soehne text-[0.7rem] text-zinc-500 font-bold uppercase tracking-widest mb-1">
+                    {contactData.whatsapp_label || "WHATSAPP US"}
+                  </div>
+                  <div className="font-soehne text-[1.5rem] md:text-[1.8rem] text-white font-semibold tracking-tight">
+                    {contactData.whatsapp_number || "93161-06151"}
+                  </div>
+                </div>
+              </div>
+              <ArrowUpRight size="1.25rem" className="text-zinc-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+            </a>
+
+            {/* Email Card */}
+            <a 
+              href={`mailto:${contactData.email_address || "info@genzverse.space"}`}
+              className="group glass-liquid-card rounded-[2rem] p-6 md:p-8 flex items-center justify-between border border-white/5 hover:border-white/25 hover:shadow-[0_15px_30px_rgba(255,255,255,0.03)] transition-all duration-500"
+            >
+              <div className="flex items-center gap-5">
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-zinc-300 group-hover:text-white transition-colors duration-300 group-hover:scale-110 transform">
+                  <Mail size="1.5rem" />
+                </div>
+                <div>
+                  <div className="font-soehne text-[0.7rem] text-zinc-500 font-bold uppercase tracking-widest mb-1">
+                    {contactData.email_label || "EMAIL US"}
+                  </div>
+                  <div className="font-canela text-[1.5rem] md:text-[1.8rem] text-white font-bold tracking-tight break-all">
+                    {contactData.email_address || "info@genzverse.space"}
+                  </div>
+                </div>
+              </div>
+              <ArrowUpRight size="1.25rem" className="text-zinc-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+            </a>
           </div>
         </div>
+
+        {/* Right Side: Social Grid and HQ */}
+        <div className="w-full md:w-1/2 flex flex-col justify-center">
+          <div className="glass-liquid-card rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden border border-white/5">
+            <div className="absolute top-0 right-0 w-[14rem] h-[14rem] bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-[4rem] pointer-events-none" />
+            
+            <h2 className="font-canela text-[2.2rem] md:text-[2.6rem] font-bold text-white tracking-tight mb-8">
+              {contactData.socials_heading || "Our Socials"}
+            </h2>
+
+            <div className="space-y-6">
+              {/* Instagram link */}
+              <a 
+                href={contactData.instagram_link || "https://www.instagram.com/genzverse.io/"} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group flex items-center justify-between py-4 border-b border-white/5 hover:border-white/20 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  <Instagram size="1.1rem" className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="font-canela text-[1.6rem] text-zinc-400 group-hover:text-white transition-colors tracking-tight">
+                    {contactData.instagram_label || "INSTAGRAM"}
+                  </span>
+                </div>
+                <ArrowUpRight size="1.1rem" className="text-zinc-600 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </a>
+
+              {/* LinkedIn link */}
+              <a 
+                href={contactData.linkedin_link || "https://in.linkedin.com/company/genzverse"} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group flex items-center justify-between py-4 border-b border-white/5 hover:border-white/20 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  <Linkedin size="1.1rem" className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="font-canela text-[1.6rem] text-zinc-400 group-hover:text-white transition-colors tracking-tight">
+                    {contactData.linkedin_label || "LINKEDIN"}
+                  </span>
+                </div>
+                <ArrowUpRight size="1.1rem" className="text-zinc-600 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </a>
+
+              {/* Community Link */}
+              <a 
+                href={contactData.community_link || "https://chat.whatsapp.com/IuFnL5VEjfS08csklpEXja?mode=ems_copy_t"} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group flex items-center justify-between py-4 border-b border-white/5 hover:border-white/20 transition-all duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  <MessageCircle size="1.1rem" className="text-zinc-500 group-hover:text-white transition-colors" />
+                  <span className="font-canela text-[1.6rem] text-zinc-400 group-hover:text-white transition-colors tracking-tight">
+                    {contactData.community_label || "COMMUNITY"}
+                  </span>
+                </div>
+                <ArrowUpRight size="1.1rem" className="text-zinc-600 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </a>
+            </div>
+
+            {/* Headquarters Section */}
+            <div className="mt-14 pt-8 border-t border-white/5 flex flex-col gap-2">
+              <div className="flex items-center gap-2 text-zinc-500">
+                <MapPin size="0.85rem" />
+                <span className="font-soehne text-[0.75rem] font-bold uppercase tracking-widest">
+                  {contactData.hq_label || "Headquarters"}
+                </span>
+              </div>
+              <p className="font-canela text-[1.15rem] text-zinc-300 leading-relaxed font-light italic">
+                {contactData.hq_value || "Ahmedabad // Mumbai // Delhi // India"}
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

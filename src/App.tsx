@@ -3,12 +3,11 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Work } from './pages/Work';
-import { Zine } from './pages/Zine';
-import { Post } from './pages/Post';
 import { Students } from './pages/Students';
 import { Payouts } from './pages/Payouts';
 import { Brands } from './pages/Brands';
 import { Contact } from './pages/Contact';
+import { JoinNow } from './pages/JoinNow';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -28,12 +27,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/work" element={<Work />} />
-          <Route path="/zine" element={<Zine />} />
-          <Route path="/zine/:slug" element={<Post />} />
           <Route path="/students" element={<Students />} />
           <Route path="/payouts" element={<Payouts />} />
           <Route path="/brands" element={<Brands />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/join-now" element={<JoinNow />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Layout>
