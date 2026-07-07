@@ -9,7 +9,8 @@ import { useSEO } from '../hooks/useSEO';
 import { FAQ } from '../components/FAQ';
 import { 
   googleSignIn, logout, initAuth, findSpreadsheet, createSpreadsheet, 
-  appendApplication, fetchApplicationsFromSheet, getAccessToken
+  appendApplication, fetchApplicationsFromSheet, getAccessToken,
+  saveApplicationToFirestore, fetchApplicationsFromFirestore, markApplicationAsSyncedInFirestore
 } from '../lib/googleSheets';
 import { User } from 'firebase/auth';
 
@@ -30,6 +31,7 @@ export const JoinNow = () => {
     whyJoin: '',
     whatsapp: '',
     instagram: '',
+    city: '',
     superpower: 'Paid Gigs & Micro-tasks',
     heardAboutUs: 'Friend'
   });
@@ -77,6 +79,32 @@ export const JoinNow = () => {
     return () => unsubscribe();
   }, [spreadsheetId]);
 
+  // Sync any previous/local applications to Firestore on load
+  useEffect(() => {
+    const syncLocalToFirestore = async () => {
+      try {
+        const localApps = JSON.parse(localStorage.getItem('genzverse_applications') || '[]');
+        if (localApps.length > 0) {
+          let updated = false;
+          for (const app of localApps) {
+            // saveApplicationToFirestore is idempotent based on document ID.
+            const saved = await saveApplicationToFirestore(app);
+            if (saved && !app.firestoreSynced) {
+              app.firestoreSynced = true;
+              updated = true;
+            }
+          }
+          if (updated) {
+            localStorage.setItem('genzverse_applications', JSON.stringify(localApps));
+          }
+        }
+      } catch (err) {
+        console.error('Error auto-syncing local applications to Firestore:', err);
+      }
+    };
+    syncLocalToFirestore();
+  }, []);
+
   const autoConnectSpreadsheet = async (token: string) => {
     try {
       const foundId = await findSpreadsheet(token);
@@ -94,10 +122,11 @@ export const JoinNow = () => {
     setIsLoadingSheet(true);
     setSheetError('');
     try {
-      const apps = await fetchApplicationsFromSheet(token, sheetId);
+      // Load all submissions globally from central Firestore database
+      const apps = await fetchApplicationsFromFirestore();
       setSheetApplications(apps);
     } catch (err) {
-      setSheetError('Failed to fetch applications from Google Sheet. Please check your network or permissions.');
+      setSheetError('Failed to fetch applications from Firestore database. Please check your network or permissions.');
     } finally {
       setIsLoadingSheet(false);
     }
@@ -146,8 +175,7 @@ export const JoinNow = () => {
   };
 
   const getUnsyncedCount = () => {
-    const localApps = JSON.parse(localStorage.getItem('genzverse_applications') || '[]');
-    return localApps.filter((app: any) => !app.synced).length;
+    return sheetApplications.filter((app: any) => !app.synced).length;
   };
 
   const handleSyncPending = async () => {
@@ -158,23 +186,22 @@ export const JoinNow = () => {
     }
     
     setIsSyncing(true);
-    setSyncStatus('Syncing offline submissions to Google Sheet...');
+    setSyncStatus('Syncing student submissions to Google Sheet...');
     setSheetError('');
 
     try {
-      const localApps = JSON.parse(localStorage.getItem('genzverse_applications') || '[]');
-      const unsyncedApps = localApps.filter((app: any) => !app.synced);
+      const unsyncedApps = sheetApplications.filter((app: any) => !app.synced);
       
       let successCount = 0;
       for (const app of unsyncedApps) {
         const success = await appendApplication(currentToken, spreadsheetId, app);
         if (success) {
+          await markApplicationAsSyncedInFirestore(app.id);
           app.synced = true;
           successCount++;
         }
       }
 
-      localStorage.setItem('genzverse_applications', JSON.stringify(localApps));
       await loadApplicationsFromSheet(currentToken, spreadsheetId);
       
       setSyncStatus(`Successfully synced ${successCount} applications to Google Sheet!`);
@@ -251,11 +278,17 @@ export const JoinNow = () => {
       synced: false
     };
     
+    // Save to global cloud database in Firestore first (so organizers can see it immediately)
+    const firestoreSaved = await saveApplicationToFirestore(newApp);
+    
     const currentToken = accessToken || getAccessToken();
     if (currentToken && spreadsheetId) {
       const success = await appendApplication(currentToken, spreadsheetId, newApp);
       if (success) {
         newApp.synced = true;
+        if (firestoreSaved) {
+          await markApplicationAsSyncedInFirestore(newApp.id);
+        }
       }
     }
 
@@ -283,6 +316,7 @@ export const JoinNow = () => {
 *Email:* ${formData.email}
 *College:* ${formData.collegeName} (${formData.collegeYear})
 *Subjects:* ${formData.subjects || 'N/A'}
+*City:* ${formData.city}
 *Superpower:* ${formData.superpower}
 *Instagram:* ${formData.instagram || 'N/A'}
 
@@ -297,6 +331,7 @@ export const JoinNow = () => {
 Full Name: ${formData.fullName}
 Age: ${formData.age}
 Email ID: ${formData.email}
+City: ${formData.city}
 College Name: ${formData.collegeName}
 College Year: ${formData.collegeYear}
 Subjects/Course: ${formData.subjects || 'N/A'}
@@ -447,8 +482,8 @@ Status: Received & Pending Verification
                   </div>
                 </div>
 
-                {/* Contact Coordinates */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Contact Coordinates & Location */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
                     <label className="block font-soehne text-[0.75rem] text-zinc-500 dark:text-zinc-400 font-bold uppercase tracking-widest mb-2 transition-colors">
                       WhatsApp / Phone Number *
@@ -486,6 +521,20 @@ Status: Received & Pending Verification
                         {validationErrors.email}
                       </p>
                     )}
+                  </div>
+                  <div>
+                    <label className="block font-soehne text-[0.75rem] text-zinc-500 dark:text-zinc-400 font-bold uppercase tracking-widest mb-2 transition-colors">
+                      City *
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      placeholder="e.g. Mumbai"
+                      className="w-full bg-zinc-50 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl px-5 py-4 font-soehne text-black dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-black/30 dark:focus:border-white/30 transition-colors duration-300"
+                    />
                   </div>
                 </div>
 
@@ -838,6 +887,7 @@ Status: Received & Pending Verification
                           <th className="px-6 py-3.5">Name</th>
                           <th className="px-6 py-3.5">Email</th>
                           <th className="px-6 py-3.5">Phone</th>
+                          <th className="px-6 py-3.5">City</th>
                           <th className="px-6 py-3.5 font-normal">College</th>
                           <th className="px-6 py-3.5 font-normal">Superpower</th>
                         </tr>
@@ -848,6 +898,7 @@ Status: Received & Pending Verification
                             <td className="px-6 py-4 font-bold text-black dark:text-white">{app.fullName}</td>
                             <td className="px-6 py-4 font-mono">{app.email}</td>
                             <td className="px-6 py-4">{app.whatsapp}</td>
+                            <td className="px-6 py-4">{app.city || 'N/A'}</td>
                             <td className="px-6 py-4">
                               {app.collegeName} <span className="text-zinc-500 text-[10px]">({app.collegeYear})</span>
                             </td>
@@ -888,8 +939,6 @@ Status: Received & Pending Verification
             </div>
           )}
         </div>
-
-        <FAQ />
       </div>
     </div>
   );

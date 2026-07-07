@@ -1,30 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 import { useSEO } from '../hooks/useSEO';
 import { parseMD } from '../lib/markdown';
-import { ArrowUpRight, BarChart3, Target, Sparkles, Filter, Globe, RefreshCw } from 'lucide-react';
-import EventsTimeline from '../components/EventsTimeline';
+import { ArrowUpRight, Filter, Globe } from 'lucide-react';
+import { BRANDS } from '../data/brands';
 
 // @ts-ignore
 import rawWork from '../content/work.md?raw';
 const { data: workData } = parseMD(rawWork);
 
+// @ts-ignore
+import rawBrands from '../content/brands.md?raw';
+const { data: brandsData } = parseMD(rawBrands);
+
+const Hexagon = ({ brand, index, onClick }: { brand: typeof BRANDS[0], index: number, onClick: () => void }) => {
+  const colors = ["#00F0FF", "#B026FF", "#FFD700"];
+  const borderColor = colors[index % colors.length];
+  
+  return (
+    <div
+      onClick={onClick}
+      className="relative w-[100px] h-[115px] md:w-[130px] md:h-[150px] flex items-center justify-center group cursor-grab active:cursor-grabbing transition-transform duration-300 hover:scale-110"
+      style={{
+        clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+        backgroundColor: borderColor,
+      }}
+    >
+      <div 
+        className="absolute inset-[2px] bg-white dark:bg-zinc-950 transition-colors duration-300 group-hover:bg-zinc-100 dark:group-hover:bg-zinc-900" 
+        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }} 
+      />
+      <div className="relative z-10 p-2 flex flex-col items-center justify-center text-center pointer-events-none w-full">
+        <span className="text-[1rem] md:text-[1.2rem] lg:text-[1.3rem] font-display text-black dark:text-white transition-all duration-300 uppercase leading-none break-words px-2 group-hover:scale-110">
+          {brand.name}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export const Work = () => {
   useSEO({
-    title: "Our Work | Genzverse Campaigns",
-    description: "Explore our record-breaking student marketing campaigns for brands like Dell, Samsung, and Asus. Authentic engagement across 200+ Indian colleges.",
-    keywords: "student campaign case studies, campus marketing results, gen z marketing examples"
+    title: "Our Work & Brand Partners | Genzverse",
+    description: "Explore our record-breaking student marketing campaigns and see the global brands that trust Genzverse to scale their student engagement in India.",
+    keywords: "student campaign case studies, campus marketing results, brand partners, gen z marketing examples"
   });
 
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const navigate = useNavigate();
 
   // Get unique categories from campaign list
   const campaignsList = workData.campaigns || [];
-  const categories = ["All", ...Array.from(new Set(campaignsList.map((c: any) => c.category))) as string[]];
+  const categories = useMemo(() => {
+    const allCats = campaignsList.flatMap((c: any) => {
+      if (!c.category) return [];
+      return c.category.split(/\s*•\s*/).map((s: string) => s.trim());
+    });
+    return ["All", ...Array.from(new Set(allCats))] as string[];
+  }, [campaignsList]);
 
-  const filteredCampaigns = activeCategory === "All"
-    ? campaignsList
-    : campaignsList.filter((c: any) => c.category === activeCategory);
+  const filteredCampaigns = useMemo(() => {
+    if (activeCategory === "All") return campaignsList;
+    return campaignsList.filter((c: any) => {
+      if (!c.category) return false;
+      const parts = c.category.split(/\s*•\s*/).map((s: string) => s.trim().toLowerCase());
+      return parts.includes(activeCategory.toLowerCase());
+    });
+  }, [campaignsList, activeCategory]);
+
+  // Create a 7x7 grid for a "large enough" feel for the brands grid
+  const gridSize = 7;
+  const totalHexagons = gridSize * gridSize;
+  const gridItems = useMemo(() => Array.from({ length: totalHexagons }).map((_, i) => BRANDS[i % BRANDS.length]), [totalHexagons]);
+
+  const handleBrandClick = (brandName: string) => {
+    navigate(`/zine?search=${encodeURIComponent(brandName)}`);
+  };
 
   return (
     <div className="bg-white dark:bg-[#0a0a0a] text-black dark:text-white min-h-screen relative overflow-hidden transition-colors duration-300">
@@ -42,7 +94,7 @@ export const Work = () => {
       </div>
 
       {/* Hero Header Section */}
-      <section className="pt-[11rem] pb-[6rem] px-[1.5em] md:px-[5em] relative z-10 max-w-[72rem] mx-auto text-center md:text-left">
+      <section className="pt-[11rem] pb-[4rem] px-[1.5em] md:px-[5em] relative z-10 max-w-[72rem] mx-auto text-center md:text-left">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -155,9 +207,15 @@ export const Work = () => {
                     {campaign.brand}
                   </h3>
                   
-                  <p className="font-soehne text-[0.9rem] text-zinc-600 dark:text-zinc-400 font-light leading-relaxed mb-8 transition-colors">
+                  <p className="font-soehne text-[0.9rem] text-zinc-600 dark:text-zinc-400 font-light leading-relaxed mb-2 transition-colors">
                     {campaign.outcome}
                   </p>
+                  
+                  {campaign.location && (
+                    <div className="text-[0.7rem] font-soehne font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-6 transition-colors">
+                      {campaign.location}
+                    </div>
+                  )}
                 </div>
 
                 <div className="relative z-10 border-t border-black/5 dark:border-white/10 pt-5 mt-auto flex items-center justify-between">
@@ -175,37 +233,78 @@ export const Work = () => {
         </div>
       </section>
 
-      {/* Events Timeline Section (Styled cleanly within container) */}
-      <div className="relative z-10 max-w-[72rem] mx-auto py-12">
-        <EventsTimeline />
-      </div>
+      {/* Brand Partners Section integrated right after Work campaigns */}
+      <section className="py-16 border-t border-black/10 dark:border-white/10 px-[1.5em] md:px-[5em] relative z-10 max-w-[72rem] mx-auto">
+        <div className="flex flex-col items-center text-center mb-[4rem]">
+          <div className="inline-block bg-black/5 dark:bg-white/5 text-black dark:text-white border border-black/10 dark:border-white/10 rounded-full px-4 py-1.5 mb-6 text-[0.7rem] md:text-[0.75rem] font-soehne font-bold uppercase tracking-widest backdrop-blur-md transition-colors">
+            // OUR PARTNERS
+          </div>
+          <h2 className="font-canela text-[3rem] md:text-[4.5rem] lg:text-[5.5rem] font-bold leading-[1.0] tracking-tight text-black dark:text-white mb-4 transition-colors duration-300">
+            GLOBAL <br />
+            <span className="italic font-normal text-[2.75rem] md:text-[4.25rem] lg:text-[5.25rem] text-zinc-600 dark:text-zinc-400 tracking-normal transition-colors duration-300">Partnering</span> <br />
+            <span className="text-black dark:text-white uppercase font-extrabold tracking-tighter transition-colors duration-300">{brandsData.hero_title || "BRANDS."}</span>
+          </h2>
+          <p className="text-zinc-600 dark:text-zinc-400 font-soehne text-[0.95rem] tracking-widest uppercase font-bold mt-4 transition-colors duration-300">{brandsData.hero_subtitle || "// THE FORCE BEHIND THE MOVEMENTS."}</p>
+        </div>
 
-      {/* Campaign Custom CTA */}
+        {/* Apple Watch Style Draggable Box */}
+        <div className="brutal-card bg-white dark:bg-[#111] h-[400px] md:h-[600px] relative overflow-hidden border-[0.3125rem] border-black dark:border-white/25 cursor-move transition-colors duration-300 rounded-[2.5rem] shadow-2xl">
+          <div className="absolute inset-0 bg-pattern-grid opacity-5 pointer-events-none z-0" />
+          
+          <motion.div 
+            drag
+            dragConstraints={{ left: -800, right: 0, top: -800, bottom: 0 }}
+            initial={{ x: -400, y: -400 }}
+            className="absolute flex flex-col gap-1 p-20"
+            style={{ width: '2000px' }}
+          >
+            {Array.from({ length: gridSize }).map((_, rowIndex) => (
+              <div 
+                key={rowIndex} 
+                className="flex gap-1"
+                style={{ marginLeft: rowIndex % 2 === 0 ? '0' : '50px' }}
+              >
+                {gridItems.slice(rowIndex * gridSize, (rowIndex + 1) * gridSize).map((brand, colIndex) => (
+                  <Hexagon 
+                    key={`${rowIndex}-${colIndex}`} 
+                    brand={brand} 
+                    index={rowIndex * gridSize + colIndex} 
+                    onClick={() => handleBrandClick(brand.name)}
+                  />
+                ))}
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Protective Vignette */}
+          <div className="absolute inset-0 pointer-events-none z-10 shadow-[inset_0_0_100px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_0_100px_rgba(0,0,0,0.6)]" />
+          
+          {/* Instructions */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-black/90 text-black dark:text-white px-4 py-1 brutal-border border-black dark:border-white/20 text-[0.75rem] font-bold z-20 animate-pulse transition-colors duration-300">
+            SWIPE TO EXPLORE • CLICK TO SEE STORIES
+          </div>
+        </div>
+      </section>
+
+      {/* Integrated theme-aware brand partner cta */}
       <section className="py-[6rem] px-[1.5em] md:px-[5em] relative z-10">
         <div className="max-w-[72rem] mx-auto">
-          <div className="w-full glass-liquid-card rounded-[3rem] p-10 md:p-16 flex flex-col items-center text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/5 opacity-10 pointer-events-none" />
-            <div className="absolute -top-[10rem] w-[25rem] h-[25rem] bg-indigo-500/10 blur-[8rem] rounded-full pointer-events-none" />
+          <div className="w-full p-10 md:p-16 bg-zinc-50 dark:bg-zinc-950 text-black dark:text-white text-center relative overflow-hidden rounded-[3rem] border border-zinc-200 dark:border-white/10 shadow-2xl transition-all duration-300">
+            <div className="absolute inset-0 bg-pattern-diagonal text-black/5 dark:text-white/5 opacity-10 pointer-events-none" />
+            <div className="absolute -top-[10rem] w-[25rem] h-[25rem] bg-zinc-500/5 dark:bg-zinc-100/5 blur-[8rem] rounded-full pointer-events-none" />
             
-            <div className="inline-block bg-white/10 text-white px-4 py-1.5 text-[0.675rem] font-soehne font-bold tracking-widest uppercase rounded-full border border-white/15 mb-6">
-              LET'S CO-CREATE A MOVEMENT
-            </div>
-            
-            <h2 className="text-[2.6rem] md:text-[3.8rem] lg:text-[4.2rem] font-canela font-extrabold tracking-tight leading-none mb-6 max-w-[48rem]">
-              {workData.cta_heading || "WANT YOUR BRAND NEXT?"}
+            <h2 className="font-canela text-[3rem] md:text-[4rem] lg:text-[5rem] font-bold tracking-tight relative z-10 leading-none mb-6">
+              WANT TO BE <br />
+              <span className="italic font-light text-zinc-500 dark:text-zinc-400">The Next Hex?</span>
             </h2>
-            
-            <p className="font-soehne text-zinc-400 text-sm md:text-base max-w-[32rem] leading-relaxed mb-10">
-              {workData.cta_body || "Stop running generic digital ads. Start activating student-driven loops and word-of-mouth networks."}
-            </p>
-            
+            <p className="font-soehne text-[1.1rem] md:text-[1.25rem] font-light tracking-wide mb-[2rem] relative z-10 text-zinc-600 dark:text-zinc-400">{brandsData.cta_body || "Let's build your brand's biggest movement yet."}</p>
             <a 
-              href={workData.cta_link || "https://wa.me/9316106151"} 
+              href={brandsData.cta_link || "https://wa.me/9316106151"} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-white text-black px-[2.5rem] py-[1.1rem] rounded-full font-soehne font-bold uppercase tracking-wider text-[1rem] hover:-translate-y-[0.125rem] hover:shadow-[0_12px_30px_rgba(255,255,255,0.15)] transition-all duration-300"
+              className="relative z-10 inline-block bg-black dark:bg-white text-white dark:text-black px-[3.5rem] py-[1.25rem] font-soehne font-bold uppercase tracking-widest text-[0.95rem] hover:-translate-y-[0.25rem] hover:shadow-2xl transition-all duration-300 rounded-full"
             >
-              {workData.cta_button || "CONTACT US →"}
+              {brandsData.cta_button || "GET IN TOUCH →"}
             </a>
           </div>
         </div>
@@ -214,3 +313,4 @@ export const Work = () => {
     </div>
   );
 };
+

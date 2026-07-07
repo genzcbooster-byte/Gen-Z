@@ -9,8 +9,6 @@ items:
     path: "/students"
   - label: "JOIN NOW"
     path: "/join-now"
-  - label: "BRANDS"
-    path: "/brands"
   - label: "CONTACT"
     path: "/contact"
 ---

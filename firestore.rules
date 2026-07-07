@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all to prevent unauthorized access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Secure access control for student applications
+    match /applications/{applicationId} {
+      // Anyone is permitted to submit/create an application
+      allow create: if true;
+
+      // Only authenticated users (organizers) can view, sync, or modify submissions
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}

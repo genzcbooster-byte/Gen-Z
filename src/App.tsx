@@ -5,7 +5,6 @@ import { Home } from './pages/Home';
 import { Work } from './pages/Work';
 import { Students } from './pages/Students';
 import { Payouts } from './pages/Payouts';
-import { Brands } from './pages/Brands';
 import { Contact } from './pages/Contact';
 import { JoinNow } from './pages/JoinNow';
 
@@ -29,7 +28,7 @@ export default function App() {
           <Route path="/work" element={<Work />} />
           <Route path="/students" element={<Students />} />
           <Route path="/payouts" element={<Payouts />} />
-          <Route path="/brands" element={<Brands />} />
+          <Route path="/brands" element={<Work />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/join-now" element={<JoinNow />} />
           <Route path="*" element={<Home />} />

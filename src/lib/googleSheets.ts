@@ -1,10 +1,12 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, User } from 'firebase/auth';
+import { getFirestore, doc, setDoc, getDocs, collection, query, orderBy } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 // Configure Google Auth Provider with necessary scopes
 export const provider = new GoogleAuthProvider();
@@ -127,6 +129,8 @@ export const createSpreadsheet = async (accessToken: string): Promise<string> =>
       'College Year',
       'Subjects',
       'WhatsApp/Phone',
+      'Instagram ID',
+      'City',
       'Superpower',
       'Heard About Us',
       'Why Join',
@@ -134,7 +138,7 @@ export const createSpreadsheet = async (accessToken: string): Promise<string> =>
     ];
 
     const headerResponse = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Applications!A1:L1?valueInputOption=USER_ENTERED`,
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Applications!A1:N1?valueInputOption=USER_ENTERED`,
       {
         method: 'PUT',
         headers: {
@@ -172,6 +176,7 @@ export const appendApplication = async (
     subjects?: string;
     whatsapp: string;
     instagram?: string;
+    city: string;
     superpower: string;
     heardAboutUs: string;
     whyJoin?: string;
@@ -189,6 +194,7 @@ export const appendApplication = async (
       formData.subjects || 'N/A',
       formData.whatsapp,
       formData.instagram || 'N/A',
+      formData.city || 'N/A',
       formData.superpower,
       formData.heardAboutUs,
       formData.whyJoin || 'N/A',
@@ -196,7 +202,7 @@ export const appendApplication = async (
     ];
 
     const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Applications!A:L:append?valueInputOption=USER_ENTERED`,
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Applications!A:N:append?valueInputOption=USER_ENTERED`,
       {
         method: 'POST',
         headers: {
@@ -228,7 +234,7 @@ export const fetchApplicationsFromSheet = async (
 ): Promise<any[]> => {
   try {
     const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Applications!A2:L2000`,
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Applications!A2:N2000`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
@@ -252,13 +258,82 @@ export const fetchApplicationsFromSheet = async (
       subjects: row[6] || 'N/A',
       whatsapp: row[7] || 'N/A',
       instagram: row[8] || 'N/A',
-      superpower: row[9] || 'N/A',
-      heardAboutUs: row[10] || 'N/A',
-      whyJoin: row[11] || 'N/A',
-      submittedAt: row[12] || 'N/A',
+      city: row[9] || 'N/A',
+      superpower: row[10] || 'N/A',
+      heardAboutUs: row[11] || 'N/A',
+      whyJoin: row[12] || 'N/A',
+      submittedAt: row[13] || 'N/A',
     }));
   } catch (error) {
     console.error('Error fetching rows:', error);
     return [];
   }
 };
+
+// Save application to central Firestore database
+export const saveApplicationToFirestore = async (formData: {
+  id: string;
+  fullName: string;
+  age: string;
+  email: string;
+  collegeName: string;
+  collegeYear: string;
+  subjects?: string;
+  whatsapp: string;
+  instagram?: string;
+  city: string;
+  superpower: string;
+  heardAboutUs: string;
+  whyJoin?: string;
+  submittedAt: string;
+  synced: boolean;
+}): Promise<boolean> => {
+  try {
+    const docRef = doc(db, 'applications', formData.id);
+    await setDoc(docRef, formData);
+    return true;
+  } catch (error) {
+    console.error('Error saving application to Firestore:', error);
+    return false;
+  }
+};
+
+// Fetch all applications from Firestore
+export const fetchApplicationsFromFirestore = async (): Promise<any[]> => {
+  try {
+    const q = query(collection(db, 'applications'), orderBy('submittedAt', 'desc'));
+    const querySnapshot = await getDocs(q);
+    const apps: any[] = [];
+    querySnapshot.forEach((doc) => {
+      apps.push(doc.data());
+    });
+    return apps;
+  } catch (error) {
+    console.error('Error fetching applications from Firestore:', error);
+    // Fallback: if ordering fails, fetch without ordering
+    try {
+      const querySnapshot = await getDocs(collection(db, 'applications'));
+      const apps: any[] = [];
+      querySnapshot.forEach((doc) => {
+        apps.push(doc.data());
+      });
+      return apps;
+    } catch (err2) {
+      console.error('Fallback fetching also failed:', err2);
+      return [];
+    }
+  }
+};
+
+// Mark application as synced in Firestore
+export const markApplicationAsSyncedInFirestore = async (id: string): Promise<boolean> => {
+  try {
+    const docRef = doc(db, 'applications', id);
+    await setDoc(docRef, { synced: true }, { merge: true });
+    return true;
+  } catch (error) {
+    console.error('Error marking application as synced in Firestore:', error);
+    return false;
+  }
+};
+

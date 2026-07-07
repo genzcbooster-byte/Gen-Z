@@ -1,0 +1,90 @@
+{
+  "entities": {
+    "application": {
+      "title": "Application",
+      "description": "Student application submission form details",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the submission"
+        },
+        "fullName": {
+          "type": "string",
+          "description": "Student's full name"
+        },
+        "age": {
+          "type": "string",
+          "description": "Student's age"
+        },
+        "email": {
+          "type": "string",
+          "description": "Student's email address"
+        },
+        "collegeName": {
+          "type": "string",
+          "description": "Student's college or university name"
+        },
+        "collegeYear": {
+          "type": "string",
+          "description": "Student's college year (e.g. 1st Year)"
+        },
+        "subjects": {
+          "type": "string",
+          "description": "Subjects or stream of study"
+        },
+        "whatsapp": {
+          "type": "string",
+          "description": "Student's WhatsApp or phone number"
+        },
+        "instagram": {
+          "type": "string",
+          "description": "Student's Instagram handle"
+        },
+        "city": {
+          "type": "string",
+          "description": "Student's city of residence"
+        },
+        "superpower": {
+          "type": "string",
+          "description": "Student's primary area of interest"
+        },
+        "heardAboutUs": {
+          "type": "string",
+          "description": "Where they heard about the community"
+        },
+        "whyJoin": {
+          "type": "string",
+          "description": "Reason for wanting to join the community"
+        },
+        "submittedAt": {
+          "type": "string",
+          "description": "Timestamp when the application was submitted"
+        },
+        "synced": {
+          "type": "boolean",
+          "description": "Whether the application has been synced to the Google Sheet"
+        }
+      },
+      "required": [
+        "id",
+        "fullName",
+        "age",
+        "email",
+        "collegeName",
+        "collegeYear",
+        "whatsapp",
+        "city",
+        "superpower",
+        "submittedAt",
+        "synced"
+      ]
+    }
+  },
+  "firestore": {
+    "/applications/{applicationId}": {
+      "schema": "application",
+      "description": "Collection of student application submissions"
+    }
+  }
+}

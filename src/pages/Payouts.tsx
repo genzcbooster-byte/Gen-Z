@@ -38,7 +38,7 @@ export const Payouts = () => {
         <div className="space-y-[1rem] relative z-10">
           {LEADERBOARD_DATA.map((entry, i) => {
             // iOS 26 Glassmorphism row styling
-            const baseGlass = "bg-black/5 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-[1.5em] flex items-center justify-between transition-all duration-300 hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-[0_0_20px_rgba(0,0,0,0.05)] hover:-translate-y-1";
+            const baseGlass = "bg-black/5 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-[1.2em] sm:p-[1.5em] flex items-center justify-between gap-4 md:gap-6 transition-all duration-300 hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-[0_0_20px_rgba(0,0,0,0.05)] hover:-translate-y-1";
             
             let amountGradientStyles = "text-zinc-800 dark:text-zinc-200";
             
@@ -59,17 +59,17 @@ export const Payouts = () => {
                 viewport={{ once: true }}
                 className={baseGlass}
               >
-                <div className="flex items-center gap-[0.25rem] md:gap-[0.5rem]">
-                  <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] w-fit min-w-[1.5rem] md:min-w-[2.5rem] ${i < 3 ? 'text-black dark:text-white' : 'text-zinc-500 dark:text-zinc-400'}`}>
+                <div className="flex items-center gap-[0.5rem] md:gap-[0.75rem] min-w-0 flex-1">
+                  <span className={`font-soehne font-bold text-[1.2rem] sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] tracking-tight w-fit min-w-[1.2rem] sm:min-w-[2.5rem] ${i < 3 ? 'text-black dark:text-white' : 'text-zinc-400 dark:text-zinc-500'} transition-colors`}>
                     {entry.rank}.
                   </span>
-                  <div className="flex flex-col">
-                    <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3.5rem] leading-none text-black dark:text-white transition-colors`}>{entry.name}</span>
-                    <span className="text-[0.75rem] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest transition-colors">{entry.location || "India"}</span>
+                  <div className="flex flex-col min-w-0">
+                    <span className={`font-canela font-extrabold text-[1.4rem] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.8rem] leading-none text-black dark:text-white transition-colors truncate`}>{entry.name}</span>
+                    <span className="text-[0.65rem] sm:text-[0.75rem] font-soehne font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mt-1.5 transition-colors">{entry.location || "India"}</span>
                   </div>
                 </div>
-                <div className="flex flex-col items-end justify-center">
-                  <span className={`font-display text-[2rem] md:text-[2.5rem] lg:text-[3.5rem] leading-none ${amountGradientStyles}`}>
+                <div className="flex flex-col items-end justify-center shrink-0">
+                  <span className={`font-soehne font-extrabold text-[1.4rem] sm:text-[1.8rem] md:text-[2.2rem] lg:text-[2.8rem] leading-none ${amountGradientStyles} transition-all duration-300`}>
                     {entry.earned}
                   </span>
                 </div>

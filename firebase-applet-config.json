@@ -3,6 +3,7 @@
   "appId": "1:929222782851:web:3da9bc525cd26877cb90b6",
   "apiKey": "AIzaSyAFxtnpVNt764pVC6OqfRpxbMIUN0pR5Qk",
   "authDomain": "cirrus-lgtt6.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-genzversewebsite-92535b2f-5857-405e-8c13-17641b148775",
   "storageBucket": "secure-cirrus-lgtt6.firebasestorage.app",
   "messagingSenderId": "929222782851",
   "measurementId": ""
